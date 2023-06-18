@@ -1,6 +1,6 @@
 import UIKit
 
-class CatalogueViewController: UIViewController {
+final class CatalogueViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)

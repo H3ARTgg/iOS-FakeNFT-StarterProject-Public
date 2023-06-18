@@ -1,6 +1,6 @@
 import UIKit
 
-class CartViewController: UIViewController {
+final class CartViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
