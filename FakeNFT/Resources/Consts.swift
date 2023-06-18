@@ -12,7 +12,7 @@ struct Consts {
     struct SystemImages {
         static let profile = UIImage(systemName: "person.crop.circle.fill")
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")
-        static let cart = UIImage(systemName: "bag.fill")
+        static let cart = UIImage(named: "cart_icon")
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
     }
     
