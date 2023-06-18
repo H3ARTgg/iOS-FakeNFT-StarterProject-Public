@@ -1,0 +1,12 @@
+/* Cart tabbar icon title */
+"cart.icon" = "Корзина";
+
+/* Catalogue tabbar icon title */
+"catalogue.icon" = "Каталог";
+
+/* Profile tabbar icon title */
+"profile.icon" = "Профиль";
+
+/* Statistics tabbar icon title */
+"statistics.icon" = "Статистика";
+
