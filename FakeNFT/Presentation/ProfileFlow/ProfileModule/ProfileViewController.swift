@@ -5,7 +5,7 @@ final class ProfileViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
-                                       image: Consts.SystemImages.profile,
+                                       image: Consts.Images.profile,
                                        tag: 0)
     }
     

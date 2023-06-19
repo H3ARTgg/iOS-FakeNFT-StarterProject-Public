@@ -1,0 +1,16 @@
+
+input_dir: FakeNFT/Resources/
+
+output_dir: FakeNFT/Resources/Generated/
+
+## XCAssets
+
+xcassets:
+  
+  inputs:
+    - Assets.xcassets
+    - Colors.xcassets
+  
+  outputs:
+    templateName: swift5
+    output: XCAssets+Generated.swift
