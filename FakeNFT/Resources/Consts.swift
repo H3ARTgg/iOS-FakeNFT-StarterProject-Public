@@ -6,7 +6,7 @@ struct Consts {
         static let profile = NSLocalizedString("profile.icon", comment: "Profile tabbar icon title")
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")    
+        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
     }
     
     struct Images {
@@ -14,6 +14,8 @@ struct Consts {
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")
         static let cart = Asset.Assets.cartIcon.image
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
+        
+        static let sortIcon = Asset.Assets.sortIcon.image
     }
     
     struct Fonts {
@@ -26,4 +28,7 @@ struct Consts {
         static let bold32 = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let bold34 = UIFont.systemFont(ofSize: 34, weight: .bold)
     }
+    
+    static let topConstant: CGFloat = 20
+    static let sideConstant: CGFloat = 16
 }
