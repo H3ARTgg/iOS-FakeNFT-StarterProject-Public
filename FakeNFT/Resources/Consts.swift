@@ -31,4 +31,5 @@ struct Consts {
     
     static let topConstant: CGFloat = 20
     static let sideConstant: CGFloat = 16
+    static let heightUserTableViewCell: CGFloat = 88
 }
