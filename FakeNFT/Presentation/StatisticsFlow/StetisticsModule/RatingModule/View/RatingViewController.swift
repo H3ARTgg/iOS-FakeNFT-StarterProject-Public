@@ -2,22 +2,13 @@ import UIKit
 
 /// Контроллер  отвечает за отображение списка пользователей
 final class RatingViewController: UIViewController {
-
+    
     // MARK: Private properties
     private var viewModel: RatingViewModelProtocol
+    private lazy var refreshControl = makeRefreshControll()
     
     // MARK: UI
-    private lazy var ratingTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UserTableViewCell.self)
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.showsVerticalScrollIndicator = false
-        return tableView
-    }()
+    private lazy var ratingTableView = makeRatingTableView()
     
     // MARK: Initialization
     init(viewModel: RatingViewModelProtocol) {
@@ -36,10 +27,30 @@ final class RatingViewController: UIViewController {
         navigationItemSetup()
         addViews()
         activateConstraints()
+        bind()
     }
 }
 
 extension RatingViewController {
+    func makeRatingTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UserTableViewCell.self)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.refreshControl = refreshControl
+        return tableView
+    }
+    
+    func makeRefreshControll() -> UIRefreshControl {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        return refreshControl
+    }
+    
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
     }
@@ -66,9 +77,22 @@ extension RatingViewController {
         ])
     }
     
+    func bind() {
+        viewModel.updateViewData = { [weak self] _ in
+            guard let self else { return }
+            self.ratingTableView.reloadData()
+        }
+    }
+    
     @objc
     func sortedButtonTapped() {
         // TODO: Filter
+    }
+    
+    @objc
+    func refresh(_ sender: UIRefreshControl) {
+        viewModel.updateUsers()
+        sender.endRefreshing()
     }
 }
 
