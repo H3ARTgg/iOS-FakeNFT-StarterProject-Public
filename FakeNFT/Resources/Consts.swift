@@ -7,6 +7,11 @@ struct Consts {
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
         static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
+        
+        static let statisticAlertTitle = NSLocalizedString("statisticAlert.title", comment: "text for statistic's title alert")
+        static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", comment: "text for statistic's action sheep sort by name")
+        static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", comment: "text for statistic's action sheep sort by rating")
+        static let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
     }
     
     struct Images {

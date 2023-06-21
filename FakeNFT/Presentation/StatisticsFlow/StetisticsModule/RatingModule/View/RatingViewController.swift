@@ -82,17 +82,39 @@ extension RatingViewController {
             guard let self else { return }
             self.ratingTableView.reloadData()
         }
+        
+        viewModel.headForAlert = { [weak self] alertModel in
+            guard let self else { return }
+            self.presentActionSheet(alertModel: alertModel)
+        }
     }
     
     @objc
     func sortedButtonTapped() {
-        // TODO: Filter
+        viewModel.showActionSheep()
     }
     
     @objc
     func refresh(_ sender: UIRefreshControl) {
         viewModel.updateUsers()
         sender.endRefreshing()
+    }
+    
+    func presentActionSheet(alertModel: AlertModel) {
+        let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
+        alertModel.alertActions.forEach { alertAction in
+            let actionStyle: UIAlertAction.Style
+            switch alertAction.actionRole {
+            case .destructive: actionStyle = .destructive
+            case .regular: actionStyle = .default
+            case .cancel: actionStyle = .cancel
+            }
+            
+            let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
+            alert.addAction(action)
+        }
+        
+        present(alert, animated: true)
     }
 }
 
