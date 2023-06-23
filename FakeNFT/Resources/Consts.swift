@@ -6,7 +6,7 @@ struct Consts {
         static let profile = NSLocalizedString("profile.icon", comment: "Profile tabbar icon title")
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")    
+        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
     }
     
     struct Images {
@@ -14,14 +14,17 @@ struct Consts {
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")
         static let cart = Asset.Assets.cartIcon.image
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
+        static let editBold = UIImage(systemName: "square.and.pencil",
+                                      withConfiguration: UIImage.SymbolConfiguration(weight: .bold))
+        static let chevron = UIImage(systemName: "chevron.right")
     }
     
     struct Fonts {
         static let regular13 = UIFont.systemFont(ofSize: 13, weight: .regular)
         static let regular15 = UIFont.systemFont(ofSize: 15, weight: .regular)
-        static let regular17 = UIFont.systemFont(ofSize: 16, weight: .regular)
+        static let regular17 = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let medium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
-        static let bold17 = UIFont.systemFont(ofSize: 10, weight: .bold)
+        static let bold17 = UIFont.systemFont(ofSize: 17, weight: .bold)
         static let bold22 = UIFont.systemFont(ofSize: 22, weight: .bold)
         static let bold32 = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let bold34 = UIFont.systemFont(ofSize: 34, weight: .bold)
