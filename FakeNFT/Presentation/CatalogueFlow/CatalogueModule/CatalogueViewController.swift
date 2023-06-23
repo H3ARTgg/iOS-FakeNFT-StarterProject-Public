@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ProgressHUD
 
 final class CatalogueViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
@@ -48,7 +49,14 @@ final class CatalogueViewController: UIViewController {
         
         viewModel?.$nftCollections.bind(action: { [weak self] _ in
             self?.collectionView.reloadData()
+            ProgressHUD.remove()
         })
+        
+        if let check = viewModel?.nftCollections.isEmpty {
+            if check {
+                ProgressHUD.show()
+            }
+        }
     }
     
     @objc
