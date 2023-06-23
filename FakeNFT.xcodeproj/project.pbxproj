@@ -27,6 +27,12 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		6B2DF20987A5036D5FDF38FB /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7EE12C02A1367B1F2F8B0 /* Pods_FakeNFT.framework */; };
 		7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */; };
+		78B553DF2A44B33100A21777 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553DE2A44B33100A21777 /* ProfileTableViewCell.swift */; };
+		78B553E62A44B54500A21777 /* ProfileNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553E52A44B54500A21777 /* ProfileNavController.swift */; };
+		78B553E82A44C2CD00A21777 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553E72A44C2CD00A21777 /* ProfileView.swift */; };
+		78B553EA2A45E25300A21777 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553E92A45E25300A21777 /* UILabel+Ext.swift */; };
+		78B553EC2A45E74B00A21777 /* ProfileDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553EB2A45E74B00A21777 /* ProfileDiffableDataSource.swift */; };
+		78B553EE2A46145000A21777 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553ED2A46145000A21777 /* ProfileViewModel.swift */; };
 		78F308A72A3EF40C0036BF33 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78F308A62A3EF40C0036BF33 /* Colors.xcassets */; };
 		78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F308AD2A3EF5880036BF33 /* MainTabBarController.swift */; };
 		78F308B42A3EF6F70036BF33 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F308B32A3EF6F70036BF33 /* StatisticsViewController.swift */; };
@@ -79,6 +85,12 @@
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		7704B34966D424C18DD99065 /* Pods_FakeNFT_FakeNFTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT_FakeNFTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
+		78B553DE2A44B33100A21777 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		78B553E52A44B54500A21777 /* ProfileNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavController.swift; sourceTree = "<group>"; };
+		78B553E72A44C2CD00A21777 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		78B553E92A45E25300A21777 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		78B553EB2A45E74B00A21777 /* ProfileDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDiffableDataSource.swift; sourceTree = "<group>"; };
+		78B553ED2A46145000A21777 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		78F308A62A3EF40C0036BF33 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		78F308AD2A3EF5880036BF33 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		78F308B32A3EF6F70036BF33 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -277,6 +289,15 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		78B553DD2A44B2FF00A21777 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				78B553DE2A44B33100A21777 /* ProfileTableViewCell.swift */,
+				78B553EB2A45E74B00A21777 /* ProfileDiffableDataSource.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
 		78F308A32A3EF3690036BF33 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +335,7 @@
 			children = (
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
 				78F308A92A3EF4490036BF33 /* UI */,
+				78B553E92A45E25300A21777 /* UILabel+Ext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -392,7 +414,11 @@
 		78F308B82A3EF8750036BF33 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
+				78B553E52A44B54500A21777 /* ProfileNavController.swift */,
+				78B553DD2A44B2FF00A21777 /* Table */,
 				78F308B92A3EF9A40036BF33 /* ProfileViewController.swift */,
+				78B553E72A44C2CD00A21777 /* ProfileView.swift */,
+				78B553ED2A46145000A21777 /* ProfileViewModel.swift */,
 			);
 			path = ProfileModule;
 			sourceTree = "<group>";
@@ -538,7 +564,6 @@
 			packageReferences = (
 				3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				78F308E42A3F6C440036BF33 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 3F68069429CBBAF100B4F915 /* Products */;
 			projectDirPath = "";
@@ -691,16 +716,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B553EC2A45E74B00A21777 /* ProfileDiffableDataSource.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */,
 				78F308BC2A3EFA230036BF33 /* CatalogueViewController.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				78B553EE2A46145000A21777 /* ProfileViewModel.swift in Sources */,
+				78B553E62A44B54500A21777 /* ProfileNavController.swift in Sources */,
 				78F308C02A3EFDBB0036BF33 /* Consts.swift in Sources */,
 				78F308BA2A3EF9A40036BF33 /* ProfileViewController.swift in Sources */,
+				78B553DF2A44B33100A21777 /* ProfileTableViewCell.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
+				78B553EA2A45E25300A21777 /* UILabel+Ext.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
@@ -708,6 +738,7 @@
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
+				78B553E82A44C2CD00A21777 /* ProfileView.swift in Sources */,
 				78F308B42A3EF6F70036BF33 /* StatisticsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -895,8 +926,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -911,6 +943,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -923,8 +956,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -939,6 +973,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1077,14 +1112,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 7.0.0;
-			};
-		};
-		78F308E42A3F6C440036BF33 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

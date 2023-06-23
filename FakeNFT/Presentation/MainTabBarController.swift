@@ -4,13 +4,13 @@ final class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = [ProfileViewController(),
+        viewControllers = [ProfileNavController(),
                            CatalogueViewController(),
                            CartViewController(),
                            StatisticsViewController()]
         
         view.backgroundColor = .white
-        tabBar.unselectedItemTintColor = .black
+        tabBar.unselectedItemTintColor = Asset.Colors.ypBlack.color
         
     }
     
