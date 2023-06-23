@@ -7,6 +7,9 @@ struct Consts {
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
         static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
+        static let ownedNfts = NSLocalizedString("profile.owned", comment: "Personal owned NFTs")
+        static let favoriteNfts = NSLocalizedString("profile.favorite", comment: "Personal favorite NFTs")
+        static let aboutDeveloper = NSLocalizedString("profile.developer", comment: "About developer")
     }
     
     struct Images {

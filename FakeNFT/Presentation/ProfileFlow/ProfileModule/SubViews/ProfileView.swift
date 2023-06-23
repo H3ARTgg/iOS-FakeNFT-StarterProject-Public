@@ -6,10 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileView: UIView {
     
-    // var profileModel: ProfileModel?
+    var profileModel: ProfileData? {
+        didSet {
+            guard let profileModel else { return }
+            userPicImageView.kf.setImage(with: profileModel.imageUrl)
+            userNameLabel.text = profileModel.name
+            aboutUserLabel.text = profileModel.about
+            siteLabel.text = profileModel.site
+        }
+    }
     
     private var profileStack: UIStackView = {
         let stack = UIStackView()
