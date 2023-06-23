@@ -1,9 +1,14 @@
 import UIKit
+import Combine
 
 final class ProfileViewController: UIViewController {
     
+    private let viewModel: ProfileViewModelProtocol = ProfileViewModel()
+    
     private lazy var dataSource = ProfileDiffableDataSource(tableView: tableView)
-
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
     private lazy var profileView = ProfileView()
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -36,9 +41,9 @@ final class ProfileViewController: UIViewController {
         applyLayout()
         tableView.dataSource = dataSource
         
-        dataSource.reload([ProfileCellModel(text: "Мои NFT", amount: 112),
-                           ProfileCellModel(text: "Избранные NFT", amount: 112),
-                           ProfileCellModel(text: "О разработчике", amount: nil)])
+        setupBindings()
+        
+        viewModel.viewDidLoad()
     }
 }
 
@@ -47,6 +52,23 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         54
+    }
+}
+
+// MARK: - Private Methods
+
+private extension ProfileViewController {
+    func setupBindings() {
+        viewModel.profileData.sink { [weak self] profileData in
+            self?.profileView.profileModel = profileData
+            self?.dataSource.reload([ProfileCellModel(text: Consts.LocalizedStrings.ownedNfts,
+                                                      amount: profileData.ownedNft),
+                                     ProfileCellModel(text: Consts.LocalizedStrings.favoriteNfts,
+                                                      amount: profileData.favouriteNft),
+                                     ProfileCellModel(text: Consts.LocalizedStrings.aboutDeveloper,
+                                                      amount: nil)])
+        }
+        .store(in: &cancellables)
     }
 }
 
@@ -60,7 +82,7 @@ private extension ProfileViewController {
     
     func configure() {
         view.backgroundColor = Asset.Colors.ypWhite.color
-
+        
         profileView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
     }

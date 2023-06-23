@@ -40,7 +40,6 @@ final class ProfileView: UIView {
     
     private lazy var userPicImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Consts.Images.profile
         imageView.clipsToBounds = true
         imageView.tintColor = Asset.Colors.ypGrayUniversal.color
         imageView.backgroundColor = Asset.Colors.ypWhite.color
@@ -51,7 +50,6 @@ final class ProfileView: UIView {
     private lazy var userNameLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold22
-        label.text = "Joaquin Phoenix"
         label.accessibilityIdentifier = "userNameLabel"
         return label
     }()
@@ -60,7 +58,7 @@ final class ProfileView: UIView {
         let label = UILabel()
         label.font = Consts.Fonts.regular13
         label.numberOfLines = 4
-        label.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте.Открыт к коллаборациям."
+        
         label.accessibilityIdentifier = "aboutUserLabel"
         label.setLineSpacing(lineSpacing: 3)
         return label
@@ -69,7 +67,6 @@ final class ProfileView: UIView {
     private lazy var siteLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.regular15
-        label.text = "Joaquin Phoenix.com"
         label.textColor = Asset.Colors.ypBlueUniversal.color
         label.accessibilityIdentifier = "siteLabel"
         return label

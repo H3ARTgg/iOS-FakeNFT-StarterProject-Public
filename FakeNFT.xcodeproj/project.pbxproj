@@ -298,6 +298,14 @@
 			path = Table;
 			sourceTree = "<group>";
 		};
+		78B553EF2A46191E00A21777 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				78B553E72A44C2CD00A21777 /* ProfileView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		78F308A32A3EF3690036BF33 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,8 +424,8 @@
 			children = (
 				78B553E52A44B54500A21777 /* ProfileNavController.swift */,
 				78B553DD2A44B2FF00A21777 /* Table */,
+				78B553EF2A46191E00A21777 /* SubViews */,
 				78F308B92A3EF9A40036BF33 /* ProfileViewController.swift */,
-				78B553E72A44C2CD00A21777 /* ProfileView.swift */,
 				78B553ED2A46145000A21777 /* ProfileViewModel.swift */,
 			);
 			path = ProfileModule;
