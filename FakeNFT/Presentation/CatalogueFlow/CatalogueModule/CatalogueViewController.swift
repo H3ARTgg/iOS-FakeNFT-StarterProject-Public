@@ -20,6 +20,11 @@ final class CatalogueViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return control
+    }()
     
     private var viewModel: CatalogueViewModel?
     
@@ -38,6 +43,7 @@ final class CatalogueViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
+        collectionView.addSubview(refreshControl)
         setupLayout()
         
         viewModel?.$nftCollections.bind(action: { [weak self] _ in
@@ -48,6 +54,12 @@ final class CatalogueViewController: UIViewController {
     @objc
     private func didTapSortButton() {
         setupAlert()
+    }
+    
+    @objc
+    private func refresh() {
+        collectionView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
