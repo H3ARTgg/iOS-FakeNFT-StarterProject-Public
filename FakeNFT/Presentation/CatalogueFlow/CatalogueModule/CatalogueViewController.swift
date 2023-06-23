@@ -13,7 +13,14 @@ final class CatalogueViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-
+    private lazy var sortButton: UIButton = {
+        let button = UIButton.systemButton(with: Consts.Images.sortButtonCatalogue, target: self, action: #selector(didTapSortButton))
+        button.setTitle(nil, for: .normal)
+        button.tintColor = Asset.Colors.ypBlack.color
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private var viewModel: CatalogueViewModel?
     
     init(viewModel: CatalogueViewModel) {
@@ -34,10 +41,10 @@ final class CatalogueViewController: UIViewController {
         setupLayout()
     }
     
-//    @objc
-//    private func didTapSortButton() {
-//
-//    }
+    @objc
+    private func didTapSortButton() {
+
+    }
     
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
         let collectionDetailsVC = CollectionDetailsViewController(viewModel: CollectionDetailsViewModel())
@@ -48,7 +55,7 @@ final class CatalogueViewController: UIViewController {
 // MARK: - Views
 private extension CatalogueViewController {
     private func setupLayout() {
-        [collectionView].forEach {
+        [collectionView, sortButton].forEach {
             view.addSubview($0)
         }
         
@@ -59,10 +66,10 @@ private extension CatalogueViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
-//        sortButton.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-//            make.trailing.equalToSuperview().offset(-16)
-//        }
+        sortButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.trailing.equalToSuperview().offset(-16)
+        }
     }
 }
 
