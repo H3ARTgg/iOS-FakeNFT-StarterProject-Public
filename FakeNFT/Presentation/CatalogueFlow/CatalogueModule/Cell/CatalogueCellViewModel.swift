@@ -10,7 +10,7 @@ final class CatalogueCellViewModel: Identifiable {
     }
     
     func downloadImage(for imageView: UIImageView) {
-        let url = URL(string: imageURL)
+        let url = URL(string: imageURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
         
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: url) { [weak self] result in

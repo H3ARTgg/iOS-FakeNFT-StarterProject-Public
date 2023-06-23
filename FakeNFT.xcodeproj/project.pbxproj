@@ -14,6 +14,7 @@
 		1D2785F12A41185400261272 /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7EE12C02A1367B1F2F8B0 /* Pods_FakeNFT.framework */; };
 		1D2785F32A4118A800261272 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1D2785F22A4118A800261272 /* SnapKit */; };
 		1D2785F92A43249100261272 /* CollectionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2785F82A43249100261272 /* CollectionsRequest.swift */; };
+		1D7CD0F02A45CDBE00921667 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD0EF2A45CDBE00921667 /* UIBlockingProgressHUD.swift */; };
 		1DECC1DD2A454045005A9116 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1DC2A454045005A9116 /* Observable.swift */; };
 		1DECC1DF2A4540B4005A9116 /* NTFCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1DE2A4540B4005A9116 /* NTFCollection.swift */; };
 		1DECC1E12A454503005A9116 /* CatalogueSupplementaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1E02A454503005A9116 /* CatalogueSupplementaryViewModel.swift */; };
@@ -86,6 +87,7 @@
 		1D2785ED2A41111600261272 /* CatalogueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueCell.swift; sourceTree = "<group>"; };
 		1D2785EF2A4112A000261272 /* CatalogueSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueSupplementaryView.swift; sourceTree = "<group>"; };
 		1D2785F82A43249100261272 /* CollectionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRequest.swift; sourceTree = "<group>"; };
+		1D7CD0EF2A45CDBE00921667 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		1DECC1DC2A454045005A9116 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		1DECC1DE2A4540B4005A9116 /* NTFCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTFCollection.swift; sourceTree = "<group>"; };
 		1DECC1E02A454503005A9116 /* CatalogueSupplementaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueSupplementaryViewModel.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 		78F308B62A3EF83C0036BF33 /* CatalogueModule */ = {
 			isa = PBXGroup;
 			children = (
+				1D7CD0EF2A45CDBE00921667 /* UIBlockingProgressHUD.swift */,
 				1DECC1DE2A4540B4005A9116 /* NTFCollection.swift */,
 				78F308BB2A3EFA230036BF33 /* CatalogueViewController.swift */,
 				1D2785E92A410E4600261272 /* CatalogueViewModel.swift */,
@@ -765,6 +768,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				1D7CD0F02A45CDBE00921667 /* UIBlockingProgressHUD.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */,
 				78F308BC2A3EFA230036BF33 /* CatalogueViewController.swift in Sources */,

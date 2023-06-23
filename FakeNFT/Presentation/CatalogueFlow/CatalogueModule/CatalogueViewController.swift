@@ -27,11 +27,11 @@ final class CatalogueViewController: UIViewController {
         return control
     }()
     
-    private var viewModel: CatalogueViewModel?
+    private var viewModel: CatalogueViewModel
     
     init(viewModel: CatalogueViewModel) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.catalogue,
                                        image: Consts.Images.catalogue,
                                        tag: 1)
@@ -47,15 +47,21 @@ final class CatalogueViewController: UIViewController {
         collectionView.addSubview(refreshControl)
         setupLayout()
         
-        viewModel?.$nftCollections.bind(action: { [weak self] _ in
-            self?.collectionView.reloadData()
-            ProgressHUD.remove()
+        viewModel.$nftCollections.bind(action: { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         })
         
-        if let check = viewModel?.nftCollections.isEmpty {
+        UIBlockingProgressHUD.show()
+        viewModel.$isGotCollections.bind(action: { check in
             if check {
-                ProgressHUD.show()
+                UIBlockingProgressHUD.dismiss()
             }
+        })
+        
+        if viewModel.isGotCollections {
+            UIBlockingProgressHUD.dismiss()
         }
     }
     
@@ -66,6 +72,8 @@ final class CatalogueViewController: UIViewController {
     
     @objc
     private func refresh() {
+        UIBlockingProgressHUD.show()
+        viewModel.requestCollections()
         collectionView.reloadData()
         refreshControl.endRefreshing()
     }
@@ -99,10 +107,10 @@ private extension CatalogueViewController {
     private func setupAlert() {
         let alert = UIAlertController(title: "", message: Consts.LocalizedStrings.sortingCatalogueMessage, preferredStyle: .actionSheet)
         let sortByName = UIAlertAction(title: Consts.LocalizedStrings.byName, style: .default) { [weak self] _ in
-            self?.viewModel?.sortByName()
+            self?.viewModel.sortByName()
         }
         let sortByNftsCount = UIAlertAction(title: Consts.LocalizedStrings.byNftCount, style: .default) { [ weak self] _ in
-            self?.viewModel?.sortByNftCount()
+            self?.viewModel.sortByNftCount()
         }
         let cancelAction = UIAlertAction(title: Consts.LocalizedStrings.close, style: .cancel)
         
@@ -121,7 +129,7 @@ extension CatalogueViewController: UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel?.nftCollections.count ?? 0
+        viewModel.nftCollections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -129,7 +137,7 @@ extension CatalogueViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        viewModel?.configure(cell, for: indexPath)
+        viewModel.configure(cell, for: indexPath)
         return cell
     }
     
@@ -149,7 +157,7 @@ extension CatalogueViewController: UICollectionViewDataSource {
             assertionFailure("No SupplementaryView")
             return UICollectionReusableView(frame: .zero)
         }
-        viewModel?.configure(view, for: indexPath)
+        viewModel.configure(view, for: indexPath)
         return view
     }
 }
