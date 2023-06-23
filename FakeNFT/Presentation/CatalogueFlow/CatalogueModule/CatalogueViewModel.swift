@@ -15,6 +15,7 @@ final class CatalogueViewModel {
         networkClient.send(request: request, type: [NFTCollection].self) { [weak self] (result: Result<[NFTCollection], Error>) in
             switch result {
             case .success(let collections):
+                self?.nftCollections = []
                 collections.forEach {
                     let collection = CatalogueSupplementaryViewModel(
                         name: $0.name + " (\($0.nfts.count))",
