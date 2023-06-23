@@ -5,7 +5,7 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [ProfileViewController(),
-                           CatalogueViewController(),
+                           CatalogueViewController(viewModel: CatalogueViewModel()),
                            CartViewController(),
                            StatisticsViewController()]
         
