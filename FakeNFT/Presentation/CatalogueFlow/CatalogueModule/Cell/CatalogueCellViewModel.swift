@@ -22,8 +22,5 @@ final class CatalogueCellViewModel: Identifiable {
                 self?.isFailed = true
             }
         }
-        KingfisherManager.shared.cache.clearMemoryCache()
-        KingfisherManager.shared.cache.cleanExpiredMemoryCache()
-        KingfisherManager.shared.cache.clearDiskCache()
     }
 }

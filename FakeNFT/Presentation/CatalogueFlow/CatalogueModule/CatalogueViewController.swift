@@ -39,11 +39,15 @@ final class CatalogueViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
         setupLayout()
+        
+        viewModel?.$nftCollections.bind(action: { [weak self] _ in
+            self?.collectionView.reloadData()
+        })
     }
     
     @objc
     private func didTapSortButton() {
-
+        setupAlert()
     }
     
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
@@ -70,6 +74,23 @@ private extension CatalogueViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.trailing.equalToSuperview().offset(-16)
         }
+    }
+    
+    private func setupAlert() {
+        let alert = UIAlertController(title: "", message: Consts.LocalizedStrings.sortingCatalogueMessage, preferredStyle: .actionSheet)
+        let sortByName = UIAlertAction(title: Consts.LocalizedStrings.byName, style: .default) { [weak self] _ in
+            self?.viewModel?.sortByName()
+        }
+        let sortByNftsCount = UIAlertAction(title: Consts.LocalizedStrings.byNftCount, style: .default) { [ weak self] _ in
+            self?.viewModel?.sortByNftCount()
+        }
+        let cancelAction = UIAlertAction(title: Consts.LocalizedStrings.close, style: .cancel)
+        
+        alert.addAction(sortByName)
+        alert.addAction(sortByNftsCount)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
 }
 

@@ -7,7 +7,12 @@ struct Consts {
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
         static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
+        // Catalogue
         static let failImageLoadText = NSLocalizedString("image.load.failure", value: "Попробовать снова", comment: "Catalogue fail button text")
+        static let sortingCatalogueMessage = NSLocalizedString("sort.catalogue", value: "Сортировка", comment: "Catalogue sort message")
+        static let byName = NSLocalizedString("by.name", value: "По названию", comment: "Sorting by name")
+        static let byNftCount = NSLocalizedString("by.nft.count", value: "По количеству NFT", comment: "Sorting by nft count in collection")
+        static let close = NSLocalizedString("close", value: "Закрыть", comment: "Close event")
     }
     
     struct Images {
