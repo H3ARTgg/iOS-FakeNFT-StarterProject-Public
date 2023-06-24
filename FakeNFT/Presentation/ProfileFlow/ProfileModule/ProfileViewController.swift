@@ -3,23 +3,27 @@ import Combine
 
 final class ProfileViewController: UIViewController {
     
-    private let viewModel: ProfileViewModelProtocol = ProfileViewModel()
+    private let viewModel: ProfileViewModelProtocol
     
     private lazy var dataSource = ProfileDiffableDataSource(tableView: tableView)
     
     private var cancellables: Set<AnyCancellable> = []
     
     private lazy var profileView = ProfileView()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
         tableView.backgroundColor = Asset.Colors.ypWhite.color
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
         return tableView
     }()
     
-    init() {
+    init(viewModel: ProfileViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
                                        image: Consts.Images.profile,

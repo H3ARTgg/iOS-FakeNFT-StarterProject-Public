@@ -10,7 +10,7 @@ import Kingfisher
 
 final class ProfileView: UIView {
     
-    var profileModel: ProfileData? {
+    var profileModel: ProfileModel? {
         didSet {
             guard let profileModel else { return }
             userPicImageView.kf.setImage(with: profileModel.imageUrl)

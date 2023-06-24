@@ -9,34 +9,49 @@ import Foundation
 import Combine
 
 protocol ProfileViewModelProtocol {
-    var profileData: PassthroughSubject<ProfileData, Never> { get }
+    var profileData: PassthroughSubject<ProfileModel, Never> { get }
     
     func viewDidLoad()
 }
 
 final class ProfileViewModel {
-    var profileData = PassthroughSubject<ProfileData, Never>()
+    var profileData = PassthroughSubject<ProfileModel, Never>()
     
+    private let networkService: NetworkClient
+    
+    init(networkService: NetworkClient) {
+        self.networkService = networkService
+    }
 }
 
 extension ProfileViewModel: ProfileViewModelProtocol {
     func viewDidLoad() {
-        profileData
-            .send(ProfileData(imageUrl: URL(string: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Yandex_icon.svg/1024px-Yandex_icon.svg.png")!,
-                              name: "Harry Potter",
-                              about: "dsfasdfasdfasdfgasdfas",
-                              site: "apple.com",
-                             ownedNft: 112,
-                             favouriteNft: 11))
+        getProfile()
     }
 }
 
-
-struct ProfileData {
-    let imageUrl: URL
-    let name: String
-    let about: String
-    let site: String
-    let ownedNft: Int
-    let favouriteNft: Int
+private extension ProfileViewModel {
+    func getProfile() {
+        let profileRequestGet = ProfileRequestGet()
+        networkService.send(request: profileRequestGet, type: ProfileResponseModel.self) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self.profileData.send(self.convert(profileResponceData: data))
+                }
+                
+            case .failure(let error): print("ERROR ", error.localizedDescription)
+            }
+        }
+    }
+    
+    func convert(profileResponceData: ProfileResponseModel) -> ProfileModel {
+        ProfileModel(imageUrl: URL(string: profileResponceData.avatar),
+                    name: profileResponceData.name,
+                    about: profileResponceData.description,
+                    site: profileResponceData.website,
+                    ownedNft: profileResponceData.nfts.count,
+                    favouriteNft: profileResponceData.likes.count)
+    }
 }

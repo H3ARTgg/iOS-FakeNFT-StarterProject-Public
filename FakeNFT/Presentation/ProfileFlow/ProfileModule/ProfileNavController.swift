@@ -10,7 +10,9 @@ import UIKit
 final class ProfileNavController: UINavigationController {
     
     init() {
-        super.init(rootViewController: ProfileViewController())
+        let networkService = DefaultNetworkClient()
+        let viewModel: ProfileViewModel = ProfileViewModel(networkService: networkService)
+        super.init(rootViewController: ProfileViewController(viewModel: viewModel))
     }
     
     required init?(coder aDecoder: NSCoder) {
