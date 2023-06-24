@@ -106,7 +106,7 @@ extension UserView {
     }
     
     func bind() {
-        let image = UIImage(named: viewModel?.photo ?? "")
+        let image = UIImage(named: viewModel?.avatar ?? "")
         photoImageView.image = image
         userNameLabel.text = viewModel?.userName
         countNFTLabel.text = String(viewModel?.countNFT ?? 0)

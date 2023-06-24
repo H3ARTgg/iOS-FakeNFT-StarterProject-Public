@@ -58,7 +58,7 @@ extension UserTableViewCell {
     
     func bind() {
         guard let viewModel else { return }
-        positionInRatingLabel.text = String(viewModel.positionInRating)
+        positionInRatingLabel.text = viewModel.positionInRating
     }
     
     func setupView() {

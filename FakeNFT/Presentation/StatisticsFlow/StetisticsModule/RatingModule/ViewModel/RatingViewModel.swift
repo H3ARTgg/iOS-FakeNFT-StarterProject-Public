@@ -13,13 +13,31 @@ final class RatingViewModel {
     public var updateViewData: ((Bool) -> Void)?
     public var headForAlert: ((AlertModel) -> Void)?
     
-    private let users = User.users.sorted { user1, user2 in
-        user1.nftCollectionCount > user2.nftCollectionCount
+    private lazy var users: [User] = [] {
+        didSet {
+            updateViewData?(true)
+        }
+    }
+    
+    init() {
+        users = ratingSorting
+    }
+    
+    private var nameSorting: [User ] {
+        return User.users.sorted(by: {
+            $0 < $1
+        })
+    }
+    
+    private var ratingSorting: [User ] {
+        return User.users.sorted(by: {
+            $0.rating < $1.rating
+        })
     }
 }
 
 extension RatingViewModel: RatingViewModelProtocol {
-    
+
     public func updateUsers() {
         updateViewData?(true)
     }
@@ -30,8 +48,7 @@ extension RatingViewModel: RatingViewModelProtocol {
     
     public func viewModelForCell(at index: Int) -> UserTableViewCellViewModel {
         let user = users[index]
-        let positionInRating = getUserPositionInRating(by: user)
-        let viewModel = UserTableViewCellViewModel(user: user, positionInRating: positionInRating)
+        let viewModel = UserTableViewCellViewModel(user: user)
         return viewModel
     }
     
@@ -53,15 +70,17 @@ extension RatingViewModel: RatingViewModelProtocol {
         let alertSortBynameAction = AlertAction(
             actionText: alertSortByNameActionText,
             actionRole: .regular,
-            action: {
-                // TODO: sort by name
+            action: { [weak self] in
+                guard let self else { return }
+                self.users = self.nameSorting
             })
         
         let alertSortBynameRating = AlertAction(
             actionText: alertSortByRaringActionText,
             actionRole: .regular,
-            action: {
-                // TODO: sort by rating
+            action: { [weak self] in
+                guard let self else { return }
+                self.users = self.ratingSorting
             })
         let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
         let alertModel = AlertModel(

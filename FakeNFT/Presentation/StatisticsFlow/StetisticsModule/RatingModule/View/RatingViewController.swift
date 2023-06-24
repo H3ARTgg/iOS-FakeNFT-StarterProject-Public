@@ -96,8 +96,10 @@ extension RatingViewController {
     
     @objc
     func refresh(_ sender: UIRefreshControl) {
-        viewModel.updateUsers()
-        sender.endRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            sender.endRefreshing()
+            self?.viewModel.updateUsers()
+        }
     }
     
     func presentActionSheet(alertModel: AlertModel) {
