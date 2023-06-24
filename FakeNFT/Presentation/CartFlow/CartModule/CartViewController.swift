@@ -39,7 +39,7 @@ final class CartViewController: UIViewController {
     }
     
     @objc func openSortAlert() {
-        print("alert sort")
+        showAlert()
     }
     
     private func configureNavBar() {
@@ -111,4 +111,41 @@ extension CartViewController: UITableViewDataSource {
 
 extension CartViewController: UITableViewDelegate {
     
+}
+
+extension CartViewController {
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Сортировка", message: nil, preferredStyle: .actionSheet
+        )
+        
+        let priceFilter = UIAlertAction(
+            title: "По цене", style: .default
+        ) { _ in
+            print("По цене")
+        }
+        
+        let ratingFilter = UIAlertAction(
+            title: "По рейтингу", style: .default
+        ) { _ in
+            print("По рейтингу")
+        }
+        
+        let titleFilter = UIAlertAction(
+            title: "По названию", style: .default
+        ) { _ in
+            print("По названию")
+        }
+        
+        let closeAction = UIAlertAction(
+            title: "Закрыть", style: .cancel
+        )
+        
+        alert.addAction(priceFilter)
+        alert.addAction(ratingFilter)
+        alert.addAction(titleFilter)
+        alert.addAction(closeAction)
+        
+        present(alert, animated: true)
+    }
 }
