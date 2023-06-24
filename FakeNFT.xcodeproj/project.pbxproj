@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		05D62AC25455BF441DA2F3EA /* Pods_FakeNFT_FakeNFTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7704B34966D424C18DD99065 /* Pods_FakeNFT_FakeNFTUITests.framework */; };
+		250DF0F42A47453900AC2E4E /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */; };
+		250DF0F72A474C6D00AC2E4E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DF0F62A474C6D00AC2E4E /* CustomLabel.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -57,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
+		250DF0F62A474C6D00AC2E4E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		37C6592EB3B1559F974F9C99 /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -129,6 +133,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		250DF0F52A474C6000AC2E4E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				250DF0F62A474C6D00AC2E4E /* CustomLabel.swift */,
+				250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,6 +357,7 @@
 		78F308B02A3EF5F10036BF33 /* CartFlow */ = {
 			isa = PBXGroup;
 			children = (
+				250DF0F52A474C6000AC2E4E /* Views */,
 				78F308B72A3EF86C0036BF33 /* CartModule */,
 			);
 			path = CartFlow;
@@ -703,8 +717,10 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				250DF0F72A474C6D00AC2E4E /* CustomLabel.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				250DF0F42A47453900AC2E4E /* CartTableViewCell.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,

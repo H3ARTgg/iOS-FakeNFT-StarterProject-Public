@@ -1,7 +1,22 @@
 import UIKit
 
 final class CartViewController: UIViewController {
-
+    
+    private lazy var cartTableView: UITableView = {
+        let table = UITableView()
+        table.dataSource = self
+        table.delegate = self
+        table.register(
+            CartTableViewCell.self,
+            forCellReuseIdentifier: Consts.Cart.cartCellIdentifier
+        )
+        
+        table.backgroundColor = .clear
+        table.separatorStyle = .none
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
@@ -15,8 +30,10 @@ final class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = UIColor(asset: Asset.Colors.ypWhite)
         configureNavBar()
+        addElements()
+        setupConstraints()
     }
     
     @objc func openSortAlert() {
@@ -31,4 +48,51 @@ final class CartViewController: UIViewController {
             action: #selector(openSortAlert)
         )
     }
+    
+    private func addElements() {
+        view.addSubview(cartTableView)
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            cartTableView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: 20
+            ),
+            
+            cartTableView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor
+            ),
+            cartTableView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor
+            ),
+            cartTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+}
+
+extension CartViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        140
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: Consts.Cart.cartCellIdentifier, for: indexPath
+        ) as? CartTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.configure()
+        
+        return cell
+    }
+}
+
+extension CartViewController: UITableViewDelegate {
+    
 }

@@ -26,4 +26,12 @@ struct Consts {
         static let bold32 = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let bold34 = UIFont.systemFont(ofSize: 34, weight: .bold)
     }
+    
+    struct Cart {
+        static let heightProductImage: CGFloat = 108
+        static let imageProductRadius: CGFloat = 12
+        static let widthProductRating: CGFloat = 68
+        
+        static let cartCellIdentifier = "cartCell"
+    }
 }
