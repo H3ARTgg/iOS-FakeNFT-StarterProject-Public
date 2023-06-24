@@ -6,7 +6,7 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         viewControllers = [ProfileViewController(),
                            CatalogueViewController(),
-                           CartViewController(),
+                           UINavigationController(rootViewController: CartViewController()),
                            StatisticsViewController()]
         
         view.backgroundColor = .white

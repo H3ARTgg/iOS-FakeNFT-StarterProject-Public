@@ -16,7 +16,19 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        configureNavBar()
     }
-
+    
+    @objc func openSortAlert() {
+        print("alert sort")
+    }
+    
+    private func configureNavBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(asset: Asset.Assets.sortButton),
+            style: .done,
+            target: self,
+            action: #selector(openSortAlert)
+        )
+    }
 }
