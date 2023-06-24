@@ -2,6 +2,8 @@ import UIKit
 
 final class CartViewController: UIViewController {
     
+    private let paymentView = PaymentView()
+    
     private lazy var cartTableView: UITableView = {
         let table = UITableView()
         table.dataSource = self
@@ -50,7 +52,10 @@ final class CartViewController: UIViewController {
     }
     
     private func addElements() {
-        view.addSubview(cartTableView)
+        [
+            paymentView,
+            cartTableView
+        ].forEach { view.addSubview($0) }
     }
     
     private func setupConstraints() {
@@ -59,14 +64,25 @@ final class CartViewController: UIViewController {
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: 20
             ),
-            
             cartTableView.leadingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.leadingAnchor
             ),
             cartTableView.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor
             ),
-            cartTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            
+            paymentView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            paymentView.topAnchor.constraint(
+                equalTo: cartTableView.bottomAnchor
+            ),
+            paymentView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+            paymentView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+            )
         ])
     }
 }

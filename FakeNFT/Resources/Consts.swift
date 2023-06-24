@@ -29,8 +29,12 @@ struct Consts {
     
     struct Cart {
         static let heightProductImage: CGFloat = 108
-        static let imageProductRadius: CGFloat = 12
         static let widthProductRating: CGFloat = 68
+        static let heightButton: CGFloat = 44
+        
+        static let imageProductRadius: CGFloat = 12
+        static let buttonRadius: CGFloat = 16
+        static let paymentViewRadius: CGFloat = 12
         
         static let cartCellIdentifier = "cartCell"
     }
