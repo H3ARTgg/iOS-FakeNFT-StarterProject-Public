@@ -19,7 +19,10 @@ final class CartViewController: UIViewController {
         return table
     }()
     
-    init() {
+    private var viewModel: CartViewModel
+    
+    init(viewModel: CartViewModel = CartViewModel()) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
                                        image: Consts.Images.cart,
@@ -36,6 +39,13 @@ final class CartViewController: UIViewController {
         configureNavBar()
         addElements()
         setupConstraints()
+        
+        viewModel.$products.bind { [weak self] _ in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.cartTableView.reloadData()
+            }
+        }
     }
     
     @objc func openSortAlert() {
@@ -89,7 +99,7 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        viewModel.products.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -103,7 +113,9 @@ extension CartViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure()
+        let nft = viewModel.products[indexPath.row]
+        
+        cell.configure(nft)
         
         return cell
     }
