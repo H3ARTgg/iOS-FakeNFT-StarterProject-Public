@@ -33,7 +33,15 @@ final class PaymentView: CustomView {
         return label
     }()
     
-    private let paymentButton = CustomButton(text: "К оплате")
+    private lazy var paymentButton: CustomButton = {
+        let button = CustomButton(text: "К оплате")
+        button.addTarget(
+            self,
+            action: #selector(paymentTapped),
+            for: .touchUpInside
+        )
+        return button
+    }()
     
     weak var delegate: CartViewControllerDelegate?
     
@@ -52,6 +60,10 @@ final class PaymentView: CustomView {
     func refreshData() {
         setupQuantityNfts()
         setupTotalPrice()
+    }
+    
+    @objc private func paymentTapped() {
+        delegate?.openPaymentViewController()
     }
     
     private func addElements() {

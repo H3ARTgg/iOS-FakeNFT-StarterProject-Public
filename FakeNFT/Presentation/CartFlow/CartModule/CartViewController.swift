@@ -4,6 +4,7 @@ protocol CartViewControllerDelegate: AnyObject {
     func getQuantityNfts() -> Int
     func getTotalPrice() -> Double
     func openDeleteNftViewController()
+    func openPaymentViewController()
 }
 
 final class CartViewController: UIViewController {
@@ -193,5 +194,10 @@ extension CartViewController: CartViewControllerDelegate {
         let deleteNftVC = DeleteNftViewController()
         deleteNftVC.modalPresentationStyle = .fullScreen
         present(deleteNftVC, animated: true)
+    }
+    
+    func openPaymentViewController() {
+        let paymentVC = PaymentViewController()
+        navigationController?.pushViewController(paymentVC, animated: true)
     }
 }
