@@ -21,4 +21,16 @@ final class CartViewModel: ObservableObject {
             }
         }
     }
+    
+    func sortFromPrice() {
+        products.sort { $0.price < $1.price }
+    }
+    
+    func sortFromRating() {
+        products.sort { $0.rating > $1.rating }
+    }
+    
+    func sortFromTitle() {
+        products.sort { $0.name < $1.name }
+    }
 }

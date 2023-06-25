@@ -139,20 +139,23 @@ extension CartViewController {
         
         let priceFilter = UIAlertAction(
             title: "По цене", style: .default
-        ) { _ in
-            print("По цене")
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.sortFromPrice()
         }
         
         let ratingFilter = UIAlertAction(
             title: "По рейтингу", style: .default
-        ) { _ in
-            print("По рейтингу")
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.sortFromRating()
         }
         
         let titleFilter = UIAlertAction(
             title: "По названию", style: .default
-        ) { _ in
-            print("По названию")
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.sortFromTitle()
         }
         
         let closeAction = UIAlertAction(
