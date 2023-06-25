@@ -12,6 +12,7 @@ protocol RatingViewModelProtocol {
     func updateUsers()
     func fetchUsers()
     func viewModelForCell(at index: Int) -> UserTableViewCellViewModel
+    func viewModelForUserCard(at index: Int) -> UserCardViewModel
     func showActionSheep()
     func checkUsers()
 }
@@ -88,6 +89,12 @@ extension RatingViewModel: RatingViewModelProtocol {
         return viewModel
     }
     
+    public func viewModelForUserCard(at index: Int) -> UserCardViewModel {
+        let user = users[index]
+        let viewModel = UserCardViewModel(user: user)
+        return viewModel
+    }
+    
     public func showActionSheep() {
         let alertModel = createAlertModel()
         headForAlert?(alertModel)
@@ -151,5 +158,4 @@ extension RatingViewModel: RatingViewModelProtocol {
         )
         return alertModel
     }
-
 }

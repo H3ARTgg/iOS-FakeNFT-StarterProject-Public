@@ -10,3 +10,5 @@
 /* Statistics tabbar icon title */
 "statistics.icon" = "Статистика";
 
+/* UserCardViewController */
+userCollectionButtonTitle = "Коллекция NFT (%d)";

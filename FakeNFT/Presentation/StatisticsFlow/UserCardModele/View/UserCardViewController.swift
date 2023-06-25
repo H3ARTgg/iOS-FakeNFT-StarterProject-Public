@@ -1,7 +1,16 @@
 import UIKit
+import Kingfisher
 
 /// Экран отображает информацию о пользователе:
 final class UserCardViewController: UIViewController {
+    
+    // MARK: Helpers
+    private struct ViewControllerConstants {
+        static let userCollectionButtonHeight = UIScreen.main.bounds.height / 12
+        static let userSiteButtonHeight = UIScreen.main.bounds.height / 20
+        static let avatarWidth = UIScreen.main.bounds.width / 5.4
+        static let stackViewTopAnchorConstant: CGFloat = 10
+    }
     
     // MARK: Private properties
     private var viewModel: UserCardViewModelProtocol
@@ -32,15 +41,11 @@ final class UserCardViewController: UIViewController {
         viewSetup()
         addViews()
         activateConstraints()
+        bind()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
     }
     
@@ -52,6 +57,11 @@ final class UserCardViewController: UIViewController {
         if traitCollection.userInterfaceStyle == .light {
             userSiteButton.layer.borderColor = Asset.Colors.ypBlackUniversal.color.cgColor
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
 }
 
@@ -91,7 +101,6 @@ extension UserCardViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.backgroundColor = .clear
-        label.text = "Joaquin Phoenix"
         return label
     }
     
@@ -101,9 +110,6 @@ extension UserCardViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.backgroundColor = .clear
-        label.text = """
-        Дизайнер из Казани, люблю цифровое искусство  и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт  к коллаборациям.
-        """
         return label
     }
     
@@ -116,7 +122,7 @@ extension UserCardViewController {
     }
     
     func makeUserSiteButton() -> UIButton {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserSiteButtonTapped), for: .touchUpInside)
         button.setTitle(Consts.LocalizedStrings.userSiteButtonTitle, for: .normal)
@@ -125,17 +131,17 @@ extension UserCardViewController {
         button.titleLabel?.font = UIFont.caption1
         button.layer.cornerRadius = 12
         button.layer.borderWidth = 1
+        button.layer.borderColor = Asset.Colors.ypBlack.color.cgColor
         return button
     }
     
     func makeUserCollectionButton() -> UIButton {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserCollectionButtonTapped), for: .touchUpInside)
         button.backgroundColor = .clear
         button.titleLabel?.font = UIFont.bodyBold
         button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
-        button.setTitle("Коллекция NFT (112)", for: .normal)
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
         return button
     }
@@ -145,24 +151,23 @@ extension UserCardViewController {
         imageView.image = Asset.Assets.chevronForward.image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .clear
+        imageView.tintColor = Asset.Colors.ypBlack.color
         return imageView
     }
     
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
+        tabBarController?.tabBar.isHidden = true
     }
     
     func addViews() {
         view.addSubview(stackView)
-        [
-            userStackView, descriptionLabel, userSiteButton, userCollectionButton
-        ].forEach {
+        
+        [ userStackView, descriptionLabel, userSiteButton, userCollectionButton ].forEach {
             stackView.addArrangedSubview($0)
         }
         
-        [
-            avatarImageView, userNameLabel
-        ].forEach {
+        [ avatarImageView, userNameLabel ].forEach {
             userStackView.addArrangedSubview($0)
         }
         
@@ -170,28 +175,34 @@ extension UserCardViewController {
     }
     
     func activateConstraints() {
-        let screenHeight = UIScreen.main.bounds.height
-        let screenWidth = UIScreen.main.bounds.width
-        
-        let userCollectionButtonHeight = screenHeight / 12
-        let userSiteButtonHeight = screenHeight / 20
-        
-        let avatarWidth = screenWidth / 5.4
-        
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: ViewControllerConstants.stackViewTopAnchorConstant),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant),
             
-            avatarImageView.widthAnchor.constraint(equalToConstant: avatarWidth),
+            avatarImageView.widthAnchor.constraint(equalToConstant: ViewControllerConstants.avatarWidth),
             avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             
-            userCollectionButton.heightAnchor.constraint(equalToConstant: userCollectionButtonHeight),
-            userSiteButton.heightAnchor.constraint(equalToConstant: userSiteButtonHeight),
+            userCollectionButton.heightAnchor.constraint(equalToConstant: ViewControllerConstants.userCollectionButtonHeight),
+            userSiteButton.heightAnchor.constraint(equalToConstant: ViewControllerConstants.userSiteButtonHeight),
             
             chevronForwardImageView.centerYAnchor.constraint(equalTo: userCollectionButton.centerYAnchor),
             chevronForwardImageView.rightAnchor.constraint(equalTo: userCollectionButton.rightAnchor)
         ])
+    }
+    
+    func bind() {
+        userNameLabel.text = viewModel.userName
+        descriptionLabel.text = viewModel.description
+        let numberOfSubscribers = viewModel.nfts?.count ?? 0
+        let userCollectionButtonTitle = String(format: Consts.LocalizedStrings.userCollectionButtonTitle, numberOfSubscribers)
+        userCollectionButton.setTitle(userCollectionButtonTitle, for: .normal)
+        loadAvatar()
+    }
+    
+    func loadAvatar() {
+        guard let url = viewModel.avatarURL else { return }
+        avatarImageView.kf.setImage(with: url)
     }
     
     @objc
@@ -203,5 +214,4 @@ extension UserCardViewController {
     func showUserCollectionButtonTapped() {
         // TODO: make userCollection
     }
-    
 }

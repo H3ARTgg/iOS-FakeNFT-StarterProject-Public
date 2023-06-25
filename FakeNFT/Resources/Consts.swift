@@ -13,6 +13,7 @@ struct Consts {
         static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", comment: "text for statistic's action sheep sort by rating")
         static let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
         static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
+        static let userCollectionButtonTitle = NSLocalizedString("userCollectionButtonTitle", comment: "Text for userCollectionButtonTitle")
     }
     
     struct Images {

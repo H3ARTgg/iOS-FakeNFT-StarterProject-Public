@@ -64,6 +64,7 @@ extension RatingViewController {
     
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
+        navigationItem.title = ""
     }
     
     func  navigationItemSetup() {
@@ -73,6 +74,7 @@ extension RatingViewController {
             target: self,
             action: #selector(sortedButtonTapped))
         navigationItem.rightBarButtonItem = filterButton
+        navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
     }
     
     func addViews() {
@@ -162,6 +164,7 @@ extension RatingViewController {
     }
 }
 
+// MARK: UITableViewDelegate
 extension RatingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.countUsers-1 {
@@ -171,8 +174,15 @@ extension RatingViewController: UITableViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userCardViewModel = viewModel.viewModelForUserCard(at: indexPath.row)
+        let viewController = UserCardViewController(viewModel: userCardViewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
+// MARK: UITableViewDataSource
 extension RatingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.countUsers
