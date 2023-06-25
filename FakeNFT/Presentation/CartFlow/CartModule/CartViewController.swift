@@ -1,8 +1,13 @@
 import UIKit
 
+protocol CartViewControllerDelegate: AnyObject {
+    func getQuantityNfts() -> Int
+    func getTotalPrice() -> Double
+}
+
 final class CartViewController: UIViewController {
     
-    private let paymentView = PaymentView()
+    private lazy var paymentView = PaymentView(delegate: self)
     
     private lazy var cartTableView: UITableView = {
         let table = UITableView()
@@ -44,6 +49,7 @@ final class CartViewController: UIViewController {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.cartTableView.reloadData()
+                self.paymentView.refreshData()
             }
         }
     }
@@ -159,5 +165,23 @@ extension CartViewController {
         alert.addAction(closeAction)
         
         present(alert, animated: true)
+    }
+}
+
+extension CartViewController: CartViewControllerDelegate {
+    func getQuantityNfts() -> Int {
+        return viewModel.products.count
+    }
+    
+    func getTotalPrice() -> Double {
+        var total: Double = 0
+        
+        for item in viewModel.products {
+            if let price = item.price {
+                total += price
+            }
+        }
+        
+        return total
     }
 }

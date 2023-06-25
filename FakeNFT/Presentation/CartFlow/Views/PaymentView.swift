@@ -21,22 +21,25 @@ final class PaymentView: CustomView {
     
     private let numbersProducts: UILabel = {
         let label = UILabel()
-        label.text = "3 NFT"
         label.font = UIFont.caption1
+        label.text = "0 NFT"
         label.textColor = UIColor(asset: Asset.Colors.ypBlack)
         return label
     }()
     
     private let totalSumProducts: CustomLabel = {
-        let label = CustomLabel(text: "5,34 ETH")
+        let label = CustomLabel(text: "00,00 ETH")
         label.textColor = UIColor(asset: Asset.Colors.ypGreenUniversal)
         return label
     }()
     
     private let paymentButton = CustomButton(text: "К оплате")
     
-    override init() {
+    weak var delegate: CartViewControllerDelegate?
+    
+    init(delegate: CartViewControllerDelegate) {
         super.init()
+        self.delegate = delegate
         
         addElements()
         setupConstraints()
@@ -44,6 +47,11 @@ final class PaymentView: CustomView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func refreshData() {
+        setupQuantityNfts()
+        setupTotalPrice()
     }
     
     private func addElements() {
@@ -79,5 +87,16 @@ final class PaymentView: CustomView {
                 equalTo: bottomAnchor, constant: -16
             )
         ])
+    }
+    
+    private func setupQuantityNfts() {
+        let count = delegate?.getQuantityNfts() ?? 0
+        numbersProducts.text = "\(count) NFT"
+        
+    }
+    
+    private func setupTotalPrice() {
+        let totalPrice = delegate?.getTotalPrice() ?? 0
+        totalSumProducts.text = (String(format: "%.2f", totalPrice) + " ETH").replacingOccurrences(of: ".", with: ",")
     }
 }
