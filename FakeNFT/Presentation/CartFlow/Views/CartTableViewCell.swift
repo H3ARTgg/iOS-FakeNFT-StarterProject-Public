@@ -137,6 +137,12 @@ final class CartTableViewCell: UITableViewCell {
     }
     
     private func setupRating(_ nft: Nft) {
+        for view in productRatingStackView.subviews {
+            if let imageView = view as? UIImageView {
+                imageView.image = UIImage(asset: Asset.Assets.star)
+            }
+        }
+        
         let rating = nft.rating
         
         for index in 0..<rating {
