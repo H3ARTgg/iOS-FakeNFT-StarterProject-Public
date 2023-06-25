@@ -25,6 +25,21 @@ final class RatingStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+    func setupRating(_ rating: Int) {
+        for view in subviews {
+            if let imageView = view as? UIImageView {
+                imageView.image = Asset.Assets.star.image
+            }
+        }
+        
+        for index in 0..<rating {
+            if let fullStar = subviews[index] as? UIImageView {
+                fullStar.image = Asset.Assets.fillStar.image
+            }
+        }
+    }
+    
     // MARK: - Private methods
     private func addElements() {
         [
