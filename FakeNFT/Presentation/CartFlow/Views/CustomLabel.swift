@@ -6,7 +6,7 @@ final class CustomLabel: UILabel {
         
         self.text = text
         font = UIFont.bodyBold
-        textColor = UIColor(asset: Asset.Colors.ypBlack)
+        textColor = Asset.Colors.ypBlack.color
         translatesAutoresizingMaskIntoConstraints = false
     }
     

@@ -3,6 +3,7 @@ import Kingfisher
 
 final class CartTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
     private let productImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +26,7 @@ final class CartTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "Цена"
         label.font = UIFont.caption2
-        label.textColor = UIColor(asset: Asset.Colors.ypBlack)
+        label.textColor = Asset.Colors.ypBlack.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,7 +35,7 @@ final class CartTableViewCell: UITableViewCell {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(asset: Asset.Assets.cartButton), for: .normal)
+        button.setImage(Asset.Assets.cartButton.image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(
             self,
@@ -43,9 +44,10 @@ final class CartTableViewCell: UITableViewCell {
         )
         return button
     }()
-        
+    
     weak var delegate: CartViewControllerDelegate?
     
+    // MARK: - Helpers
     func configure(_ nft: Nft) {
         backgroundColor = .clear
         addElements()
@@ -57,10 +59,14 @@ final class CartTableViewCell: UITableViewCell {
         setupRating(nft)
     }
     
+    // MARK: - Actions
     @objc private func deleteNft() {
         delegate?.openDeleteNftViewController()
     }
-    
+}
+
+// MARK: - Private methods
+extension CartTableViewCell {
     private func addElements() {
         [
             productImageView,
@@ -150,7 +156,7 @@ final class CartTableViewCell: UITableViewCell {
     private func setupRating(_ nft: Nft) {
         for view in productRatingStackView.subviews {
             if let imageView = view as? UIImageView {
-                imageView.image = UIImage(asset: Asset.Assets.star)
+                imageView.image = Asset.Assets.star.image
             }
         }
         
@@ -158,7 +164,7 @@ final class CartTableViewCell: UITableViewCell {
         
         for index in 0..<rating {
             if let fullStar = productRatingStackView.subviews[index] as? UIImageView {
-                fullStar.image = UIImage(asset: Asset.Assets.fullStar)
+                fullStar.image = Asset.Assets.fullStar.image
             }
         }
     }

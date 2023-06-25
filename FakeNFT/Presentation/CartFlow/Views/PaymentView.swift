@@ -2,6 +2,7 @@ import UIKit
 
 final class PaymentView: CustomView {
     
+    // MARK: - Properties
     private let paymentStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -23,13 +24,13 @@ final class PaymentView: CustomView {
         let label = UILabel()
         label.font = UIFont.caption1
         label.text = "0 NFT"
-        label.textColor = UIColor(asset: Asset.Colors.ypBlack)
+        label.textColor = Asset.Colors.ypBlack.color
         return label
     }()
     
     private let totalSumProducts: CustomLabel = {
         let label = CustomLabel(text: "00,00 ETH")
-        label.textColor = UIColor(asset: Asset.Colors.ypGreenUniversal)
+        label.textColor = Asset.Colors.ypGreenUniversal.color
         return label
     }()
     
@@ -45,6 +46,7 @@ final class PaymentView: CustomView {
     
     weak var delegate: CartViewControllerDelegate?
     
+    // MARK: - Lifecycle
     init(delegate: CartViewControllerDelegate) {
         super.init()
         self.delegate = delegate
@@ -57,15 +59,20 @@ final class PaymentView: CustomView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func refreshData() {
         setupQuantityNfts()
         setupTotalPrice()
     }
     
+    // MARK: - Actions
     @objc private func paymentTapped() {
         delegate?.openPaymentViewController()
     }
-    
+}
+
+// MARK: - Private methods
+extension PaymentView {
     private func addElements() {
         [
             paymentStackView,

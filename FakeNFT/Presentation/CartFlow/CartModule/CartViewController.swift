@@ -1,5 +1,6 @@
 import UIKit
 
+// MARK: - Protocols
 protocol CartViewControllerDelegate: AnyObject {
     func getQuantityNfts() -> Int
     func getTotalPrice() -> Double
@@ -8,13 +9,12 @@ protocol CartViewControllerDelegate: AnyObject {
 }
 
 final class CartViewController: UIViewController {
-    
+    // MARK: - Properties
     private lazy var paymentView = PaymentView(delegate: self)
     
     private lazy var cartTableView: UITableView = {
         let table = UITableView()
         table.dataSource = self
-        table.delegate = self
         table.register(
             CartTableViewCell.self,
             forCellReuseIdentifier: Consts.Cart.cartCellIdentifier
@@ -29,6 +29,7 @@ final class CartViewController: UIViewController {
     
     private var viewModel: CartViewModel
     
+    // MARK: - Lifecycle
     init(viewModel: CartViewModel = CartViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +44,7 @@ final class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(asset: Asset.Colors.ypWhite)
+        view.backgroundColor = Asset.Colors.ypWhite.color
         configureNavBar()
         addElements()
         setupConstraints()
@@ -59,13 +60,17 @@ final class CartViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
     @objc func openSortAlert() {
         showAlert()
     }
-    
+}
+
+// MARK: - Private methods
+extension CartViewController {
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(asset: Asset.Assets.sortButton),
+            image: Asset.Assets.sortButton.image,
             style: .done,
             target: self,
             action: #selector(openSortAlert)
@@ -106,38 +111,7 @@ final class CartViewController: UIViewController {
             )
         ])
     }
-}
-
-extension CartViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.products.count
-    }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        140
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: Consts.Cart.cartCellIdentifier, for: indexPath
-        ) as? CartTableViewCell else {
-            return UITableViewCell()
-        }
-        
-        let nft = viewModel.products[indexPath.row]
-        
-        cell.delegate = self
-        cell.configure(nft)
-        
-        return cell
-    }
-}
-
-extension CartViewController: UITableViewDelegate {
-    
-}
-
-extension CartViewController {
     private func showAlert() {
         let alert = UIAlertController(
             title: "Сортировка", message: nil, preferredStyle: .actionSheet
@@ -177,6 +151,29 @@ extension CartViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+extension CartViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.products.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: Consts.Cart.cartCellIdentifier, for: indexPath
+        ) as? CartTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let nft = viewModel.products[indexPath.row]
+        
+        cell.delegate = self
+        cell.configure(nft)
+        
+        return cell
+    }
+}
+
+// MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
     func getQuantityNfts() -> Int {
         return viewModel.products.count

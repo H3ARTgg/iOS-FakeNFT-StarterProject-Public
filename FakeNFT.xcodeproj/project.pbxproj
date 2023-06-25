@@ -169,10 +169,10 @@
 				250DF0F62A474C6D00AC2E4E /* CustomLabel.swift */,
 				250DF0F82A4752D800AC2E4E /* CustomButton.swift */,
 				250DF0FC2A475D3200AC2E4E /* CustomView.swift */,
+				25B4DA6F2A489EB9000B1F89 /* StarImageView.swift */,
 				250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */,
 				250DF0FA2A47540700AC2E4E /* PaymentView.swift */,
 				25B4DA6D2A4896CA000B1F89 /* RatingStackView.swift */,
-				25B4DA6F2A489EB9000B1F89 /* StarImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

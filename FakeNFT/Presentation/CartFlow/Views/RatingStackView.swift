@@ -2,12 +2,14 @@ import UIKit
 
 final class RatingStackView: UIStackView {
     
+    // MARK: - Properties
     private let starImageView1 = StarImageView()
     private let starImageView2 = StarImageView()
     private let starImageView3 = StarImageView()
     private let starImageView4 = StarImageView()
     private let starImageView5 = StarImageView()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -23,6 +25,7 @@ final class RatingStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Private methods
     private func addElements() {
         [
             starImageView1,

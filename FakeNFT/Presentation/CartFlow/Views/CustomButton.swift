@@ -5,8 +5,8 @@ final class CustomButton: UIButton {
         super.init(frame: .zero)
         setTitle(text, for: .normal)
         titleLabel?.font = UIFont.bodyBold
-        setTitleColor(UIColor(asset: Asset.Colors.ypWhite), for: .normal)
-        backgroundColor = UIColor(asset: Asset.Colors.ypBlack)
+        setTitleColor(Asset.Colors.ypWhite.color, for: .normal)
+        backgroundColor = Asset.Colors.ypBlack.color
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: Consts.Cart.heightButton).isActive = true
         layer.cornerRadius = Consts.Cart.buttonRadius
