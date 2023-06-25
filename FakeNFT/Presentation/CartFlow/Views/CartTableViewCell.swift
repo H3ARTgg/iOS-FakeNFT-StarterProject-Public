@@ -1,12 +1,13 @@
 import UIKit
+import Kingfisher
 
 final class CartTableViewCell: UITableViewCell {
     
     private let productImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
         view.layer.cornerRadius = Consts.Cart.imageProductRadius
-        view.backgroundColor = .red
         return view
     }()
     
@@ -16,17 +17,9 @@ final class CartTableViewCell: UITableViewCell {
         return view
     }()
     
-    private let productTitleLabel = CustomLabel(text: "Title")
+    private let productTitleLabel = CustomLabel(text: "")
     
-    private let productRatingStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .fill
-        stack.spacing = 2
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = .red
-        return stack
-    }()
+    private let productRatingStackView = RatingStackView()
     
     private let productPriceLabel: UILabel = {
         let label = UILabel()
@@ -37,7 +30,7 @@ final class CartTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let productTotalPriceLabel = CustomLabel(text: "Price")
+    private let productTotalPriceLabel = CustomLabel(text: "")
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton(type: .system)
@@ -45,11 +38,16 @@ final class CartTableViewCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    func configure() {
+        
+    func configure(_ nft: Nft) {
         backgroundColor = .clear
         addElements()
         setupConstraints()
+        
+        productTitleLabel.text = nft.name
+        productImageView.kf.setImage(with: URL(string: nft.image ?? ""))
+        productTotalPriceLabel.text = (String(format: "%.2f", nft.price ?? 0) + " ETH").replacingOccurrences(of: ".", with: ",")
+        setupRating(nft)
     }
     
     private func addElements() {
@@ -136,5 +134,15 @@ final class CartTableViewCell: UITableViewCell {
                 equalTo: contentView.centerYAnchor
             )
         ])
+    }
+    
+    private func setupRating(_ nft: Nft) {
+        guard var rating = nft.rating else { return }
+        
+        for index in 0..<rating {
+            if let fullStar = productRatingStackView.subviews[index] as? UIImageView {
+                fullStar.image = UIImage(asset: Asset.Assets.fullStar)
+            }
+        }
     }
 }
