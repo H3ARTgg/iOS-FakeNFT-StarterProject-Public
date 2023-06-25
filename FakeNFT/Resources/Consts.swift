@@ -12,6 +12,7 @@ struct Consts {
         static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", comment: "text for statistic's action sheep sort by name")
         static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", comment: "text for statistic's action sheep sort by rating")
         static let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
+        static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
     }
     
     struct Images {
@@ -42,5 +43,9 @@ struct Consts {
         // Network
         static let urlStatistic: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/users")
         static let limiteUsersOnPage = 10
+    }
+    
+    struct UserCard {
+        
     }
 }

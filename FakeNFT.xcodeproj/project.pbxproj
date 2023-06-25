@@ -35,6 +35,8 @@
 		5BCFCF732A48526E0097AE09 /* StatisticProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */; };
 		5BCFCF752A4852AF0097AE09 /* StatiscticRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */; };
 		5BCFCF772A4852D00097AE09 /* UserNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */; };
+		5BCFCF7D2A4853FE0097AE09 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF7C2A4853FE0097AE09 /* UserCardViewController.swift */; };
+		5BCFCF7F2A4854080097AE09 /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF7E2A4854080097AE09 /* UserCardViewModel.swift */; };
 		6B2DF20987A5036D5FDF38FB /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7EE12C02A1367B1F2F8B0 /* Pods_FakeNFT.framework */; };
 		7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */; };
 		78F308A72A3EF40C0036BF33 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78F308A62A3EF40C0036BF33 /* Colors.xcassets */; };
@@ -97,6 +99,8 @@
 		5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticProvider.swift; sourceTree = "<group>"; };
 		5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatiscticRequest.swift; sourceTree = "<group>"; };
 		5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkModel.swift; sourceTree = "<group>"; };
+		5BCFCF7C2A4853FE0097AE09 /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
+		5BCFCF7E2A4854080097AE09 /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewModel.swift; sourceTree = "<group>"; };
 		7704B34966D424C18DD99065 /* Pods_FakeNFT_FakeNFTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT_FakeNFTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		78F308A62A3EF40C0036BF33 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -302,6 +306,31 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		5BCFCF792A4853B80097AE09 /* UserCardModele */ = {
+			isa = PBXGroup;
+			children = (
+				5BCFCF7B2A4853D40097AE09 /* ViewModel */,
+				5BCFCF7A2A4853CE0097AE09 /* View */,
+			);
+			path = UserCardModele;
+			sourceTree = "<group>";
+		};
+		5BCFCF7A2A4853CE0097AE09 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5BCFCF7C2A4853FE0097AE09 /* UserCardViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5BCFCF7B2A4853D40097AE09 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5BCFCF7E2A4854080097AE09 /* UserCardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		6CBB697C1773C6577012BDBE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				78F308B52A3EF82C0036BF33 /* StetisticsModule */,
+				5BCFCF792A4853B80097AE09 /* UserCardModele */,
 			);
 			path = StatisticsFlow;
 			sourceTree = "<group>";
@@ -760,11 +790,13 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
+				5BCFCF7F2A4854080097AE09 /* UserCardViewModel.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				5B473B1A2A419EA1005E78DD /* RatingViewModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				5BCFCF7D2A4853FE0097AE09 /* UserCardViewController.swift in Sources */,
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,
 				5B473B1C2A41B4F7005E78DD /* UserTableViewCell.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,

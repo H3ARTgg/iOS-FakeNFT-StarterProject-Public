@@ -8,6 +8,7 @@ final class UserView: UIView {
         static let imageViewWidth = UIScreen.main.bounds.width / 13.3
         static let countNFTLabelWidth = UIScreen.main.bounds.width / 8
         static let edgeDistance: CGFloat = 8
+        static let cornerRadius: CGFloat = 12
     }
     
     private var viewModel: UserViewModelProtocol? {
@@ -81,7 +82,7 @@ extension UserView {
     
     func setupView() {
         backgroundColor = Asset.Colors.ypLightGray.color
-        layer.cornerRadius = 12
+        layer.cornerRadius = ViewConstants.cornerRadius
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
     }
