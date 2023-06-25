@@ -3,6 +3,7 @@ import UIKit
 protocol CartViewControllerDelegate: AnyObject {
     func getQuantityNfts() -> Int
     func getTotalPrice() -> Double
+    func openDeleteNftViewController()
 }
 
 final class CartViewController: UIViewController {
@@ -121,6 +122,7 @@ extension CartViewController: UITableViewDataSource {
         
         let nft = viewModel.products[indexPath.row]
         
+        cell.delegate = self
         cell.configure(nft)
         
         return cell
@@ -185,5 +187,11 @@ extension CartViewController: CartViewControllerDelegate {
         }
         
         return total
+    }
+    
+    func openDeleteNftViewController() {
+        let deleteNftVC = DeleteNftViewController()
+        deleteNftVC.modalPresentationStyle = .fullScreen
+        present(deleteNftVC, animated: true)
     }
 }

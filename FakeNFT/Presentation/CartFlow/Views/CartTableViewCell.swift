@@ -36,9 +36,16 @@ final class CartTableViewCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.setImage(UIImage(asset: Asset.Assets.cartButton), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(
+            self,
+            action: #selector(deleteNft),
+            for: .touchUpInside
+        )
         return button
     }()
         
+    weak var delegate: CartViewControllerDelegate?
+    
     func configure(_ nft: Nft) {
         backgroundColor = .clear
         addElements()
@@ -48,6 +55,10 @@ final class CartTableViewCell: UITableViewCell {
         productImageView.kf.setImage(with: URL(string: nft.image))
         productTotalPriceLabel.text = (String(format: "%.2f", nft.price) + " ETH").replacingOccurrences(of: ".", with: ",")
         setupRating(nft)
+    }
+    
+    @objc private func deleteNft() {
+        delegate?.openDeleteNftViewController()
     }
     
     private func addElements() {
