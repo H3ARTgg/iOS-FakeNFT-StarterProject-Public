@@ -16,10 +16,13 @@ final class ProfileEditTableHeaderView: UIView {
         }
     }
     
+    var closeButtonClosure: (() -> Void)?
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(Consts.Images.cross, for: .normal)
         button.tintColor = Asset.Colors.ypBlack.color
+        button.addTarget(nil, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -54,6 +57,15 @@ final class ProfileEditTableHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Private Methods
+
+private extension ProfileEditTableHeaderView {
+    @objc
+    func closeButtonTapped() {
+        closeButtonClosure?()
     }
 }
 

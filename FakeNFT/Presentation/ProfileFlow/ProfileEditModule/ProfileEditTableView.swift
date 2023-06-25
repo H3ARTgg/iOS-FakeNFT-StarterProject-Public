@@ -26,6 +26,9 @@ final class ProfileEditTableView: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.tableHeaderView = tableHeaderView
+        tableHeaderView.closeButtonClosure = { [weak self] in
+            self?.dismiss(animated: true)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,7 +50,7 @@ extension ProfileEditTableView {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         34
     }
-
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionHeaderView = tableView
             .dequeueReusableHeaderFooterView(withIdentifier: ProfileEditSectionHeaderView.identifier) as? ProfileEditSectionHeaderView
