@@ -72,7 +72,6 @@ final class CatalogueViewController: UIViewController {
     
     @objc
     private func refresh() {
-        UIBlockingProgressHUD.show()
         viewModel.requestCollections()
         collectionView.reloadData()
         refreshControl.endRefreshing()
