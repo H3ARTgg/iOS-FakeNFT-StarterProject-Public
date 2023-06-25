@@ -29,7 +29,11 @@ final class ProfileViewController: UIViewController {
                                        image: Consts.Images.profile,
                                        tag: 0)
         
-        let rightBarButtonItem = UIBarButtonItem(image: Consts.Images.editBold, style: .done, target: nil, action: nil)
+        let rightBarButtonItem = UIBarButtonItem(image: Consts.Images.editBold,
+                                                 style: .done,
+                                                 target: self,
+                                                 action: #selector(showEditProfile))
+        
         rightBarButtonItem.tintColor = Asset.Colors.ypBlack.color
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -74,9 +78,14 @@ private extension ProfileViewController {
         }
         .store(in: &cancellables)
     }
+    @objc
+    func showEditProfile() {
+        present(ProfileEditTableView(), animated: true)
+    }
 }
 
 // MARK: - Subviews configure + layout
+
 private extension ProfileViewController {
     func addSubviews() {
         view.addSubview(profileView)

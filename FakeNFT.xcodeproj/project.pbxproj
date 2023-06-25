@@ -35,6 +35,11 @@
 		78B553EE2A46145000A21777 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553ED2A46145000A21777 /* ProfileViewModel.swift */; };
 		78B553F22A46E4D300A21777 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553F12A46E4D300A21777 /* ProfileModel.swift */; };
 		78B553F42A46E4FA00A21777 /* ProfileResponceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553F32A46E4FA00A21777 /* ProfileResponceModel.swift */; };
+		78B553F72A48256800A21777 /* ProfileEditTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553F62A48256800A21777 /* ProfileEditTableView.swift */; };
+		78B553F92A4825A000A21777 /* ProfileEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553F82A4825A000A21777 /* ProfileEditCell.swift */; };
+		78B553FB2A4828F000A21777 /* ProfileEditDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FA2A4828F000A21777 /* ProfileEditDiffableDataSource.swift */; };
+		78B553FD2A48330200A21777 /* ProfileEditSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FC2A48330200A21777 /* ProfileEditSectionHeaderView.swift */; };
+		78B553FF2A48B20500A21777 /* ProfileEditTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FE2A48B20500A21777 /* ProfileEditTableHeaderView.swift */; };
 		78F308A72A3EF40C0036BF33 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78F308A62A3EF40C0036BF33 /* Colors.xcassets */; };
 		78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F308AD2A3EF5880036BF33 /* MainTabBarController.swift */; };
 		78F308B42A3EF6F70036BF33 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F308B32A3EF6F70036BF33 /* StatisticsViewController.swift */; };
@@ -95,6 +100,11 @@
 		78B553ED2A46145000A21777 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		78B553F12A46E4D300A21777 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		78B553F32A46E4FA00A21777 /* ProfileResponceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponceModel.swift; sourceTree = "<group>"; };
+		78B553F62A48256800A21777 /* ProfileEditTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableView.swift; sourceTree = "<group>"; };
+		78B553F82A4825A000A21777 /* ProfileEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCell.swift; sourceTree = "<group>"; };
+		78B553FA2A4828F000A21777 /* ProfileEditDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditDiffableDataSource.swift; sourceTree = "<group>"; };
+		78B553FC2A48330200A21777 /* ProfileEditSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditSectionHeaderView.swift; sourceTree = "<group>"; };
+		78B553FE2A48B20500A21777 /* ProfileEditTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableHeaderView.swift; sourceTree = "<group>"; };
 		78F308A62A3EF40C0036BF33 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		78F308AD2A3EF5880036BF33 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		78F308B32A3EF6F70036BF33 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +329,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		78B553F52A48254B00A21777 /* ProfileEditModule */ = {
+			isa = PBXGroup;
+			children = (
+				78B553F62A48256800A21777 /* ProfileEditTableView.swift */,
+				78B553F82A4825A000A21777 /* ProfileEditCell.swift */,
+				78B553FA2A4828F000A21777 /* ProfileEditDiffableDataSource.swift */,
+				78B553FC2A48330200A21777 /* ProfileEditSectionHeaderView.swift */,
+				78B553FE2A48B20500A21777 /* ProfileEditTableHeaderView.swift */,
+			);
+			path = ProfileEditModule;
+			sourceTree = "<group>";
+		};
 		78F308A32A3EF3690036BF33 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,7 +378,6 @@
 			children = (
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
 				78F308A92A3EF4490036BF33 /* UI */,
-				78B553E92A45E25300A21777 /* UILabel+Ext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -364,6 +385,7 @@
 		78F308A92A3EF4490036BF33 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				78B553E92A45E25300A21777 /* UILabel+Ext.swift */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 			);
 			path = UI;
@@ -379,6 +401,7 @@
 		78F308AF2A3EF5AA0036BF33 /* ProfileFlow */ = {
 			isa = PBXGroup;
 			children = (
+				78B553F52A48254B00A21777 /* ProfileEditModule */,
 				78F308B82A3EF8750036BF33 /* ProfileModule */,
 			);
 			path = ProfileFlow;
@@ -739,6 +762,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B553EC2A45E74B00A21777 /* ProfileDiffableDataSource.swift in Sources */,
+				78B553FB2A4828F000A21777 /* ProfileEditDiffableDataSource.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */,
@@ -749,17 +773,21 @@
 				78F308C02A3EFDBB0036BF33 /* Consts.swift in Sources */,
 				78B553F22A46E4D300A21777 /* ProfileModel.swift in Sources */,
 				78F308BA2A3EF9A40036BF33 /* ProfileViewController.swift in Sources */,
+				78B553F92A4825A000A21777 /* ProfileEditCell.swift in Sources */,
+				78B553FD2A48330200A21777 /* ProfileEditSectionHeaderView.swift in Sources */,
 				78B553DF2A44B33100A21777 /* ProfileTableViewCell.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
 				78B553EA2A45E25300A21777 /* UILabel+Ext.swift in Sources */,
+				78B553FF2A48B20500A21777 /* ProfileEditTableHeaderView.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ProfileRequests.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				78B553F42A46E4FA00A21777 /* ProfileResponceModel.swift in Sources */,
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,
+				78B553F72A48256800A21777 /* ProfileEditTableView.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				78B553E82A44C2CD00A21777 /* ProfileView.swift in Sources */,
