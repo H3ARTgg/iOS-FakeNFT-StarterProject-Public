@@ -74,8 +74,8 @@ final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
         
         imageView.snp.makeConstraints { make in
             make.height.equalTo(140)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
             make.top.equalToSuperview()
         }

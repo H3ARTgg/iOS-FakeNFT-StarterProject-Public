@@ -27,10 +27,10 @@ final class CatalogueSupplementaryView: UICollectionReusableView {
     private func setupTitleLabel() {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(self.snp.leading)
-            make.trailing.equalTo(self.snp.trailing)
-            make.top.equalTo(self.snp.top).offset(4)
-            make.bottom.equalTo(self.snp.bottom).offset(-21)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalToSuperview().offset(4)
+            make.bottom.equalToSuperview().offset(-21)
         }
     }
 }
