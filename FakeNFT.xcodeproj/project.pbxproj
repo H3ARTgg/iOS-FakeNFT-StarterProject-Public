@@ -32,6 +32,9 @@
 		5B473B202A422DFB005E78DD /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B1F2A422DFB005E78DD /* UserView.swift */; };
 		5B473B222A423025005E78DD /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B212A423025005E78DD /* UserViewModel.swift */; };
 		5B473B242A437F71005E78DD /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B232A437F71005E78DD /* AlertModel.swift */; };
+		5BCFCF732A48526E0097AE09 /* StatisticProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */; };
+		5BCFCF752A4852AF0097AE09 /* StatiscticRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */; };
+		5BCFCF772A4852D00097AE09 /* UserNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */; };
 		6B2DF20987A5036D5FDF38FB /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7EE12C02A1367B1F2F8B0 /* Pods_FakeNFT.framework */; };
 		7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */; };
 		78F308A72A3EF40C0036BF33 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78F308A62A3EF40C0036BF33 /* Colors.xcassets */; };
@@ -91,6 +94,9 @@
 		5B473B1F2A422DFB005E78DD /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		5B473B212A423025005E78DD /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		5B473B232A437F71005E78DD /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticProvider.swift; sourceTree = "<group>"; };
+		5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatiscticRequest.swift; sourceTree = "<group>"; };
+		5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkModel.swift; sourceTree = "<group>"; };
 		7704B34966D424C18DD99065 /* Pods_FakeNFT_FakeNFTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT_FakeNFTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		78F308A62A3EF40C0036BF33 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
+				5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -261,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
+				5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -348,6 +356,7 @@
 		78F308A52A3EF3EA0036BF33 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */,
 				3FC8C38F29D245250081F015 /* Requests */,
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
 			);
@@ -737,6 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B473B1E2A41B9B8005E78DD /* UserTableViewCellViewModel.swift in Sources */,
+				5BCFCF752A4852AF0097AE09 /* StatiscticRequest.swift in Sources */,
 				5B473B222A423025005E78DD /* UserViewModel.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
@@ -761,6 +771,8 @@
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				78F308B42A3EF6F70036BF33 /* RatingViewController.swift in Sources */,
 				5B473B162A419DE1005E78DD /* User.swift in Sources */,
+				5BCFCF732A48526E0097AE09 /* StatisticProvider.swift in Sources */,
+				5BCFCF772A4852D00097AE09 /* UserNetworkModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
