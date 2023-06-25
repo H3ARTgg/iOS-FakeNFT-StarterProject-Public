@@ -31,6 +31,7 @@ struct Consts {
         static let heightProductImage: CGFloat = 108
         static let widthProductRating: CGFloat = 68
         static let heightButton: CGFloat = 44
+        static let heightStarImage: CGFloat = 12
         
         static let imageProductRadius: CGFloat = 12
         static let buttonRadius: CGFloat = 16
