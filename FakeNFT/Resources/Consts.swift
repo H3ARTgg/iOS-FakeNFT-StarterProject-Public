@@ -10,6 +10,7 @@ struct Consts {
         static let ownedNfts = NSLocalizedString("profile.owned", value: "Мои NFT", comment: "Personal owned NFTs")
         static let favoriteNfts = NSLocalizedString("profile.favorite", value: "Избранные NFT", comment: "Personal favorite NFTs")
         static let aboutDeveloper = NSLocalizedString("profile.developer", value: "О разработчике", comment: "About developer")
+        static let changePhoto = NSLocalizedString("profileEdit.changePhoto", value: "Сменить фото", comment: "Change photo")
     }
     
     struct Images {
@@ -20,6 +21,7 @@ struct Consts {
         static let editBold = UIImage(systemName: "square.and.pencil",
                                       withConfiguration: UIImage.SymbolConfiguration(weight: .bold))
         static let chevron = UIImage(systemName: "chevron.right")
+        static let cross = UIImage(systemName: "xmark")
     }
     
     struct Fonts {
