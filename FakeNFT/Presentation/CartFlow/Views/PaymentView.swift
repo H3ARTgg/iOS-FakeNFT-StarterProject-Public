@@ -23,19 +23,19 @@ final class PaymentView: CustomView {
     private let numbersProducts: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption1
-        label.text = "0 NFT"
+        label.text = "0 \(Consts.LocalizedStrings.cartLabelAmountNft)"
         label.textColor = Asset.Colors.ypBlack.color
         return label
     }()
     
     private let totalSumProducts: CustomLabel = {
-        let label = CustomLabel(text: "00,00 ETH")
+        let label = CustomLabel(text: "00,00 \(Consts.LocalizedStrings.cartLabelEth)")
         label.textColor = Asset.Colors.ypGreenUniversal.color
         return label
     }()
     
     private lazy var paymentButton: CustomButton = {
-        let button = CustomButton(text: "К оплате")
+        let button = CustomButton(text: "\(Consts.LocalizedStrings.cartButtonToPay)")
         button.addTarget(
             self,
             action: #selector(paymentTapped),

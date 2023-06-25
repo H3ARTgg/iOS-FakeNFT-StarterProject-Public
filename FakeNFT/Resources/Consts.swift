@@ -6,7 +6,12 @@ struct Consts {
         static let profile = NSLocalizedString("profile.icon", comment: "Profile tabbar icon title")
         static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")    
+        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
+        
+        // Cart
+        static let cartButtonToPay = NSLocalizedString("button.to.pay", value: "К оплате", comment: "Button for go to the payment screen")
+        static let cartLabelAmountNft = NSLocalizedString("label.amount.nft", value: "NFT", comment: "Label for amount nfts")
+        static let cartLabelEth = NSLocalizedString("label.currency.eth", value: "ETH", comment: "Label for currency")
     }
     
     struct Images {
