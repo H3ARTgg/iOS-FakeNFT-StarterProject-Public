@@ -22,6 +22,7 @@ final class CartViewController: UIViewController {
         
         table.backgroundColor = .clear
         table.separatorStyle = .none
+        table.allowsSelection = false
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
