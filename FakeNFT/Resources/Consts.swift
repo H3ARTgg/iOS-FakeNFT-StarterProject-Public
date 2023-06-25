@@ -1,5 +1,5 @@
 import Foundation
-import UIKit
+import UIKit.UIColor
 
 struct Consts {
     struct LocalizedStrings {
@@ -14,6 +14,7 @@ struct Consts {
         static let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
         static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
         static let userCollectionButtonTitle = NSLocalizedString("userCollectionButtonTitle", comment: "Text for userCollectionButtonTitle")
+        static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewControllerTitle", comment: "Title for UserCollectionViewController")
     }
     
     struct Images {
