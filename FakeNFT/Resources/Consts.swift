@@ -34,7 +34,13 @@ struct Consts {
         static let bold34 = UIFont.systemFont(ofSize: 34, weight: .bold)
     }
     
-    static let topConstant: CGFloat = 20
-    static let sideConstant: CGFloat = 16
-    static let heightUserTableViewCell: CGFloat = 88
+    struct Statistic {
+        static let topConstant: CGFloat = 20
+        static let sideConstant: CGFloat = 16
+        static let heightUserTableViewCell: CGFloat = 88
+        
+        // Network
+        static let urlStatistic: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/users")
+        static let limiteUsersOnPage = 10
+    }
 }

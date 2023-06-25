@@ -1,11 +1,12 @@
 import UIKit
+import Kingfisher
 
 final class UserView: UIView {
     
     // MARK: Helpers
     private struct ViewConstants {
         static let imageViewWidth = UIScreen.main.bounds.width / 13.3
-        static let countNFTLabelWidth = UIScreen.main.bounds.width / 4
+        static let countNFTLabelWidth = UIScreen.main.bounds.width / 8
         static let edgeDistance: CGFloat = 8
     }
     
@@ -42,6 +43,7 @@ final class UserView: UIView {
     // MARK: - public methods
     public func initialize(viewModel: UserViewModelProtocol?) {
         self.viewModel = viewModel
+        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
     }
 }
 
@@ -51,6 +53,8 @@ extension UserView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
+        imageView.clipsToBounds = true
+        imageView.image = Asset.Assets.noPhoto.image
         return imageView
     }
     
@@ -91,7 +95,7 @@ extension UserView {
     func activateConstraints() {
         NSLayoutConstraint.activate([
             photoImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Consts.sideConstant),
+            photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Consts.Statistic.sideConstant),
             photoImageView.widthAnchor.constraint(equalToConstant: ViewConstants.imageViewWidth),
             photoImageView.heightAnchor.constraint(equalTo: photoImageView.widthAnchor),
             
@@ -100,15 +104,19 @@ extension UserView {
             userNameLabel.trailingAnchor.constraint(equalTo: countNFTLabel.leadingAnchor),
             
             countNFTLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            countNFTLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Consts.sideConstant),
+            countNFTLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Consts.Statistic.sideConstant),
             countNFTLabel.widthAnchor.constraint(equalToConstant: ViewConstants.countNFTLabelWidth)
         ])
     }
     
     func bind() {
-        let image = UIImage(named: viewModel?.avatar ?? "")
-        photoImageView.image = image
         userNameLabel.text = viewModel?.userName
         countNFTLabel.text = String(viewModel?.countNFT ?? 0)
+        loadImage()
+    }
+    
+    func loadImage() {
+        guard let url = viewModel?.avatarURL else { return }
+        photoImageView.kf.setImage(with: url)
     }
 }

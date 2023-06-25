@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 /// Контроллер  отвечает за отображение списка пользователей
 final class RatingViewController: UIViewController {
@@ -28,6 +29,16 @@ final class RatingViewController: UIViewController {
         addViews()
         activateConstraints()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.checkUsers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ProgressHUD.dismiss()
     }
 }
 
@@ -70,9 +81,9 @@ extension RatingViewController {
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            ratingTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.topConstant),
-            ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.sideConstant),
-            ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.sideConstant),
+            ratingTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant),
+            ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
+            ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant),
             ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -87,6 +98,32 @@ extension RatingViewController {
             guard let self else { return }
             self.presentActionSheet(alertModel: alertModel)
         }
+        
+        viewModel.addUsers = { [weak self] value in
+            guard let self else { return }
+            if value.oldValue != value.newValue {
+                self.ratingTableView.performBatchUpdates {
+                    let indexPath = (value.oldValue..<value.newValue).map { IndexPath(row: $0, section: 0)}
+                    self.ratingTableView.insertRows(at: indexPath, with: .automatic)
+                }
+            }
+        }
+        
+        viewModel.hideTableView = { [weak self] _ in
+            ProgressHUD.show()
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.ratingTableView.alpha = 0
+            }
+        }
+        
+        viewModel.showTableView = { [weak self] _ in
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.ratingTableView.alpha = 1
+            }
+            ProgressHUD.dismiss()
+        }
     }
     
     @objc
@@ -97,8 +134,9 @@ extension RatingViewController {
     @objc
     func refresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            self.viewModel.updateUsers()
             sender.endRefreshing()
-            self?.viewModel.updateUsers()
         }
     }
     
@@ -112,7 +150,11 @@ extension RatingViewController {
             case .cancel: actionStyle = .cancel
             }
             
-            let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
+            let action = UIAlertAction(
+                title: alertAction.actionText,
+                style: actionStyle,
+                handler: { _ in alertAction.action?() }
+            )
             alert.addAction(action)
         }
         
@@ -120,7 +162,16 @@ extension RatingViewController {
     }
 }
 
-extension RatingViewController: UITableViewDelegate {}
+extension RatingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.countUsers-1 {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.viewModel.fetchUsers()
+            }
+        }
+    }
+}
 
 extension RatingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,6 +194,6 @@ extension RatingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Consts.heightUserTableViewCell
+        Consts.Statistic.heightUserTableViewCell
     }
 }

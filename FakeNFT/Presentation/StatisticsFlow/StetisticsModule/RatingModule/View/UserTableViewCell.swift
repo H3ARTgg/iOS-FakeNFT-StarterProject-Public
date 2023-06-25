@@ -7,7 +7,7 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
     static var defaultReuseIdentifier: String { "UserCell" }
     
     private struct CellConstants {
-        static let userViewWidth = (UIScreen.main.bounds.width - Consts.sideConstant * 2) / 1.1111
+        static let userViewWidth = (UIScreen.main.bounds.width - Consts.Statistic.sideConstant * 2) / 1.1111
         static let positionInRatingLabelHeight: CGFloat = 20
         static let edgeDistance: CGFloat = 4
         static let stackViewCornerRadius: CGFloat = 12
