@@ -45,8 +45,8 @@ final class CartTableViewCell: UITableViewCell {
         setupConstraints()
         
         productTitleLabel.text = nft.name
-        productImageView.kf.setImage(with: URL(string: nft.image ?? ""))
-        productTotalPriceLabel.text = (String(format: "%.2f", nft.price ?? 0) + " ETH").replacingOccurrences(of: ".", with: ",")
+        productImageView.kf.setImage(with: URL(string: nft.image))
+        productTotalPriceLabel.text = (String(format: "%.2f", nft.price) + " ETH").replacingOccurrences(of: ".", with: ",")
         setupRating(nft)
     }
     
@@ -137,7 +137,7 @@ final class CartTableViewCell: UITableViewCell {
     }
     
     private func setupRating(_ nft: Nft) {
-        guard var rating = nft.rating else { return }
+        let rating = nft.rating
         
         for index in 0..<rating {
             if let fullStar = productRatingStackView.subviews[index] as? UIImageView {

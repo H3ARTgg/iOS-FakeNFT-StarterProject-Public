@@ -177,9 +177,8 @@ extension CartViewController: CartViewControllerDelegate {
         var total: Double = 0
         
         for item in viewModel.products {
-            if let price = item.price {
-                total += price
-            }
+            let price = item.price
+            total += price
         }
         
         return total

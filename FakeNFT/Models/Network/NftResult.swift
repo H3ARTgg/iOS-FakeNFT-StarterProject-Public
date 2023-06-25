@@ -9,10 +9,10 @@ struct NftResult: Codable {
     
     func convert() -> Nft {
         Nft(
-            id: Int(self.id ?? ""),
-            name: self.name,
-            image: self.images?[0],
-            rating: self.rating,
+            id: Int(self.id ?? "") ?? 0,
+            name: self.name ?? "",
+            image: self.images?[0] ?? "",
+            rating: self.rating ?? 0,
             price: Double(self.price ?? 0)
         )
     }
