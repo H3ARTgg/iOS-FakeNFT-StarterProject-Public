@@ -22,6 +22,7 @@ struct Consts {
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")
         static let cart = Asset.Assets.cartIcon.image
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
+        static let backButton = Asset.Assets.chevronBackward.image
     }
     
     struct Fonts {
