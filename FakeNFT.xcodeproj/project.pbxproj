@@ -175,6 +175,7 @@
 				250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */,
 				250DF0FA2A47540700AC2E4E /* PaymentView.swift */,
 				25B4DA6D2A4896CA000B1F89 /* RatingStackView.swift */,
+				252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -443,10 +444,9 @@
 			isa = PBXGroup;
 			children = (
 				78F308BD2A3EFA510036BF33 /* CartViewController.swift */,
-				250DF10C2A47892100AC2E4E /* CartViewModel.swift */,
 				25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */,
-				252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */,
 				25B4DA732A48C816000B1F89 /* PaymentViewController.swift */,
+				250DF10C2A47892100AC2E4E /* CartViewModel.swift */,
 			);
 			path = CartModule;
 			sourceTree = "<group>";

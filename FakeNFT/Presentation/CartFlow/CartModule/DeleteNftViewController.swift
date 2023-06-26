@@ -50,9 +50,8 @@ final class DeleteNftViewController: UIViewController {
                 equalTo: view.trailingAnchor,
                 constant: -57
             ),
-            mainStackView.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 244
+            mainStackView.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
             )
         ])
     }
