@@ -28,7 +28,7 @@ final class DeleteNftStackView: UIStackView {
     
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Вы уверены, что хотите удалить объект из корзины?"
+        label.text = Consts.LocalizedStrings.cartDeleteMessage
         label.font = UIFont.caption2
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -37,7 +37,7 @@ final class DeleteNftStackView: UIStackView {
     }()
     
     private lazy var deleteButton: CustomButton = {
-        let button = CustomButton(text: "Удалить")
+        let button = CustomButton(text: Consts.LocalizedStrings.cartDeleteButton)
         button.titleLabel?.font = UIFont.bodyRegular
         button.setTitleColor(Asset.Colors.ypRedUniversal.color, for: .normal)
         button.addTarget(
@@ -49,7 +49,7 @@ final class DeleteNftStackView: UIStackView {
     }()
     
     private lazy var cancelButton: CustomButton = {
-        let button = CustomButton(text: "Вернуться")
+        let button = CustomButton(text: Consts.LocalizedStrings.cartCancelButton)
         button.titleLabel?.font = UIFont.bodyRegular
         button.addTarget(
             self,
@@ -104,7 +104,7 @@ final class DeleteNftStackView: UIStackView {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             messageStackView.widthAnchor.constraint(
-                equalToConstant: 180
+                equalToConstant: Consts.Cart.widthMessageStackView
             ),
             buttonStackView.trailingAnchor.constraint(
                 equalTo: trailingAnchor

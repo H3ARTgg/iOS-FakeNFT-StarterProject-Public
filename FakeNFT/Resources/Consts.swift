@@ -12,6 +12,9 @@ struct Consts {
         static let cartButtonToPay = NSLocalizedString("button.to.pay", value: "К оплате", comment: "Button for go to the payment screen")
         static let cartLabelAmountNft = NSLocalizedString("label.amount.nft", value: "NFT", comment: "Label for amount nfts")
         static let cartLabelEth = NSLocalizedString("label.currency.eth", value: "ETH", comment: "Label for currency")
+        static let cartDeleteMessage = NSLocalizedString("label.delete.nft", value: "Вы уверены, что хотите удалить объект из корзины?", comment: "Message for user when deleting nft")
+        static let cartDeleteButton = NSLocalizedString("button.delete.nft", value: "Удалить", comment: "Delete nft")
+        static let cartCancelButton = NSLocalizedString("label.cancel", value: "Вернуться", comment: "cancel deletion of nft")
     }
     
     struct Images {
@@ -36,6 +39,7 @@ struct Consts {
         static let heightProductImage: CGFloat = 108
         static let widthProductRating: CGFloat = 68
         static let heightButton: CGFloat = 44
+        static let widthMessageStackView: CGFloat = 180
         
         static let imageProductRadius: CGFloat = 12
         static let buttonRadius: CGFloat = 16
