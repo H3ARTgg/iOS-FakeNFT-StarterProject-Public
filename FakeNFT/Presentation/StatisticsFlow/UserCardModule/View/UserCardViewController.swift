@@ -12,6 +12,11 @@ final class UserCardViewController: UIViewController {
         static let stackViewTopAnchorConstant: CGFloat = 10
     }
     
+    private enum TypeViewController {
+        case userSite
+        case userCollection
+    }
+    
     // MARK: Private properties
     private var viewModel: UserCardViewModelProtocol
     
@@ -61,7 +66,7 @@ final class UserCardViewController: UIViewController {
 }
 
 extension UserCardViewController {
-    func makeStackView() -> UIStackView {
+    private func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -70,7 +75,7 @@ extension UserCardViewController {
         return stackView
     }
     
-    func makeUserStackView() -> UIStackView {
+    private func makeUserStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -79,7 +84,7 @@ extension UserCardViewController {
         return stackView
     }
     
-    func makeAvatarImageView() -> UIImageView {
+    private func makeAvatarImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -90,7 +95,7 @@ extension UserCardViewController {
         return imageView
     }
     
-    func makeUserNameLabel() -> UILabel {
+    private func makeUserNameLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.headline3
         label.textAlignment = .left
@@ -99,7 +104,7 @@ extension UserCardViewController {
         return label
     }
     
-    func makeDescriptionLabel() -> UILabel {
+    private func makeDescriptionLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.caption2
         label.textAlignment = .left
@@ -108,7 +113,7 @@ extension UserCardViewController {
         return label
     }
     
-    func makeLabel() -> UILabel {
+    private func makeLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Asset.Colors.ypBlack.color
@@ -116,7 +121,7 @@ extension UserCardViewController {
         return label
     }
     
-    func makeUserSiteButton() -> UIButton {
+    private func makeUserSiteButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserSiteButtonTapped), for: .touchUpInside)
@@ -130,7 +135,7 @@ extension UserCardViewController {
         return button
     }
     
-    func makeUserCollectionButton() -> UIButton {
+    private func makeUserCollectionButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserCollectionButtonTapped), for: .touchUpInside)
@@ -141,7 +146,7 @@ extension UserCardViewController {
         return button
     }
     
-    func makeChevronForwardImageView() -> UIImageView {
+    private func makeChevronForwardImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.image = Asset.Assets.chevronForward.image
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,13 +155,13 @@ extension UserCardViewController {
         return imageView
     }
     
-    func viewSetup() {
+    private func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         tabBarController?.tabBar.isHidden = true
         title = ""
     }
     
-    func addViews() {
+    private func addViews() {
         view.addSubview(stackView)
         
         [ userStackView, descriptionLabel, userSiteButton, userCollectionButton ].forEach {
@@ -170,7 +175,7 @@ extension UserCardViewController {
         userCollectionButton.addSubview(chevronForwardImageView)
     }
     
-    func activateConstraints() {
+    private func activateConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: ViewControllerConstants.stackViewTopAnchorConstant),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
@@ -187,7 +192,7 @@ extension UserCardViewController {
         ])
     }
     
-    func bind() {
+    private func bind() {
         userNameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.description
         let numberOfSubscribers = viewModel.nfts?.count ?? 0
@@ -196,22 +201,35 @@ extension UserCardViewController {
         loadAvatar()
     }
     
-    func loadAvatar() {
+    private func loadAvatar() {
         guard let url = viewModel.avatarURL else { return }
         avatarImageView.kf.setImage(with: url)
     }
     
     @objc
-    func showUserSiteButtonTapped() {
-        showWebViewController()
+    private func showUserSiteButtonTapped() {
+        showWebViewController(type: .userSite)
     }
     
     @objc
-    func showUserCollectionButtonTapped() {
-        // TODO: make userCollection
+    private func showUserCollectionButtonTapped() {
+        showWebViewController(type: .userCollection)
     }
     
-    func showWebViewController() {
-        // TODO: show webView
+    private func showWebViewController(type: TypeViewController) {
+        let viewController = creatViewController(type: type)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func creatViewController(type: TypeViewController) -> UIViewController {
+        switch type {
+        case .userSite:
+            // TODO: show webView
+            let viewModel = UserCollectionViewModel(nfts: viewModel.nfts)
+            return UserCollectionViewController(viewModel: viewModel)
+        case .userCollection:
+            let viewModel = UserCollectionViewModel(nfts: viewModel.nfts)
+            return  UserCollectionViewController(viewModel: viewModel)
+        }
     }
 }
