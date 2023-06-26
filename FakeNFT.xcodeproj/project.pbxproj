@@ -20,6 +20,7 @@
 		250DF10F2A47895A00AC2E4E /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DF10E2A47895A00AC2E4E /* Observable.swift */; };
 		250DF1132A478CBB00AC2E4E /* OrderResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DF1122A478CBB00AC2E4E /* OrderResult.swift */; };
 		250DF1172A47A99400AC2E4E /* CartNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250DF1162A47A99400AC2E4E /* CartNetworkService.swift */; };
+		252B3F5E2A4A1E31006356D4 /* DeleteNftStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */; };
 		25B4DA6E2A4896CA000B1F89 /* RatingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA6D2A4896CA000B1F89 /* RatingStackView.swift */; };
 		25B4DA702A489EB9000B1F89 /* StarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA6F2A489EB9000B1F89 /* StarImageView.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
@@ -86,6 +87,7 @@
 		250DF10E2A47895A00AC2E4E /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		250DF1122A478CBB00AC2E4E /* OrderResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResult.swift; sourceTree = "<group>"; };
 		250DF1162A47A99400AC2E4E /* CartNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNetworkService.swift; sourceTree = "<group>"; };
+		252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftStackView.swift; sourceTree = "<group>"; };
 		25B4DA6D2A4896CA000B1F89 /* RatingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStackView.swift; sourceTree = "<group>"; };
 		25B4DA6F2A489EB9000B1F89 /* StarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageView.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				78F308BD2A3EFA510036BF33 /* CartViewController.swift */,
 				250DF10C2A47892100AC2E4E /* CartViewModel.swift */,
 				25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */,
+				252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */,
 				25B4DA732A48C816000B1F89 /* PaymentViewController.swift */,
 			);
 			path = CartModule;
@@ -759,6 +762,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				25B4DA702A489EB9000B1F89 /* StarImageView.swift in Sources */,
 				25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */,
+				252B3F5E2A4A1E31006356D4 /* DeleteNftStackView.swift in Sources */,
 				78F308C02A3EFDBB0036BF33 /* Consts.swift in Sources */,
 				250DF10D2A47892100AC2E4E /* CartViewModel.swift in Sources */,
 				250DF0FB2A47540700AC2E4E /* PaymentView.swift in Sources */,

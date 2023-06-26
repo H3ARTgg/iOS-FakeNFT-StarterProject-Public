@@ -192,7 +192,7 @@ extension CartViewController: CartViewControllerDelegate {
     
     func openDeleteNftViewController() {
         let deleteNftVC = DeleteNftViewController()
-        deleteNftVC.modalPresentationStyle = .fullScreen
+        deleteNftVC.modalPresentationStyle = .overFullScreen
         present(deleteNftVC, animated: true)
     }
     

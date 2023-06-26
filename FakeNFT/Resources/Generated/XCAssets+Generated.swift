@@ -28,6 +28,7 @@ internal enum Asset {
     internal static let cartButton = ImageAsset(name: "cartButton")
     internal static let cartIcon = ImageAsset(name: "cart_icon")
     internal static let fullStar = ImageAsset(name: "fullStar")
+    internal static let nftCard = ImageAsset(name: "nftCard")
     internal static let sortButton = ImageAsset(name: "sortButton")
     internal static let star = ImageAsset(name: "star")
   }
