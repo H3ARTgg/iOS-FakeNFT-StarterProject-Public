@@ -37,6 +37,7 @@ class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetup()
+        navigationItemSetup()
         addViews()
         activateConstraints()
         setObserver()
@@ -48,6 +49,16 @@ class WebViewViewController: UIViewController {
 extension WebViewViewController {
     private func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
+    }
+    
+    private func navigationItemSetup() {
+        let backButton = UIBarButtonItem(
+            image: Consts.Images.backButton,
+            style: .done,
+            target: self,
+            action: #selector(backButtonTapped))
+        navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
+        navigationItem.leftBarButtonItem = backButton
     }
     
     private func addViews() {
@@ -68,7 +79,7 @@ extension WebViewViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-        
+    
     private func bind() {
         viewModel.loadURL = { [weak webView] url in
             guard let webView else { return }
@@ -95,5 +106,11 @@ extension WebViewViewController {
     
     private func shouldHideProgress(for value: Float) -> Bool {
         abs(value - 1.0) <= 0.0001
+    }
+    
+    @objc
+    private func backButtonTapped() {
+        webView.stopLoading()
+        navigationController?.popViewController(animated: true)
     }
 }
