@@ -22,6 +22,7 @@ struct Consts {
                                       withConfiguration: UIImage.SymbolConfiguration(weight: .bold))
         static let chevron = UIImage(systemName: "chevron.right")
         static let cross = UIImage(systemName: "xmark")
+        static let backButton = Asset.Assets.chevronBackward.image
     }
     
     struct Fonts {
