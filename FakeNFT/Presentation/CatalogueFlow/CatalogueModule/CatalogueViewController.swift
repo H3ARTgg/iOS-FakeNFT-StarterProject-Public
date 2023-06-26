@@ -26,7 +26,26 @@ final class CatalogueViewController: UIViewController {
         control.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return control
     }()
-    
+    private lazy var errorButton: UIButton = {
+        let button = UIButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+        button.setImage(nil, for: .normal)
+        button.setTitle(Consts.LocalizedStrings.errorAlertAgain, for: .normal)
+        button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
+        button.titleLabel?.font = Consts.Fonts.bold17
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.backgroundColor = Asset.Colors.ypLightGray.color
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    private lazy var errorTitle: UILabel = {
+        let title = UILabel()
+        title.text = Consts.LocalizedStrings.errorConnectionMessage
+        title.font = Consts.Fonts.regular17
+        title.textColor = Asset.Colors.ypBlack.color
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
     private var viewModel: CatalogueViewModel
     
     init(viewModel: CatalogueViewModel) {
@@ -44,7 +63,7 @@ final class CatalogueViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
-        collectionView.addSubview(refreshControl)
+        collectionView.insertSubview(refreshControl, at: 0)
         setupLayout()
         
         viewModel.$nftCollections.bind(action: { [weak self] _ in
@@ -53,15 +72,21 @@ final class CatalogueViewController: UIViewController {
             }
         })
         
-        UIBlockingProgressHUD.show()
-        viewModel.$isGotCollections.bind(action: { check in
-            if check {
-                UIBlockingProgressHUD.dismiss()
+        CustomProgressHUD.show()
+        viewModel.$isGotCollections.bind(action: { [weak self] check in
+            DispatchQueue.main.async {
+                CustomProgressHUD.dismiss()
+                if !check {
+                    self?.setupErrorContent()
+                }
             }
         })
         
         if viewModel.isGotCollections {
-            UIBlockingProgressHUD.dismiss()
+            CustomProgressHUD.dismiss()
+        } else {
+            CustomProgressHUD.dismiss()
+            setupErrorContent()
         }
     }
     
@@ -71,10 +96,24 @@ final class CatalogueViewController: UIViewController {
     }
     
     @objc
+    private func didTapErrorButton() {
+        removeErrorContent()
+        CustomProgressHUD.show()
+        viewModel.requestCollections()
+    }
+    
+    @objc
     private func refresh() {
+        forceHideRefreshControl(for: collectionView)
         viewModel.requestCollections()
         collectionView.reloadData()
         refreshControl.endRefreshing()
+    }
+    
+    private func forceHideRefreshControl(for collectionView: UICollectionView) {
+        if collectionView.contentOffset.y < 0 {
+            collectionView.setContentOffset(CGPoint.zero, animated: true)
+        }
     }
     
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
@@ -119,6 +158,30 @@ private extension CatalogueViewController {
         
         present(alert, animated: true)
     }
+    
+    private func setupErrorContent() {
+        [errorTitle, errorButton].forEach {
+            view.addSubview($0)
+        }
+        
+        errorTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        
+        errorButton.snp.makeConstraints { make in
+            make.top.equalTo(errorTitle.snp.bottom).offset(10)
+            make.leading.equalTo(view.snp.leading).offset(60)
+            make.trailing.equalTo(view.snp.trailing).offset(-60)
+            make.height.equalTo(35)
+            
+        }
+    }
+    
+    private func removeErrorContent() {
+        errorTitle.removeFromSuperview()
+        errorButton.removeFromSuperview()
+    }
 }
 
 // MARK: - DataSource
@@ -135,7 +198,6 @@ extension CatalogueViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CatalogueCell.defaultReuseIdentifier, for: indexPath) as? CatalogueCell else {
             return UICollectionViewCell()
         }
-        
         viewModel.configure(cell, for: indexPath)
         return cell
     }

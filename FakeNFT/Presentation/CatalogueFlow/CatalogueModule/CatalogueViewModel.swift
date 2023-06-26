@@ -26,16 +26,19 @@ final class CatalogueViewModel {
                 }
                 self?.isGotCollections = true
             case .failure(_):
+                self?.nftCollections = []
                 self?.isGotCollections = false
             }
         }
     }
     
     func configure(_ cell: CatalogueCell, for indexPath: IndexPath) {
+        guard !nftCollections.isEmpty else { return }
         cell.viewModel = nftCollections[indexPath.section].cell
     }
     
     func configure(_ supView: CatalogueSupplementaryView, for indexPath: IndexPath) {
+        guard !nftCollections.isEmpty else { return }
         supView.viewModel = nftCollections[indexPath.section]
     }
     

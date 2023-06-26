@@ -13,6 +13,8 @@ struct Consts {
         static let byName = NSLocalizedString("by.name", value: "По названию", comment: "Sorting by name")
         static let byNftCount = NSLocalizedString("by.nft.count", value: "По количеству NFT", comment: "Sorting by nft count in collection")
         static let close = NSLocalizedString("close", value: "Закрыть", comment: "Close event")
+        static let errorAlertAgain = NSLocalizedString("error.try.again", value: "Попробовать снова", comment: "Try again text for error")
+        static let errorConnectionMessage = NSLocalizedString("error.connection.message", value: "Что-то пошло не так(", comment: "Connection error text")
     }
     
     struct Images {
