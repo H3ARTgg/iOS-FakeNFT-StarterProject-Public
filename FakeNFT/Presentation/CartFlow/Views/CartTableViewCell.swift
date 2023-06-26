@@ -45,6 +45,7 @@ final class CartTableViewCell: UITableViewCell {
         return button
     }()
     
+    var nft: Nft?
     weak var delegate: CartViewControllerDelegate?
     
     // MARK: - Helpers
@@ -52,6 +53,8 @@ final class CartTableViewCell: UITableViewCell {
         backgroundColor = .clear
         addElements()
         setupConstraints()
+        
+        self.nft = nft
         
         productTitleLabel.text = nft.name
         productImageView.kf.setImage(with: URL(string: nft.image))
@@ -61,7 +64,7 @@ final class CartTableViewCell: UITableViewCell {
     
     // MARK: - Actions
     @objc private func deleteNft() {
-        delegate?.openDeleteNftViewController()
+        delegate?.openDeleteNftViewController(nft)
     }
 }
 

@@ -4,8 +4,9 @@ import UIKit
 protocol CartViewControllerDelegate: AnyObject {
     func getQuantityNfts() -> Int
     func getTotalPrice() -> Double
-    func openDeleteNftViewController()
+    func openDeleteNftViewController(_ nft: Nft?)
     func openPaymentViewController()
+    func reloadTableView()
 }
 
 final class CartViewController: UIViewController {
@@ -190,8 +191,9 @@ extension CartViewController: CartViewControllerDelegate {
         return total
     }
     
-    func openDeleteNftViewController() {
-        let deleteNftVC = DeleteNftViewController()
+    func openDeleteNftViewController(_ nft: Nft?) {
+        let deleteNftVC = DeleteNftViewController(viewModel: viewModel)
+        deleteNftVC.nft = nft
         deleteNftVC.modalPresentationStyle = .overFullScreen
         present(deleteNftVC, animated: true)
     }
@@ -199,5 +201,9 @@ extension CartViewController: CartViewControllerDelegate {
     func openPaymentViewController() {
         let paymentVC = PaymentViewController()
         navigationController?.pushViewController(paymentVC, animated: true)
+    }
+    
+    func reloadTableView() {
+        cartTableView.reloadData()
     }
 }

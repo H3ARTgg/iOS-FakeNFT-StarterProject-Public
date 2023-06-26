@@ -33,4 +33,10 @@ final class CartViewModel: ObservableObject {
     func sortFromTitle() {
         products.sort { $0.name < $1.name }
     }
+    
+    func delete(from id: Int) {
+        if let index = products.firstIndex(where: { $0.id == id }) {
+            products.remove(at: index)
+        }
+    }
 }

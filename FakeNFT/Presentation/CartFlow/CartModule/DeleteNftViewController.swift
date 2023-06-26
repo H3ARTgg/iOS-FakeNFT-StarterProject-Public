@@ -9,6 +9,19 @@ final class DeleteNftViewController: UIViewController {
     
     private let mainStackView = DeleteNftStackView()
     
+    var nft: Nft?
+    
+    private var viewModel: CartViewModel
+    
+    init(viewModel: CartViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBlur()
@@ -47,7 +60,8 @@ final class DeleteNftViewController: UIViewController {
 
 extension DeleteNftViewController: DeleteNftViewControllerDelegate {
     func deleteNft() {
-        
+        viewModel.delete(from: nft?.id ?? 0)
+        dismiss(animated: true)
     }
     
     func closeViewController() {

@@ -77,7 +77,7 @@ final class DeleteNftStackView: UIStackView {
     }
     
     @objc private func deleteNft() {
-        
+        delegate?.deleteNft()
     }
     
     @objc private func cancel() {
