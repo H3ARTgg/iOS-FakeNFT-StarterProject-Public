@@ -34,6 +34,7 @@ final class RatingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.checkUsers()
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

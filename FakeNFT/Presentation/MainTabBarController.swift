@@ -10,7 +10,7 @@ final class MainTabBarController: UITabBarController {
                            creatRatingViewController()]
         
         view.backgroundColor = .white
-        tabBar.unselectedItemTintColor = .black
+        tabBar.unselectedItemTintColor = Asset.Colors.ypBlack.color
     }
 }
 

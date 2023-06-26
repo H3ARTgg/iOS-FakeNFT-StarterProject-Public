@@ -58,11 +58,6 @@ final class UserCardViewController: UIViewController {
             userSiteButton.layer.borderColor = Asset.Colors.ypBlackUniversal.color.cgColor
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
 }
 
 extension UserCardViewController {
@@ -158,6 +153,7 @@ extension UserCardViewController {
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         tabBarController?.tabBar.isHidden = true
+        title = ""
     }
     
     func addViews() {
@@ -207,11 +203,15 @@ extension UserCardViewController {
     
     @objc
     func showUserSiteButtonTapped() {
-        // TODO: make webView
+        showWebViewController()
     }
     
     @objc
     func showUserCollectionButtonTapped() {
         // TODO: make userCollection
+    }
+    
+    func showWebViewController() {
+        // TODO: show webView
     }
 }
