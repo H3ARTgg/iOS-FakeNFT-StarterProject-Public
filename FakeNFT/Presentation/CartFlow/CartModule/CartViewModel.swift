@@ -6,6 +6,8 @@ final class CartViewModel: ObservableObject {
     private var idProducts: [String] = []
     private var cartNetworkService: CartNetworkService
     
+    var isInitialLoadCompleted = false
+    
     init(cartNetworkService: CartNetworkService = CartNetworkService()) {
         self.cartNetworkService = cartNetworkService
         fetchProducts()
@@ -13,11 +15,15 @@ final class CartViewModel: ObservableObject {
     
     private func fetchProducts() {
         cartNetworkService.fetchProducts { [weak self] result in
-            switch result {
-            case .success(let products):
-                self?.products = products
-            case .failure(let error):
-                print(error.localizedDescription)
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let products):
+                    self.products = products
+                    self.isInitialLoadCompleted = true
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }

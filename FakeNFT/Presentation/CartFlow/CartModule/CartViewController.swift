@@ -50,7 +50,13 @@ final class CartViewController: UIViewController {
         addElements()
         setupConstraints()
         
-        UIBlockingProgressHUD.show()
+        if viewModel.isInitialLoadCompleted {
+            cartTableView.reloadData()
+            paymentView.refreshData()
+        } else {
+            UIBlockingProgressHUD.show()
+        }
+        
         viewModel.$products.bind { [weak self] _ in
             guard let self = self else { return }
             DispatchQueue.main.async {
