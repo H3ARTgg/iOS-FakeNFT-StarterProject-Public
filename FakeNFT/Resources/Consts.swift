@@ -1,5 +1,5 @@
 import Foundation
-import UIKit.UIColor
+import UIKit
 
 struct Consts {
     struct LocalizedStrings {
@@ -15,6 +15,7 @@ struct Consts {
         static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
         static let userCollectionButtonTitle = NSLocalizedString("userCollectionButtonTitle", comment: "Text for userCollectionButtonTitle")
         static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewControllerTitle", comment: "Title for UserCollectionViewController")
+        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")    
     }
     
     struct Images {
@@ -24,6 +25,7 @@ struct Consts {
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
         
         static let sortIcon = Asset.Assets.sortIcon.image
+        static let backButton = Asset.Assets.chevronBackward.image
     }
     
     struct Fonts {
