@@ -167,7 +167,7 @@ extension CartTableViewCell {
         
         for index in 0..<rating {
             if let fullStar = productRatingStackView.subviews[index] as? UIImageView {
-                fullStar.image = Asset.Assets.fullStar.image
+                fullStar.image = Asset.Assets.fillStar.image
             }
         }
     }
