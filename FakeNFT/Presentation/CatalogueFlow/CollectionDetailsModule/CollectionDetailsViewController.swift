@@ -11,8 +11,36 @@ final class CollectionDetailsViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let button = UIButton.systemButton(with: Consts.Images.backArrow, target: self, action: #selector(didTapBackButton))
         button.tintColor = Asset.Colors.ypBlack.color
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    private lazy var collectionLabel: UILabel = {
+        let label = UILabel()
+        label.font = Consts.Fonts.bold22
+        label.text = "Peach"
+        return label
+    }()
+    private lazy var aboutAuthorTextView: UITextView = {
+        let textView = UITextView()
+        let author = NSMutableAttributedString(string: "John Doe")
+        author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
+        let attributedString = NSMutableAttributedString(string: "Автор коллекции: ")
+        attributedString.append(author)
+        attributedString.addAttributes([.link: "https://www.vk.com"], range: NSRange(location: 17, length: author.length))
+        textView.attributedText = attributedString
+        textView.font = Consts.Fonts.regular13
+        textView.textColor = Asset.Colors.ypBlack.color
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.textColor = Asset.Colors.ypBlack.color
+        textView.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
+        textView.font = Consts.Fonts.regular13
+        return textView
     }()
     var viewModel: CollectionDetailsViewModel?
     
@@ -41,12 +69,16 @@ final class CollectionDetailsViewController: UIViewController {
 // MARK: - Views
 extension CollectionDetailsViewController {
     private func addSubviews() {
-        [coverImageView, backButton].forEach {
+        [coverImageView, backButton, collectionLabel, aboutAuthorTextView, descriptionTextView].forEach {
             view.addSubview($0)
         }
     }
     
     private func setupLayout() {
+        view.subviews.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
         coverImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
@@ -58,5 +90,31 @@ extension CollectionDetailsViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(9)
             make.leading.equalToSuperview().offset(9)
         }
+        
+        collectionLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(coverImageView.snp.bottom).offset(16)
+        }
+        
+        aboutAuthorTextView.snp.makeConstraints { make in
+            make.top.equalTo(collectionLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().offset(-12)
+            make.height.equalTo(28)
+        }
+        
+        descriptionTextView.snp.makeConstraints { make in
+            make.top.equalTo(aboutAuthorTextView.snp.bottom)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().offset(-12)
+        }
+    }
+}
+
+extension CollectionDetailsViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        UIApplication.shared.canOpenURL(URL)
+        return false
     }
 }
