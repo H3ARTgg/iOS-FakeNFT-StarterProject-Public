@@ -15,6 +15,7 @@
 		1D2785F32A4118A800261272 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1D2785F22A4118A800261272 /* SnapKit */; };
 		1D2785F92A43249100261272 /* CollectionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2785F82A43249100261272 /* CollectionsRequest.swift */; };
 		1D7CD0F02A45CDBE00921667 /* CustomProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD0EF2A45CDBE00921667 /* CustomProgressHUD.swift */; };
+		1D7CD0F22A4A843300921667 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD0F12A4A843300921667 /* UIViewController+Extension.swift */; };
 		1DECC1DD2A454045005A9116 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1DC2A454045005A9116 /* Observable.swift */; };
 		1DECC1DF2A4540B4005A9116 /* NTFCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1DE2A4540B4005A9116 /* NTFCollection.swift */; };
 		1DECC1E12A454503005A9116 /* CatalogueSupplementaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECC1E02A454503005A9116 /* CatalogueSupplementaryViewModel.swift */; };
@@ -88,6 +89,7 @@
 		1D2785EF2A4112A000261272 /* CatalogueSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueSupplementaryView.swift; sourceTree = "<group>"; };
 		1D2785F82A43249100261272 /* CollectionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRequest.swift; sourceTree = "<group>"; };
 		1D7CD0EF2A45CDBE00921667 /* CustomProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressHUD.swift; sourceTree = "<group>"; };
+		1D7CD0F12A4A843300921667 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		1DECC1DC2A454045005A9116 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		1DECC1DE2A4540B4005A9116 /* NTFCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTFCollection.swift; sourceTree = "<group>"; };
 		1DECC1E02A454503005A9116 /* CatalogueSupplementaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueSupplementaryViewModel.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 		78F308A92A3EF4490036BF33 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1D7CD0F12A4A843300921667 /* UIViewController+Extension.swift */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 			);
 			path = UI;
@@ -785,6 +788,7 @@
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				1D2785F92A43249100261272 /* CollectionsRequest.swift in Sources */,
+				1D7CD0F22A4A843300921667 /* UIViewController+Extension.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				1D2785F02A4112A000261272 /* CatalogueSupplementaryView.swift in Sources */,
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,

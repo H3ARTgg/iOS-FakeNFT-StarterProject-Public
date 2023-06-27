@@ -117,8 +117,10 @@ final class CatalogueViewController: UIViewController {
     }
     
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
-        let collectionDetailsVC = CollectionDetailsViewController(viewModel: CollectionDetailsViewModel())
-        present(collectionDetailsVC, animated: true)
+        let detailsVM = viewModel.getViewModelForCollectionDetails(with: indexPath)
+        let collectionDetailsVC = CollectionDetailsViewController(viewModel: detailsVM)
+        collectionDetailsVC.modalPresentationStyle = .overFullScreen
+        presentDetail(collectionDetailsVC)
     }
 }
 

@@ -2,7 +2,7 @@ import Foundation
 
 final class CatalogueViewModel {
     @Observable private(set) var nftCollections: [CatalogueSupplementaryViewModel] = []
-    @Observable private(set) var isGotCollections: Bool = false
+    @Observable private(set) var isGotCollections: Bool = true
     private var networkClient: NetworkClient
     
     init(networkClient: NetworkClient) {
@@ -18,6 +18,7 @@ final class CatalogueViewModel {
                 self?.nftCollections = []
                 collections.forEach {
                     let collection = CatalogueSupplementaryViewModel(
+                        id: $0.id,
                         name: $0.name + " (\($0.nfts.count))",
                         nftCount: $0.nfts.count,
                         cell: CatalogueCellViewModel(imageURL: $0.cover)
@@ -52,5 +53,9 @@ final class CatalogueViewModel {
         nftCollections.sort {
             $0.nftCount < $1.nftCount
         }
+    }
+    
+    func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel {
+        CollectionDetailsViewModel(collectionId: nftCollections[indexPath.row].id, networkClient: networkClient)
     }
 }
