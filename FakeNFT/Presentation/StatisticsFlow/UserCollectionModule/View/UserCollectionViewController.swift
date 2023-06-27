@@ -1,9 +1,11 @@
 import UIKit
+import ProgressHUD
 
 final class UserCollectionViewController: UIViewController {
     
     // MARK: private properties
-    private let viewModel: UserCollectionViewModelProtocol
+    private var viewModel: UserCollectionViewModelProtocol
+    private lazy var refreshControl = makeRefreshControll()
     
     // MARK: UI
     private lazy var collectionView: UICollectionView = makeCollectionView()
@@ -24,6 +26,8 @@ final class UserCollectionViewController: UIViewController {
         addViews()
         viewSetup()
         activateConstraints()
+        bind()
+        viewModel.fetchNft()
     }
 }
 
@@ -39,6 +43,7 @@ extension UserCollectionViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.refreshControl = refreshControl
         return collectionView
     }
     
@@ -52,16 +57,59 @@ extension UserCollectionViewController {
     }
     
     private func activateConstraints() {
-        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    private func bind() {
+        viewModel.updateViewData = { [weak self] _ in
+            guard let self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.collectionView.reloadData()
+            }
+        }
+        
+        viewModel.hideCollectionViewView = { [weak self] _ in
+            ProgressHUD.show()
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.collectionView.alpha = 0
+            }
+        }
+        
+        viewModel.showCollectionView = { [weak self] _ in
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    self.collectionView.alpha = 1
+                }
+            }
+            ProgressHUD.dismiss()
+        }
+    }
+    
+    private func makeRefreshControll() -> UIRefreshControl {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        return refreshControl
+    }
+    
+    @objc
+    func refresh(_ sender: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            self.viewModel.refreshNft()
+            sender.endRefreshing()
+        }
     }
 }
 
 extension UserCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        viewModel.countUsers
     }
     
     func collectionView(

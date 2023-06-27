@@ -225,10 +225,12 @@ extension UserCardViewController {
         switch type {
         case .userSite:
             // TODO: show webView
-            let viewModel = UserCollectionViewModel(nfts: viewModel.nfts)
-            return UserCollectionViewController(viewModel: viewModel)
+            let nftsProvider = NftProvider()
+            let viewModel = UserCollectionViewModel(nftsId: viewModel.nfts, nftsProvider: nftsProvider)
+            return  UserCollectionViewController(viewModel: viewModel)
         case .userCollection:
-            let viewModel = UserCollectionViewModel(nfts: viewModel.nfts)
+            let nftsProvider = NftProvider()
+            let viewModel = UserCollectionViewModel(nftsId: viewModel.nfts, nftsProvider: nftsProvider)
             return  UserCollectionViewController(viewModel: viewModel)
         }
     }

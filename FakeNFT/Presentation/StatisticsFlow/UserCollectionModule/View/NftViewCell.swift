@@ -1,5 +1,5 @@
-import Foundation
 import UIKit
+import Kingfisher
 
 final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
     
@@ -10,6 +10,7 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
         static let cartButtonWidth: CGFloat = 44
         static let viewIndent: CGFloat = 5
         static let ratingViewHeight: CGFloat = 10
+        static let cornerRadius: CGFloat = 12
     }
     
     // MARK: private properties
@@ -37,6 +38,12 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override
+    override func layoutSubviews() {
+        super.layoutSubviews()
+       
+    }
+    
     // MARK: - public methods
     public func initialize(viewModel: NftViewCellViewModelProtocol?) {
         self.viewModel = viewModel
@@ -51,6 +58,7 @@ extension NftViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = CellConstants.cornerRadius
         return imageView
     }
     
@@ -178,7 +186,16 @@ extension NftViewCell {
     }
     
     private func bind() {
-        
+        guard let viewModel else { return }
+        nftNameLabel.text = viewModel.nftName
+        nftPriceLabel.text = viewModel.nftPrice
+        loadImage()
+    }
+    
+    func loadImage() {
+        guard let url = viewModel?.imageURL else { return }
+        nftImageView.kf.indicatorType = .activity
+        nftImageView.kf.setImage(with: url)
     }
     
     @objc

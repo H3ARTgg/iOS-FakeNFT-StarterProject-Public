@@ -26,7 +26,6 @@ final class UserView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
-        bind()
     }
     
     // MARK: - initialization
@@ -44,7 +43,7 @@ final class UserView: UIView {
     // MARK: - public methods
     public func initialize(viewModel: UserViewModelProtocol?) {
         self.viewModel = viewModel
-        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
+        bind()
     }
 }
 
