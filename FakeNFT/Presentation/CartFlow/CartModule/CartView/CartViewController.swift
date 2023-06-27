@@ -11,24 +11,9 @@ protocol CartViewControllerDelegate: AnyObject {
 
 final class CartViewController: UIViewController {
     // MARK: - Properties
-    private lazy var paymentView = PaymentView(delegate: self)
-    
-    private lazy var cartTableView: UITableView = {
-        let table = UITableView()
-        table.dataSource = self
-        table.register(
-            CartTableViewCell.self,
-            forCellReuseIdentifier: Consts.Cart.cartCellIdentifier
-        )
-        
-        table.backgroundColor = .clear
-        table.separatorStyle = .none
-        table.allowsSelection = false
-        table.translatesAutoresizingMaskIntoConstraints = false
-        return table
-    }()
-    
     private var viewModel: CartViewModel
+    
+    weak var updateDelegate: UpdateCartViewDelegate?
     
     // MARK: - Lifecycle
     init(viewModel: CartViewModel = CartViewModel()) {
@@ -43,16 +28,22 @@ final class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        super.loadView()
+        
+        let customView = CartView()
+        customView.configure(delegate: self)
+        updateDelegate = customView
+        view = customView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Asset.Colors.ypWhite.color
         configureNavBar()
-        addElements()
-        setupConstraints()
         
         if viewModel.isInitialLoadCompleted {
-            cartTableView.reloadData()
-            paymentView.refreshData()
+            updateDelegate?.reloadTableView()
+            updateDelegate?.refreshPayment()
         } else {
             UIBlockingProgressHUD.show()
         }
@@ -60,8 +51,8 @@ final class CartViewController: UIViewController {
         viewModel.$products.bind { [weak self] _ in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.cartTableView.reloadData()
-                self.paymentView.refreshData()
+                self.updateDelegate?.reloadTableView()
+                self.updateDelegate?.refreshPayment()
                 UIBlockingProgressHUD.dismiss()
             }
         }
@@ -82,41 +73,6 @@ extension CartViewController {
             target: self,
             action: #selector(openSortAlert)
         )
-    }
-    
-    private func addElements() {
-        [
-            paymentView,
-            cartTableView
-        ].forEach { view.addSubview($0) }
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            cartTableView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 20
-            ),
-            cartTableView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor
-            ),
-            cartTableView.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor
-            ),
-            
-            paymentView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor
-            ),
-            paymentView.topAnchor.constraint(
-                equalTo: cartTableView.bottomAnchor
-            ),
-            paymentView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor
-            ),
-            paymentView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor
-            )
-        ])
     }
     
     private func showAlert() {
@@ -210,6 +166,6 @@ extension CartViewController: CartViewControllerDelegate {
     }
     
     func reloadTableView() {
-        cartTableView.reloadData()
+        updateDelegate?.reloadTableView()
     }
 }

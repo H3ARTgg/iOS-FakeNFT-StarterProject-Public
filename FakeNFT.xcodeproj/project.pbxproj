@@ -24,6 +24,8 @@
 		25179EBF2A48DBBE00D4AA59 /* RatingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25179EBE2A48DBBE00D4AA59 /* RatingStackView.swift */; };
 		252B3F5E2A4A1E31006356D4 /* DeleteNftStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */; };
 		252B3F612A4A5FF1006356D4 /* CartTasks.md in Resources */ = {isa = PBXBuildFile; fileRef = 252B3F602A4A5FF1006356D4 /* CartTasks.md */; };
+		252B3F632A4AECF4006356D4 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B3F622A4AECF4006356D4 /* CartView.swift */; };
+		252B3F662A4AF07C006356D4 /* DeleteNftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B3F652A4AF07C006356D4 /* DeleteNftView.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
 		25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA732A48C816000B1F89 /* PaymentViewController.swift */; };
 		25B4DA762A48CE8F000B1F89 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA752A48CE8F000B1F89 /* UIBlockingProgressHUD.swift */; };
@@ -94,6 +96,8 @@
 		25179EBE2A48DBBE00D4AA59 /* RatingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStackView.swift; sourceTree = "<group>"; };
 		252B3F5D2A4A1E31006356D4 /* DeleteNftStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftStackView.swift; sourceTree = "<group>"; };
 		252B3F602A4A5FF1006356D4 /* CartTasks.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CartTasks.md; sourceTree = "<group>"; };
+		252B3F622A4AECF4006356D4 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		252B3F652A4AF07C006356D4 /* DeleteNftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftView.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		25B4DA732A48C816000B1F89 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		25B4DA752A48CE8F000B1F89 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
@@ -191,6 +195,32 @@
 				25179EBE2A48DBBE00D4AA59 /* RatingStackView.swift */,
 			);
 			path = Rating;
+			sourceTree = "<group>";
+		};
+		252B3F642A4AF065006356D4 /* CartView */ = {
+			isa = PBXGroup;
+			children = (
+				78F308BD2A3EFA510036BF33 /* CartViewController.swift */,
+				252B3F622A4AECF4006356D4 /* CartView.swift */,
+			);
+			path = CartView;
+			sourceTree = "<group>";
+		};
+		252B3F672A4AF2B7006356D4 /* DeleteNftView */ = {
+			isa = PBXGroup;
+			children = (
+				25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */,
+				252B3F652A4AF07C006356D4 /* DeleteNftView.swift */,
+			);
+			path = DeleteNftView;
+			sourceTree = "<group>";
+		};
+		252B3F682A4AF2D7006356D4 /* PaymentView */ = {
+			isa = PBXGroup;
+			children = (
+				25B4DA732A48C816000B1F89 /* PaymentViewController.swift */,
+			);
+			path = PaymentView;
 			sourceTree = "<group>";
 		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
@@ -476,10 +506,10 @@
 		78F308B72A3EF86C0036BF33 /* CartModule */ = {
 			isa = PBXGroup;
 			children = (
-				78F308BD2A3EFA510036BF33 /* CartViewController.swift */,
-				25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */,
-				25B4DA732A48C816000B1F89 /* PaymentViewController.swift */,
 				250DF10C2A47892100AC2E4E /* CartViewModel.swift */,
+				252B3F642A4AF065006356D4 /* CartView */,
+				252B3F672A4AF2B7006356D4 /* DeleteNftView */,
+				252B3F682A4AF2D7006356D4 /* PaymentView */,
 			);
 			path = CartModule;
 			sourceTree = "<group>";
@@ -803,10 +833,12 @@
 				250DF0FB2A47540700AC2E4E /* PaymentView.swift in Sources */,
 				78F308BA2A3EF9A40036BF33 /* ProfileViewController.swift in Sources */,
 				25B4DA762A48CE8F000B1F89 /* UIBlockingProgressHUD.swift in Sources */,
+				252B3F632A4AECF4006356D4 /* CartView.swift in Sources */,
 				250DF0FD2A475D3200AC2E4E /* CustomView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				250DF1062A47860300AC2E4E /* OrderRequest.swift in Sources */,
 				250DF1132A478CBB00AC2E4E /* OrderResult.swift in Sources */,
+				252B3F662A4AF07C006356D4 /* DeleteNftView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				250DF10B2A47876D00AC2E4E /* Nft.swift in Sources */,
 				25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */,
