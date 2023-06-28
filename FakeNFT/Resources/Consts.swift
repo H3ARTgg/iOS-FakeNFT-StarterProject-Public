@@ -25,6 +25,16 @@ struct Consts {
         static let sortButtonCatalogue = Asset.Assets.sortButtonCatalogue.image
         static let backArrow = Asset.Assets.backArrow.image
         static let coverFake = Asset.Assets.coverFake.image
+        static let rating0 = Asset.Assets.rating0.image
+        static let rating1 = Asset.Assets.rating1.image
+        static let rating2 = Asset.Assets.rating2.image
+        static let rating3 = Asset.Assets.rating3.image
+        static let rating4 = Asset.Assets.rating4.image
+        static let rating5 = Asset.Assets.rating5.image
+        static let outCart = Asset.Assets.notInCart.image
+        static let inCart = Asset.Assets.inCart.image
+        static let inFavorites = Asset.Assets.inFavorites.image
+        static let outFavorites = Asset.Assets.notInFavorites.image
     }
     
     struct Fonts {
