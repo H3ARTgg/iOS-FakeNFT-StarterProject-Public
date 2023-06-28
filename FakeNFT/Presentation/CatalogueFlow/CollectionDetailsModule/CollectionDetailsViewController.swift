@@ -72,8 +72,13 @@ final class CollectionDetailsViewController: UIViewController {
     private func didTapBackButton() {
         dismissDetail()
     }
+    
+    private func presentNftViewViewController() {
+        // *показывает экран просмотра NFT*
+    }
 }
 
+// MARK: - DataSource
 extension CollectionDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         9
@@ -88,6 +93,7 @@ extension CollectionDetailsViewController: UICollectionViewDataSource {
     
 }
 
+// MARK: - DelegateFlowLayout
 extension CollectionDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: collectionView.bounds.width / 3 - 9, height: 192)
@@ -99,6 +105,10 @@ extension CollectionDetailsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presentNftViewViewController()
     }
 }
 
