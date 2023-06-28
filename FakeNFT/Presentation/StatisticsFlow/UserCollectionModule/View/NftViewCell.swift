@@ -26,6 +26,7 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var buttonAndLablesStackStackView = makeButtonAndLablesStackStackView()
     private lazy var lablesView = makeLablesView()
     private lazy var cartButton = makeCartButton()
+    private lazy var ratingStackView = makeRatingStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,13 +38,7 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Override
-    override func layoutSubviews() {
-        super.layoutSubviews()
-       
-    }
-    
+        
     // MARK: - public methods
     public func initialize(viewModel: NftViewCellViewModelProtocol?) {
         self.viewModel = viewModel
@@ -66,7 +61,6 @@ extension NftViewCell {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        button.setImage(Asset.Assets.like.image, for: .normal)
         button.backgroundColor = .clear
         return button
     }
@@ -105,7 +99,7 @@ extension NftViewCell {
         button.setImage(Asset.Assets.cart.image, for: .normal)
         button.tintColor = Asset.Colors.ypBlack.color
         button.backgroundColor = .clear
-        button.imageEdgeInsets = UIEdgeInsets(top: -30, left: 0, bottom: 0, right: 0)
+        button.imageEdgeInsets = UIEdgeInsets(top: -15, left: 0, bottom: 0, right: 0)
         return button
     }
     
@@ -115,6 +109,7 @@ extension NftViewCell {
         stackView.axis = .vertical
         stackView.backgroundColor = .clear
         stackView.distribution = .fill
+        stackView.spacing = 5
         return stackView
     }
     
@@ -130,6 +125,11 @@ extension NftViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.backgroundColor = .clear
+        return stackView
+    }
+    
+    private func makeRatingStackView() -> RatingStackView {
+        let stackView = RatingStackView()
         return stackView
     }
     
@@ -153,6 +153,8 @@ extension NftViewCell {
         [lablesView, cartButton].forEach {
             buttonAndLablesStackStackView.addArrangedSubview($0)
         }
+        
+        ratingView.addSubview(ratingStackView)
     }
     
     private func activateConstraints() {
@@ -174,9 +176,9 @@ extension NftViewCell {
             nftPriceLabel.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor, constant: CellConstants.viewIndent),
             nftPriceLabel.widthAnchor.constraint(equalTo: lablesView.widthAnchor),
             
-            ratingView.heightAnchor.constraint(equalToConstant: CellConstants.ratingViewHeight),
-            
-            buttonAndLablesStackStackView.topAnchor.constraint(equalTo: ratingView.bottomAnchor),
+            ratingView.heightAnchor.constraint(equalTo: ratingStackView.heightAnchor),
+            ratingStackView.leftAnchor.constraint(equalTo: ratingView.leftAnchor),
+            ratingStackView.centerYAnchor.constraint(equalTo: ratingView.centerYAnchor),
             
             likeButton.widthAnchor.constraint(equalToConstant: CellConstants.cartButtonWidth),
             likeButton.heightAnchor.constraint(equalTo: likeButton.widthAnchor),
@@ -189,10 +191,17 @@ extension NftViewCell {
         guard let viewModel else { return }
         nftNameLabel.text = viewModel.nftName
         nftPriceLabel.text = viewModel.nftPrice
+        ratingStackView.setupRating(viewModel.rating)
+        setLikeImage(isLiked: viewModel.isLiked)
         loadImage()
     }
     
-    func loadImage() {
+    private func setLikeImage(isLiked: Bool) {
+        let image = isLiked ? Asset.Assets.like.image : Asset.Assets.noLike.image
+        likeButton.setImage(image, for: .normal)
+    }
+    
+    private func loadImage() {
         guard let url = viewModel?.imageURL else { return }
         nftImageView.kf.indicatorType = .activity
         nftImageView.kf.setImage(with: url)

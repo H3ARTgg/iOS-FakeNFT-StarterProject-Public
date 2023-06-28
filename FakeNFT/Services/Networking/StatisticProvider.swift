@@ -1,41 +1,23 @@
 import Foundation
 
 protocol StatisticProviderProtocol {
-    func fetchUsersNextPage(isRefresh: Bool, filter: StatisticFilter, completion: @escaping (Result<[User], Error>) -> Void)
+   mutating func fetchUsersNextPage(completion: @escaping (Result<[User], Error>) -> Void)
 }
 
-final class StatisticProvider {
+struct StatisticProvider {
     private let networkClient = DefaultNetworkClient()
     private var lastLoadedPage: Int?
 }
 
 extension StatisticProvider: StatisticProviderProtocol {
-    func fetchUsersNextPage(
-        isRefresh: Bool,
-        filter: StatisticFilter,
+    mutating func fetchUsersNextPage(
         completion: @escaping (Result<[User], Error>
         ) -> Void) {
         assert(Thread.isMainThread)
-        guard let url = Consts.Statistic.urlStatistic else { return }
-        
-        if isRefresh { lastLoadedPage = nil }
-        var nextPage: Int
-        
-        if let lastLoadedPage = lastLoadedPage {
-            nextPage = lastLoadedPage + 1
-            self.lastLoadedPage = nextPage
-        } else {
-            nextPage = 1
-            self.lastLoadedPage = nextPage
-        }
-        
+      
         let networkRequest = StatiscticRequest(
-            endpoint: url,
-            queryParameters: [
-                "page": "\(nextPage)",
-                "limit": "\(Consts.Statistic.limiteUsersOnPage)",
-                "sortBy": filter.rawValue
-            ],
+            endpoint: Consts.Statistic.urlStatistic,
+            queryParameters: nil,
             httpMethod: .get
         )
         
@@ -48,7 +30,7 @@ extension StatisticProvider: StatisticProviderProtocol {
                                 description: result.description,
                                 website: result.website,
                                 nfts: result.nfts,
-                                rating: result.rating,
+                                rating: Int(result.rating) ?? 0,
                                 id: result.id
                     )
                 }

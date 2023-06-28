@@ -2,8 +2,9 @@ import Foundation
 
 protocol UserCollectionViewModelProtocol {
     var updateViewData: ((Bool) -> Void)? { get set }
-    var hideCollectionViewView: ((Bool) -> Void)? { get set }
+    var hideCollectionView: ((Bool) -> Void)? { get set }
     var showCollectionView: ((Bool) -> Void)? { get set }
+    var showPlugView: ((String) -> Void)? { get set }
     
     var countUsers: Int { get }
     func nftCellViewModel(at index: Int) -> NftViewCellViewModel
@@ -13,15 +14,16 @@ protocol UserCollectionViewModelProtocol {
 
 final class UserCollectionViewModel: UserCollectionViewModelProtocol {
     public var updateViewData: ((Bool) -> Void)?
-    public var hideCollectionViewView: ((Bool) -> Void)?
+    public var hideCollectionView: ((Bool) -> Void)?
     public var showCollectionView: ((Bool) -> Void)?
+    public var showPlugView: ((String) -> Void)?
     
     private var nftsId: [String]? 
     
     private var nfts: [Nft] = [] {
         didSet {
-            guard let nftsId,
-            !nftsId.isEmpty else {
+            guard let nftsId
+            else {
                 showCollectionView?(true)
                 return
             }
@@ -41,12 +43,17 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
     
     public func nftCellViewModel(at index: Int) -> NftViewCellViewModel {
         let nft = nfts[index]
-        return NftViewCellViewModel(nft: nft)
+        // TODO: необходимо проверить ставил ли лайк наш профиль этому NFT
+        return NftViewCellViewModel(nft: nft, isLiked: false)
     }
     
     public func fetchNft() {
-        hideCollectionViewView?(true)
         guard let nftsId else { return }
+        guard !nftsId.isEmpty else {
+            showPlugView?(Consts.LocalizedStrings.plugLabelText)
+            return
+        }
+        hideCollectionView?(true)
         nftsId.forEach({ [weak self] id in
             nftsProvider.fetchNft(id: id) { result in
                 switch result {

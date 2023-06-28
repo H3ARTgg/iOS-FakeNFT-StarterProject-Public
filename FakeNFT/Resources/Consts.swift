@@ -15,7 +15,7 @@ struct Consts {
         static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
         static let userCollectionButtonTitle = NSLocalizedString("userCollectionButtonTitle", comment: "Text for userCollectionButtonTitle")
         static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewControllerTitle", comment: "Title for UserCollectionViewController")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")    
+        static let plugLabelText = NSLocalizedString("plugLabelText", comment: "text for plug label in UserCollectionViewController")
     }
     
     struct Images {
@@ -47,10 +47,5 @@ struct Consts {
         // Network
         static let urlStatistic: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/users")
         static let urlNft: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/nft/")
-        static let limiteUsersOnPage = 10
-    }
-    
-    struct UserCard {
-        
     }
 }

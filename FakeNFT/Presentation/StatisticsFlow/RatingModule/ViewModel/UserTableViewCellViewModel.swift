@@ -11,7 +11,7 @@ final class UserTableViewCellViewModel: UserTableViewCellViewModelProtocol {
     let user: User
     
     init(user: User) {
-        self.positionInRating = user.rating
+        self.positionInRating = String(user.rating) 
         self.user = user
     }
     

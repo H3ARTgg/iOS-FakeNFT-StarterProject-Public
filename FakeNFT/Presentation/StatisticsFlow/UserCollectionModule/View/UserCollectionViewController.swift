@@ -8,7 +8,8 @@ final class UserCollectionViewController: UIViewController {
     private lazy var refreshControl = makeRefreshControll()
     
     // MARK: UI
-    private lazy var collectionView: UICollectionView = makeCollectionView()
+    private lazy var collectionView = makeCollectionView()
+    private lazy var plugLabel = makePlugLabel()
     
     // MARK: Initialization
     init(viewModel: UserCollectionViewModelProtocol) {
@@ -47,13 +48,25 @@ extension UserCollectionViewController {
         return collectionView
     }
     
+    private func makePlugLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Asset.Colors.ypBlack.color
+        label.textAlignment = .center
+        label.font = Consts.Fonts.bold22
+        label.isHidden = true
+        return label
+    }
+    
     private func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         title = Consts.LocalizedStrings.userCollectionViewControllerTitle
     }
     
     private func addViews() {
-        view.addSubview(collectionView)
+        [collectionView, plugLabel].forEach {
+            view.addSubview($0)
+        }
     }
     
     private func activateConstraints() {
@@ -61,6 +74,10 @@ extension UserCollectionViewController {
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        plugLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        plugLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        plugLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
     }
     
     private func bind() {
@@ -72,7 +89,7 @@ extension UserCollectionViewController {
             }
         }
         
-        viewModel.hideCollectionViewView = { [weak self] _ in
+        viewModel.hideCollectionView = { [weak self] _ in
             ProgressHUD.show()
             UIView.animate(withDuration: 0.3) { [weak self] in
                 guard let self else { return }
@@ -88,6 +105,12 @@ extension UserCollectionViewController {
                 }
             }
             ProgressHUD.dismiss()
+        }
+        
+        viewModel.showPlugView = { [weak self] text in
+            guard let self else { return }
+            self.plugLabel.text = text
+            self.plugLabel.isHidden = false
         }
     }
     

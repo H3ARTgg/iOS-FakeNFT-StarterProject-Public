@@ -224,10 +224,8 @@ extension UserCardViewController {
     private func creatViewController(type: TypeViewController) -> UIViewController {
         switch type {
         case .userSite:
-            // TODO: show webView
-            let nftsProvider = NftProvider()
-            let viewModel = UserCollectionViewModel(nftsId: viewModel.nfts, nftsProvider: nftsProvider)
-            return  UserCollectionViewController(viewModel: viewModel)
+            let viewModel = WebViewViewModel(url: viewModel.website)
+            return  WebViewViewController(viewModel: viewModel)
         case .userCollection:
             let nftsProvider = NftProvider()
             let viewModel = UserCollectionViewModel(nftsId: viewModel.nfts, nftsProvider: nftsProvider)

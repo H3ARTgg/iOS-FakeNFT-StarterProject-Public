@@ -4,7 +4,7 @@ protocol NftProviderProtocol {
     func fetchNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
 }
 
-final class NftProvider {
+struct NftProvider {
     private let networkClient = DefaultNetworkClient()
 }
 
