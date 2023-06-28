@@ -42,13 +42,21 @@ final class CollectionDetailsViewController: UIViewController {
         textView.font = Consts.Fonts.regular13
         return textView
     }()
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+        collectionView.register(CollectionDetailsCell.self)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = Asset.Colors.ypWhite.color
+        return collectionView
+    }()
     var viewModel: CollectionDetailsViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
         addSubviews()
-        setupLayout()
+        setupLayouts()
     }
     
     init(viewModel: CollectionDetailsViewModel) {
@@ -66,15 +74,36 @@ final class CollectionDetailsViewController: UIViewController {
     }
 }
 
+extension CollectionDetailsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell(frame: .zero)
+    }
+    
+}
+
+extension CollectionDetailsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.bounds.width / 2 - 18, height: 192)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        9
+    }
+}
+
 // MARK: - Views
 extension CollectionDetailsViewController {
     private func addSubviews() {
-        [coverImageView, backButton, collectionLabel, aboutAuthorTextView, descriptionTextView].forEach {
+        [coverImageView, backButton, collectionLabel, aboutAuthorTextView, descriptionTextView, collectionView].forEach {
             view.addSubview($0)
         }
     }
     
-    private func setupLayout() {
+    private func setupLayouts() {
         view.subviews.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -109,9 +138,17 @@ extension CollectionDetailsViewController {
             make.leading.equalToSuperview().offset(12)
             make.trailing.equalToSuperview().offset(-12)
         }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(24)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
 }
 
+// MARK: = TextViewDelegate
 extension CollectionDetailsViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         UIApplication.shared.canOpenURL(URL)
