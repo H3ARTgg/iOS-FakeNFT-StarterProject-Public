@@ -27,7 +27,7 @@ final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    var isFailedCancellable: AnyCancellable?
+    private(set) var isFailedCancellable: AnyCancellable?
     var viewModel: CatalogueCellViewModelProtocol? {
         didSet {
             isFailedCancellable = viewModel?.isFailedPublisher

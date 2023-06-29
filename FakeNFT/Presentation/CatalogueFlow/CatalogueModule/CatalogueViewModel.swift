@@ -5,7 +5,7 @@ protocol CatalogueViewModelProtocol {
     var isGotCollectionPublisher: AnyPublisher<Bool, Never> { get }
     var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> { get }
     func requestCollections()
-    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModel?
+    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModelProtocol?
     func getViewModelForSupView(with indexPath: IndexPath) -> CatalogueSupplementaryViewModel?
     func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel
     func sortByName()
@@ -53,7 +53,7 @@ final class CatalogueViewModel: CatalogueViewModelProtocol {
         }
     }
     
-    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModel? {
+    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModelProtocol? {
         guard !nftCollectionsSubject.value.isEmpty else { return nil }
         return nftCollectionsSubject.value[indexPath.section].cell
     }
