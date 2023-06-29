@@ -59,6 +59,7 @@ extension RatingViewController {
     
     private func makeRefreshControll() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .clear
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         return refreshControl
     }
@@ -103,7 +104,6 @@ extension RatingViewController {
         }
         
         viewModel.hideTableView = { [weak self] _ in
-            ProgressHUD.show()
             UIView.animate(withDuration: 0.3) { [weak self] in
                 guard let self else { return }
                 self.ratingTableView.alpha = 0
@@ -126,6 +126,7 @@ extension RatingViewController {
     
     @objc
     private func refresh(_ sender: UIRefreshControl) {
+        ProgressHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
             self.viewModel.fetchUsers()

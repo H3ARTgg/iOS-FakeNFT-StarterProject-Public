@@ -116,6 +116,7 @@ extension UserCollectionViewController {
     
     private func makeRefreshControll() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .clear
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         return refreshControl
     }
