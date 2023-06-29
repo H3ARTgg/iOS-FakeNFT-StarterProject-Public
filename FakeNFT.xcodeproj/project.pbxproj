@@ -195,6 +195,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D7CD1132A4DADD300921667 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D7CD0F32A4B898E00921667 /* CollectionDetailsCell.swift */,
+				1D7CD0F52A4B89C300921667 /* CollectionDetailsCellViewModel.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		1D7CD1142A4DAE7F00921667 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D7CD0FB2A4BA41C00921667 /* NFT.swift */,
+				1D7CD0FD2A4BA72800921667 /* Rating.swift */,
+				1D7CD1032A4C720600921667 /* OrderResult.swift */,
+				1D7CD1012A4C719700921667 /* LikesResult.swift */,
+				1D7CD1112A4D065500921667 /* OrderModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		1DECC1E62A455787005A9116 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,13 +239,8 @@
 			children = (
 				1DECC1E92A456660005A9116 /* CollectionDetailsViewController.swift */,
 				1DECC1EB2A456686005A9116 /* CollectionDetailsViewModel.swift */,
-				1D7CD0F32A4B898E00921667 /* CollectionDetailsCell.swift */,
-				1D7CD0F52A4B89C300921667 /* CollectionDetailsCellViewModel.swift */,
-				1D7CD0FB2A4BA41C00921667 /* NFT.swift */,
-				1D7CD0FD2A4BA72800921667 /* Rating.swift */,
-				1D7CD1012A4C719700921667 /* LikesResult.swift */,
-				1D7CD1032A4C720600921667 /* OrderResult.swift */,
-				1D7CD1112A4D065500921667 /* OrderModel.swift */,
+				1D7CD1142A4DAE7F00921667 /* Models */,
+				1D7CD1132A4DADD300921667 /* Cell */,
 			);
 			path = CollectionDetailsModule;
 			sourceTree = "<group>";
