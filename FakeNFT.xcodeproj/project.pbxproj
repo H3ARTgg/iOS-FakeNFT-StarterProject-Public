@@ -53,6 +53,7 @@
 		1D7CD1442A4E368000921667 /* CollectionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD13D2A4E368000921667 /* CollectionsRequest.swift */; };
 		1D7CD1452A4E368000921667 /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD13E2A4E368000921667 /* OrderRequest.swift */; };
 		1D7CD1492A4E36F900921667 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD1482A4E36F900921667 /* Observable.swift */; };
+		1D7CD14B2A4E420500921667 /* CatalogueTasks.md in Resources */ = {isa = PBXBuildFile; fileRef = 1D7CD14A2A4E420500921667 /* CatalogueTasks.md */; };
 		1DECC1DD2A454045005A9116 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1DECC1DF2A4540B4005A9116 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1DECC1E12A454503005A9116 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -148,6 +149,7 @@
 		1D7CD13D2A4E368000921667 /* CollectionsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsRequest.swift; sourceTree = "<group>"; };
 		1D7CD13E2A4E368000921667 /* OrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		1D7CD1482A4E36F900921667 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		1D7CD14A2A4E420500921667 /* CatalogueTasks.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CatalogueTasks.md; path = ../../../Desktop/CatalogueTasks.md; sourceTree = "<group>"; };
 		25179EBC2A48DBAA00D4AA59 /* StarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageView.swift; sourceTree = "<group>"; };
 		25179EBE2A48DBBE00D4AA59 /* RatingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStackView.swift; sourceTree = "<group>"; };
 		37C6592EB3B1559F974F9C99 /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 		786545162A40C5A200C1961B /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
+				1D7CD14A2A4E420500921667 /* CatalogueTasks.md */,
 			);
 			path = Decomposition;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78F308A72A3EF40C0036BF33 /* Colors.xcassets in Resources */,
+				1D7CD14B2A4E420500921667 /* CatalogueTasks.md in Resources */,
 				78F308CB2A3F02550036BF33 /* Localizable.strings in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
