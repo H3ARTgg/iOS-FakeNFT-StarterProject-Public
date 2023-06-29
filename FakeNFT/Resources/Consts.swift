@@ -15,6 +15,7 @@ struct Consts {
         static let close = NSLocalizedString("close", value: "Закрыть", comment: "Close event")
         static let errorAlertAgain = NSLocalizedString("error.try.again", value: "Попробовать снова", comment: "Try again text for error")
         static let errorConnectionMessage = NSLocalizedString("error.connection.message", value: "Что-то пошло не так(", comment: "Connection error text")
+        static let collectionAuthor = NSLocalizedString("collection.author", value: "Автор коллекции", comment: "Collection author text")
     }
     
     struct Images {

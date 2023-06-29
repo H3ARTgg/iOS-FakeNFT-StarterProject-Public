@@ -88,7 +88,7 @@ final class CollectionDetailsViewController: UIViewController {
     private func makeTextForAboutAuthor(author: String) -> NSAttributedString {
         let author = NSMutableAttributedString(string: author)
         author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
-        let attributedString = NSMutableAttributedString(string: "Автор коллекции: ")
+        let attributedString = NSMutableAttributedString(string: "\(Consts.LocalizedStrings.collectionAuthor): ")
         attributedString.append(author)
         attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 17, length: author.length))
         return attributedString
