@@ -18,7 +18,7 @@ final class CatalogueCellViewModel: Identifiable {
             case .success(let image):
                 imageView.image = image.image
                 self?.isFailed = false
-            case .failure(_):
+            case .failure:
                 self?.isFailed = true
             }
         }

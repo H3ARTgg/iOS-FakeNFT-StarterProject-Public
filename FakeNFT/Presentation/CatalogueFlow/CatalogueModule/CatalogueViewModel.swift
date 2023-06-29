@@ -26,7 +26,7 @@ final class CatalogueViewModel {
                     self?.nftCollections.append(collection)
                 }
                 self?.isGotCollections = true
-            case .failure(_):
+            case .failure:
                 self?.nftCollections = []
                 self?.isGotCollections = false
             }
@@ -56,6 +56,6 @@ final class CatalogueViewModel {
     }
     
     func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel {
-        CollectionDetailsViewModel(collectionId: nftCollections[indexPath.row].id, networkClient: networkClient)
+        CollectionDetailsViewModel(collectionId: nftCollections[indexPath.section].id, networkClient: networkClient)
     }
 }
