@@ -1,8 +1,15 @@
 import UIKit
 import SnapKit
 import ProgressHUD
+import Combine
 
-final class CatalogueViewController: UIViewController {
+protocol CatalogueViewControllerProtocol {
+    var viewModel: CatalogueViewModelProtocol { get }
+    var isGotCollectionCancellable: AnyCancellable? { get }
+    var nftCollectionsCancellable: AnyCancellable? { get }
+}
+
+final class CatalogueViewController: UIViewController, CatalogueViewControllerProtocol {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(CatalogueCell.self)
@@ -46,9 +53,11 @@ final class CatalogueViewController: UIViewController {
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
-    private var viewModel: CatalogueViewModel
+    private(set) var viewModel: CatalogueViewModelProtocol
+    private(set) var isGotCollectionCancellable: AnyCancellable?
+    private(set) var nftCollectionsCancellable: AnyCancellable?
     
-    init(viewModel: CatalogueViewModel) {
+    init(viewModel: CatalogueViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.catalogue,
@@ -66,28 +75,22 @@ final class CatalogueViewController: UIViewController {
         collectionView.insertSubview(refreshControl, at: 0)
         setupLayout()
         
-        viewModel.$nftCollections.bind(action: { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        })
-        
         CustomProgressHUD.show()
-        viewModel.$isGotCollections.bind(action: { [weak self] check in
-            DispatchQueue.main.async {
+        
+        nftCollectionsCancellable = viewModel.nftCollectionsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.collectionView.reloadData()
+            })
+        
+        isGotCollectionCancellable = viewModel.isGotCollectionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] check in
                 CustomProgressHUD.dismiss()
                 if !check {
                     self?.setupErrorContent()
                 }
             }
-        })
-        
-        if viewModel.isGotCollections {
-            CustomProgressHUD.dismiss()
-        } else {
-            CustomProgressHUD.dismiss()
-            setupErrorContent()
-        }
     }
     
     @objc
@@ -193,14 +196,14 @@ extension CatalogueViewController: UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel.nftCollections.count
+        viewModel.getNftsCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CatalogueCell.defaultReuseIdentifier, for: indexPath) as? CatalogueCell else {
             return UICollectionViewCell()
         }
-        viewModel.configure(cell, for: indexPath)
+        cell.viewModel = viewModel.getViewModelForCell(with: indexPath)
         return cell
     }
     
@@ -220,7 +223,7 @@ extension CatalogueViewController: UICollectionViewDataSource {
             assertionFailure("No SupplementaryView")
             return UICollectionReusableView(frame: .zero)
         }
-        viewModel.configure(view, for: indexPath)
+        view.viewModel = viewModel.getViewModelForSupView(with: indexPath)
         return view
     }
 }

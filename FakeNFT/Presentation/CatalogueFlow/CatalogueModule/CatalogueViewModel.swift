@@ -1,8 +1,27 @@
 import Foundation
+import Combine
 
-final class CatalogueViewModel {
-    @Observable private(set) var nftCollections: [CatalogueSupplementaryViewModel] = []
-    @Observable private(set) var isGotCollections: Bool = true
+protocol CatalogueViewModelProtocol {
+    var isGotCollectionPublisher: AnyPublisher<Bool, Never> { get }
+    var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> { get }
+    func requestCollections()
+    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModel?
+    func getViewModelForSupView(with indexPath: IndexPath) -> CatalogueSupplementaryViewModel?
+    func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel
+    func sortByName()
+    func sortByNftCount()
+    func getNftsCount() -> Int
+}
+
+final class CatalogueViewModel: CatalogueViewModelProtocol {
+    var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> {
+        nftCollectionsSubject.eraseToAnyPublisher()
+    }
+    var isGotCollectionPublisher: AnyPublisher<Bool, Never> {
+        isGotCollectionSubject.eraseToAnyPublisher()
+    }
+    private let isGotCollectionSubject = CurrentValueSubject<Bool, Never>(false)
+    private let nftCollectionsSubject = CurrentValueSubject<[CatalogueSupplementaryViewModel], Never>([])
     private var networkClient: NetworkClient
     
     init(networkClient: NetworkClient) {
@@ -13,9 +32,10 @@ final class CatalogueViewModel {
     func requestCollections() {
         let request = CollectionsRequest()
         networkClient.send(request: request, type: [NFTCollection].self) { [weak self] (result: Result<[NFTCollection], Error>) in
+            guard let self else { return }
             switch result {
             case .success(let collections):
-                self?.nftCollections = []
+                self.nftCollectionsSubject.send([])
                 collections.forEach {
                     let collection = CatalogueSupplementaryViewModel(
                         id: $0.id,
@@ -23,39 +43,43 @@ final class CatalogueViewModel {
                         nftCount: $0.nfts.count,
                         cell: CatalogueCellViewModel(imageURL: $0.cover)
                     )
-                    self?.nftCollections.append(collection)
+                    self.nftCollectionsSubject.value.append(collection)
                 }
-                self?.isGotCollections = true
+                self.isGotCollectionSubject.send(true)
             case .failure:
-                self?.nftCollections = []
-                self?.isGotCollections = false
+                self.nftCollectionsSubject.send([])
+                self.isGotCollectionSubject.send(false)
             }
         }
     }
     
-    func configure(_ cell: CatalogueCell, for indexPath: IndexPath) {
-        guard !nftCollections.isEmpty else { return }
-        cell.viewModel = nftCollections[indexPath.section].cell
+    func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModel? {
+        guard !nftCollectionsSubject.value.isEmpty else { return nil }
+        return nftCollectionsSubject.value[indexPath.section].cell
     }
     
-    func configure(_ supView: CatalogueSupplementaryView, for indexPath: IndexPath) {
-        guard !nftCollections.isEmpty else { return }
-        supView.viewModel = nftCollections[indexPath.section]
+    func getViewModelForSupView(with indexPath: IndexPath) -> CatalogueSupplementaryViewModel? {
+        guard !nftCollectionsSubject.value.isEmpty else { return nil }
+        return nftCollectionsSubject.value[indexPath.section]
     }
     
     func sortByName() {
-        nftCollections.sort {
+        nftCollectionsSubject.value.sort {
             $0.name < $1.name
         }
     }
     
     func sortByNftCount() {
-        nftCollections.sort {
+        nftCollectionsSubject.value.sort {
             $0.nftCount < $1.nftCount
         }
     }
     
     func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel {
-        CollectionDetailsViewModel(collectionId: nftCollections[indexPath.section].id, networkClient: networkClient)
+        CollectionDetailsViewModel(collectionId: nftCollectionsSubject.value[indexPath.section].id, networkClient: networkClient)
+    }
+    
+    func getNftsCount() -> Int {
+        nftCollectionsSubject.value.count
     }
 }
