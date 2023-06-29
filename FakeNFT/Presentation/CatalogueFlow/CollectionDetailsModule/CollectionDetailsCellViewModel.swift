@@ -24,7 +24,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
     }
     
     func downloadImageFor(_ imageView: UIImageView) {
-        
+        imageView.kf.setImage(with: URL(string: images[0]))
     }
     
     func getImageForRating() -> UIImage {
