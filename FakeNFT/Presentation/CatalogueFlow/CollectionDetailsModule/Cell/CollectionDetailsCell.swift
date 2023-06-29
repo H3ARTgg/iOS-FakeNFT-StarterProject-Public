@@ -49,6 +49,12 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                     CustomProgressHUD.dismiss()
                     _ = check ? self?.setFavorite() : self?.setNotFavorite()
                 })
+                
+                viewModel?.$isFailed.bind(action: { check in
+                    if check {
+                        CustomProgressHUD.dismiss()
+                    }
+                })
             }
         }
     
