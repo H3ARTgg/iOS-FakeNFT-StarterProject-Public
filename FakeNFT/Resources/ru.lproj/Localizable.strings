@@ -11,4 +11,4 @@
 "statistics.icon" = "Статистика";
 
 /* UserCardViewController */
-userCollectionButtonTitle = "Коллекция NFT (%d)";
+"userCollectionButton.title" = "Коллекция NFT (%d)";

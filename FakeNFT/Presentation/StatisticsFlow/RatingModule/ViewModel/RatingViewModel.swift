@@ -60,7 +60,10 @@ final class RatingViewModel {
             guard let self else { return }
             switch result {
             case .success(let users):
-                self.fetchedUsers = users
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    self.fetchedUsers = users
+                }
             case .failure(let failure):
                 // TODO: show error alert
                 print("not internet \(failure.localizedDescription)")
@@ -70,14 +73,11 @@ final class RatingViewModel {
     
     private func sortUsers() {
         hideTableView?(true)
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            switch self.filter {
-            case .name:
-                self.sortedUsers = self.nameSorting
-            case .rating:
-                self.sortedUsers = self.ratingSorting
-            }
+        switch self.filter {
+        case .name:
+            self.sortedUsers = self.nameSorting
+        case .rating:
+            self.sortedUsers = self.ratingSorting
         }
     }
 }

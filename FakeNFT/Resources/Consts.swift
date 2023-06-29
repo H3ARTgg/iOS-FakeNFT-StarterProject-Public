@@ -8,14 +8,15 @@ struct Consts {
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
         static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
         
-        static let statisticAlertTitle = NSLocalizedString("statisticAlert.title", comment: "text for statistic's title alert")
-        static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", comment: "text for statistic's action sheep sort by name")
-        static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", comment: "text for statistic's action sheep sort by rating")
-        static let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
-        static let userSiteButtonTitle = NSLocalizedString("userSiteButtonTitle", comment: "Text for userSiteButton")
-        static let userCollectionButtonTitle = NSLocalizedString("userCollectionButtonTitle", comment: "Text for userCollectionButtonTitle")
-        static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewControllerTitle", comment: "Title for UserCollectionViewController")
-        static let plugLabelText = NSLocalizedString("plugLabelText", comment: "text for plug label in UserCollectionViewController")
+        // Statistic epic
+        static let statisticAlertTitle = NSLocalizedString("statisticAlert.title", value: "Sorting", comment: "text for statistic's title alert")
+        static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", value: "By name", comment: "text for statistic's title alert")
+        static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", value: "By rating", comment: "text for statistic's action sheep sort by rating")
+        static let alertCancelText = NSLocalizedString("cancelAction.Text", value: "Cancel", comment: "Text for alert cancel button")
+        static let userSiteButtonTitle = NSLocalizedString("userSiteButton.Title", value: "Go to site", comment: "Text for userSiteButton")
+        static let userCollectionButtonTitle = NSLocalizedString("userCollectionButton.title", value: "Collection NFT (%d)", comment: "Text for userCollectionButtonTitle")
+        static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewController.Title", value: "Collection NFT", comment: "Title for UserCollectionViewController")
+        static let plugLabelText = NSLocalizedString("plugLabel.Text", value: "No NFT", comment: "text for plug label in UserCollectionViewController")
     }
     
     struct Images {
