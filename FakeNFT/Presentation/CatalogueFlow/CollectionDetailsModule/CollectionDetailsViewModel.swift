@@ -51,6 +51,7 @@ final class CollectionDetailsViewModel {
     }
     
     private func requestNfts(_ ids: [String]) {
+        // Загружаю все NFT, так как иначе быстрее достигается лимит запросов.
         let request = NFTsRequest()
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
