@@ -3,26 +3,22 @@ import UIKit
 final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Consts.Images.coverFake
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         return imageView
     }()
     private lazy var ratingImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Consts.Images.rating2
         return imageView
     }()
     private lazy var name: UILabel = {
         let label = UILabel()
-        label.text = "Archie"
         label.font = Consts.Fonts.bold17
         label.textColor = Asset.Colors.ypBlack.color
         return label
     }()
     private lazy var price: UILabel = {
         let label = UILabel()
-        label.text = "1 ETH"
         label.font = Consts.Fonts.medium10
         label.textColor = Asset.Colors.ypBlack.color
         return label
@@ -37,6 +33,20 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         button.tintColor = Asset.Colors.ypWhiteUniversal.color
         return button
     }()
+        var viewModel: CollectionDetailsCellViewModel? {
+            didSet {
+                name.text = viewModel?.name
+                price.text = "\(viewModel?.price ?? 0) ETH"
+                viewModel?.downloadImageFor(nftImageView)
+                ratingImageView.image = viewModel?.getImageForRating()
+                
+                
+                viewModel?.$isFavorite.bind(action: { [weak self] check in
+                    CustomProgressHUD.dismiss()
+                    _ = check ? self?.setFavorite() : self?.setNotFavorite()
+                })
+            }
+        }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,7 +66,24 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     
     @objc
     private func didTapFavorite() {
+        CustomProgressHUD.show()
+        viewModel?.didTapFavorite()
+    }
         
+    }
+    
+    private func setFavorite() {
+        UIView.animate(withDuration: 1) { [weak self] in
+            self?.favoriteButton.setImage(Consts.Images.inFavorites, for: .normal)
+            self?.favoriteButton.tintColor = Asset.Colors.ypRedUniversal.color
+        }
+    }
+    
+    private func setNotFavorite() {
+        UIView.animate(withDuration: 1) { [weak self] in
+            self?.favoriteButton.setImage(Consts.Images.outFavorites, for: .normal)
+            self?.favoriteButton.tintColor = Asset.Colors.ypWhiteUniversal.color
+        }
     }
     
     private func addSubviews() {

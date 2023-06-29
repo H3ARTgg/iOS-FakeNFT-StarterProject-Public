@@ -2,7 +2,7 @@ import UIKit
 
 final class CollectionDetailsViewController: UIViewController {
     private lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(image: Consts.Images.coverFake)
+        let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -16,17 +16,10 @@ final class CollectionDetailsViewController: UIViewController {
     private lazy var collectionLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold22
-        label.text = "Peach"
         return label
     }()
     private lazy var aboutAuthorTextView: UITextView = {
         let textView = UITextView()
-        let author = NSMutableAttributedString(string: "John Doe")
-        author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
-        let attributedString = NSMutableAttributedString(string: "Автор коллекции: ")
-        attributedString.append(author)
-        attributedString.addAttributes([.link: "https://www.vk.com"], range: NSRange(location: 17, length: author.length))
-        textView.attributedText = attributedString
         textView.font = Consts.Fonts.regular13
         textView.textColor = Asset.Colors.ypBlack.color
         textView.isEditable = false
@@ -38,7 +31,6 @@ final class CollectionDetailsViewController: UIViewController {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.textColor = Asset.Colors.ypBlack.color
-        textView.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
         textView.font = Consts.Fonts.regular13
         return textView
     }()
@@ -57,6 +49,22 @@ final class CollectionDetailsViewController: UIViewController {
         view.backgroundColor = Asset.Colors.ypWhite.color
         addSubviews()
         setupLayouts()
+        
+        viewModel?.$nftCollection.bind(action: { [weak self] collection in
+            guard let collection else { return }
+            guard let self else { return }
+            
+            self.collectionLabel.text = collection.name
+            self.descriptionTextView.text = collection.description
+            self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection.author)
+            self.viewModel?.downloadImageFor(self.coverImageView)
+        })
+        
+        viewModel?.$nfts.bind(action: { [weak self] _ in
+            self?.collectionView.performBatchUpdates({
+                self?.collectionView.insertItems(at: [IndexPath(row: (self?.viewModel?.nfts.count ?? 0) - 1, section: 0)])
+            })
+        })
     }
     
     init(viewModel: CollectionDetailsViewModel) {
@@ -76,18 +84,28 @@ final class CollectionDetailsViewController: UIViewController {
     private func presentNftViewViewController() {
         // *показывает экран просмотра NFT*
     }
+    
+    private func makeTextForAboutAuthor(author: String) -> NSAttributedString {
+        let author = NSMutableAttributedString(string: author)
+        author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
+        let attributedString = NSMutableAttributedString(string: "Автор коллекции: ")
+        attributedString.append(author)
+        attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 17, length: author.length))
+        return attributedString
+    }
 }
 
 // MARK: - DataSource
 extension CollectionDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        9
+        viewModel?.nfts.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionDetailsCell.defaultReuseIdentifier, for: indexPath) as? CollectionDetailsCell else {
             return UICollectionViewCell(frame: .zero)
         }
+        cell.viewModel = viewModel?.getViewModelForCellAt(indexPath)
         return cell
     }
     
