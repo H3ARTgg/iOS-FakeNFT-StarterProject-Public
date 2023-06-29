@@ -36,6 +36,7 @@ struct Consts {
         static let inCart = Asset.Assets.inCart.image
         static let inFavorites = Asset.Assets.inFavorites.image
         static let outFavorites = Asset.Assets.notInFavorites.image
+        static let backButton = Asset.Assets.chevronBackward.image
     }
     
     struct Fonts {
