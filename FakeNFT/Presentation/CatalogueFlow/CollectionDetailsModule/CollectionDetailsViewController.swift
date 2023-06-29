@@ -8,11 +8,6 @@ final class CollectionDetailsViewController: UIViewController {
         imageView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         return imageView
     }()
-    private lazy var backButton: UIButton = {
-        let button = UIButton.systemButton(with: Consts.Images.backArrow, target: self, action: #selector(didTapBackButton))
-        button.tintColor = Asset.Colors.ypBlack.color
-        return button
-    }()
     private lazy var collectionLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold22
@@ -24,6 +19,7 @@ final class CollectionDetailsViewController: UIViewController {
         textView.textColor = Asset.Colors.ypBlack.color
         textView.isEditable = false
         textView.isScrollEnabled = false
+        textView.delegate = self
         return textView
     }()
     private lazy var descriptionTextView: UITextView = {
@@ -76,13 +72,15 @@ final class CollectionDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc
-    private func didTapBackButton() {
-        dismissDetail()
-    }
-    
     private func presentNftViewViewController() {
         // *показывает экран просмотра NFT*
+    }
+    
+    private func presentWebViewController(with url: URL) {
+        guard let viewModel else { return }
+        let webViewVC = WebViewViewController(viewModel: viewModel.getViewModelForWebView(with: url))
+        webViewVC.modalPresentationStyle = .overFullScreen
+        navigationController?.pushViewController(webViewVC, animated: true)
     }
     
     private func makeTextForAboutAuthor(author: String) -> NSAttributedString {
@@ -133,7 +131,7 @@ extension CollectionDetailsViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Views
 extension CollectionDetailsViewController {
     private func addSubviews() {
-        [coverImageView, backButton, collectionLabel, aboutAuthorTextView, descriptionTextView, collectionView].forEach {
+        [coverImageView, collectionLabel, aboutAuthorTextView, descriptionTextView, collectionView].forEach {
             view.addSubview($0)
         }
     }
@@ -148,11 +146,6 @@ extension CollectionDetailsViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(310)
-        }
-        
-        backButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(9)
-            make.leading.equalToSuperview().offset(9)
         }
         
         collectionLabel.snp.makeConstraints { make in
@@ -186,7 +179,7 @@ extension CollectionDetailsViewController {
 // MARK: = TextViewDelegate
 extension CollectionDetailsViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        UIApplication.shared.canOpenURL(URL)
+        presentWebViewController(with: URL)
         return false
     }
 }

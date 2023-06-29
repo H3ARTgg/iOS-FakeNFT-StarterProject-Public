@@ -18,14 +18,15 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         collectionView.delegate = self
         collectionView.register(CatalogueSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "Footer")
         collectionView.backgroundColor = Asset.Colors.ypWhite.color
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    private lazy var sortButton: UIButton = {
-        let button = UIButton.systemButton(with: Consts.Images.sortButtonCatalogue, target: self, action: #selector(didTapSortButton))
-        button.setTitle(nil, for: .normal)
-        button.tintColor = Asset.Colors.ypBlack.color
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var sortButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: Consts.Images.sortButtonCatalogue,
+            style: .done,
+            target: self,
+            action: #selector(didTapSortButton))
+        button.title = ""
         return button
     }()
     private lazy var refreshControl: UIRefreshControl = {
@@ -72,8 +73,19 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
+        navigationItem.rightBarButtonItem = sortButton
+        navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: "",
+            style: .done,
+            target: nil,
+            action: nil
+        )
+        
         collectionView.insertSubview(refreshControl, at: 0)
-        setupLayout()
+        addSubviews()
+        setupLayouts()
         
         CustomProgressHUD.show()
         
@@ -122,28 +134,28 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
         let detailsVM = viewModel.getViewModelForCollectionDetails(with: indexPath)
         let collectionDetailsVC = CollectionDetailsViewController(viewModel: detailsVM)
-        collectionDetailsVC.modalPresentationStyle = .overFullScreen
-        presentDetail(collectionDetailsVC)
+        navigationController?.pushViewController(collectionDetailsVC, animated: true)
     }
 }
 
 // MARK: - Views
 private extension CatalogueViewController {
-    private func setupLayout() {
-        [collectionView, sortButton].forEach {
+    private func addSubviews() {
+        [collectionView].forEach {
             view.addSubview($0)
+        }
+    }
+    
+    private func setupLayouts() {
+        view.subviews.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        
-        sortButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.trailing.equalToSuperview().offset(-16)
         }
     }
     

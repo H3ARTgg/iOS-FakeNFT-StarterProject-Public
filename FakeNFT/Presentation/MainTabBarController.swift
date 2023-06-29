@@ -4,8 +4,11 @@ final class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let catalogueVM = CatalogueViewModel(networkClient: DefaultNetworkClient())
+        let catalogueVC = CatalogueViewController(viewModel: catalogueVM)
+        let catalogueNavCon = UINavigationController(rootViewController: catalogueVC)
         viewControllers = [ProfileViewController(),
-                           CatalogueViewController(viewModel: CatalogueViewModel(networkClient: DefaultNetworkClient())),
+                           catalogueNavCon,
                            CartViewController(),
                            StatisticsViewController()]
         

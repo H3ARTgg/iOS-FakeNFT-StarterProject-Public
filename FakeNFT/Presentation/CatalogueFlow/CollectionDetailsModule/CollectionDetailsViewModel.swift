@@ -46,6 +46,10 @@ final class CollectionDetailsViewModel {
         )
     }
     
+    func getViewModelForWebView(with url: URL) -> WebViewViewModelProtocol {
+        WebViewViewModel(url: url)
+    }
+    
     private func requestNfts(_ ids: [String]) {
         let request = NFTsRequest()
         DispatchQueue.global().async { [weak self] in

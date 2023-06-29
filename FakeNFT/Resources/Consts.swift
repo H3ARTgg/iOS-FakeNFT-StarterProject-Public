@@ -24,7 +24,6 @@ struct Consts {
         static let cart = Asset.Assets.cartIcon.image
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
         static let sortButtonCatalogue = Asset.Assets.sortButtonCatalogue.image
-        static let backArrow = Asset.Assets.backArrow.image
         static let coverFake = Asset.Assets.coverFake.image
         static let rating0 = Asset.Assets.rating0.image
         static let rating1 = Asset.Assets.rating1.image
