@@ -1,9 +1,18 @@
 import Kingfisher
 import UIKit
+import Combine
 
-final class CatalogueCellViewModel: Identifiable {
+protocol CatalogueCellViewModelProtocol {
+    var isFailedPublisher: AnyPublisher<Bool, Never> { get }
+    func downloadImage(for imageView: UIImageView)
+}
+
+final class CatalogueCellViewModel: Identifiable, CatalogueCellViewModelProtocol {
     private let imageURL: String
-    @Observable private(set) var isFailed: Bool = false
+    private let isFailedSubject = CurrentValueSubject<Bool, Never>(false)
+    var isFailedPublisher: AnyPublisher<Bool, Never> {
+        isFailedSubject.eraseToAnyPublisher()
+    }
     
     init(imageURL: String) {
         self.imageURL = imageURL
@@ -17,9 +26,9 @@ final class CatalogueCellViewModel: Identifiable {
             switch result {
             case .success(let image):
                 imageView.image = image.image
-                self?.isFailed = false
+                self?.isFailedSubject.send(false)
             case .failure:
-                self?.isFailed = true
+                self?.isFailedSubject.send(true)
             }
         }
     }

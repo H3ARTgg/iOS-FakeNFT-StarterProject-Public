@@ -1,6 +1,12 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import Combine
+
+protocol CatalogueCellProtocol {
+    var isFailedCancellable: AnyCancellable? { get }
+    var viewModel: CatalogueCellViewModelProtocol? { get }
+}
 
 final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
     private let imageView: UIImageView = {
@@ -21,15 +27,18 @@ final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    var viewModel: CatalogueCellViewModel? {
+    var isFailedCancellable: AnyCancellable?
+    var viewModel: CatalogueCellViewModelProtocol? {
         didSet {
-            viewModel?.$isFailed.bind(action: { [weak self] in
-                if $0 {
-                    self?.setupFailButton()
-                } else {
-                    self?.removeFailButton()
-                }
-            })
+            isFailedCancellable = viewModel?.isFailedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] check in
+                    if check {
+                        self?.setupFailButton()
+                    } else {
+                        self?.removeFailButton()
+                    }
+                })
             viewModel?.downloadImage(for: imageView)
         }
     }
