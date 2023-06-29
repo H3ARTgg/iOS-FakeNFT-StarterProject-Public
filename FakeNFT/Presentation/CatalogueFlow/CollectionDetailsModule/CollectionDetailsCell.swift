@@ -40,6 +40,10 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                 viewModel?.downloadImageFor(nftImageView)
                 ratingImageView.image = viewModel?.getImageForRating()
                 
+                viewModel?.$isInCart.bind(action: { [weak self] check in
+                    CustomProgressHUD.dismiss()
+                    _ = check ? self?.setInCart() : self?.setOutCart()
+                })
                 
                 viewModel?.$isFavorite.bind(action: { [weak self] check in
                     CustomProgressHUD.dismiss()
@@ -61,7 +65,8 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     
     @objc
     private func didTapCart() {
-        
+        CustomProgressHUD.show()
+        viewModel?.didTapCart()
     }
     
     @objc
@@ -69,6 +74,17 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         CustomProgressHUD.show()
         viewModel?.didTapFavorite()
     }
+    
+    private func setInCart() {
+        UIView.animate(withDuration: 1) { [weak self] in
+            self?.cartButton.setImage(Consts.Images.inCart, for: .normal)
+        }
+    }
+    
+    private func setOutCart() {
+        UIView.animate(withDuration: 1) { [weak self] in
+            self?.cartButton.setImage(Consts.Images.outCart, for: .normal)
+        }
         
     }
     
