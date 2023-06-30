@@ -4,11 +4,8 @@ final class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let catalogueVM = CatalogueViewModel(networkClient: DefaultNetworkClient())
-        let catalogueVC = CatalogueViewController(viewModel: catalogueVM)
-        let catalogueNavCon = UINavigationController(rootViewController: catalogueVC)
         viewControllers = [ProfileViewController(),
-                           catalogueNavCon,
+                           getCatalogueNavigationController(),
                            CartViewController(),
                            StatisticsViewController()]
         
@@ -17,4 +14,9 @@ final class MainTabBarController: UITabBarController {
         
     }
     
+    private func getCatalogueNavigationController() -> UINavigationController {
+        let catalogueVM = CatalogueViewModel(networkClient: DefaultNetworkClient())
+        let catalogueVC = CatalogueViewController(viewModel: catalogueVM)
+        return UINavigationController(rootViewController: catalogueVC)
+    }
 }
