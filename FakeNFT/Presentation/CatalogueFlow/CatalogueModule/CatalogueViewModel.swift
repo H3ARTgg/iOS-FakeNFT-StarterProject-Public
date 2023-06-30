@@ -31,7 +31,7 @@ final class CatalogueViewModel: CatalogueViewModelProtocol {
     
     func requestCollections() {
         let request = CollectionsRequest()
-        networkClient.send(request: request, type: [NFTCollection].self) { [weak self] (result: Result<[NFTCollection], Error>) in
+        networkClient.send(request: request, type: [NFTCollectionResponce].self) { [weak self] (result: Result<[NFTCollectionResponce], Error>) in
             guard let self else { return }
             switch result {
             case .success(let collections):

@@ -1,4 +1,4 @@
-struct NFTCollection: Codable {
+struct NFTCollectionResponce: Codable {
     let createdAt: String
     let name: String
     let cover: String

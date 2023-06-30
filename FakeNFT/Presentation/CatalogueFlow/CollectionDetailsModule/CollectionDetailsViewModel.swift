@@ -5,7 +5,7 @@ import Kingfisher
 final class CollectionDetailsViewModel {
     private var collectionId: String
     private var networkClient: NetworkClient
-    @Observable private(set) var nftCollection: NFTCollection?
+    @Observable private(set) var nftCollection: NFTCollectionResponce?
     @Observable private(set) var nfts: [CollectionDetailsCellViewModel] = []
     
     init(collectionId: String, networkClient: NetworkClient) {
@@ -18,7 +18,7 @@ final class CollectionDetailsViewModel {
         let request = CollectionRequest(id: collectionId)
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
-            self.networkClient.send(request: request, type: NFTCollection.self) { (result: Result<NFTCollection, Error>) in
+            self.networkClient.send(request: request, type: NFTCollectionResponce.self) { (result: Result<NFTCollectionResponce, Error>) in
                 switch result {
                 case .success(let collection):
                     DispatchQueue.main.async {

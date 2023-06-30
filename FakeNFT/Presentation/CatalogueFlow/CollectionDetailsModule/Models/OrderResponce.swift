@@ -1,4 +1,4 @@
-struct OrderResult: Codable {
+struct OrderResponce: Codable {
     let nfts: [String]
     let id: String
 }

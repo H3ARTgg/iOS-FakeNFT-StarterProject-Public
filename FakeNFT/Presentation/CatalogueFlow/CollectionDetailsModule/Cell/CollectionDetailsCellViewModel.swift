@@ -54,7 +54,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
-            self.currentTask = self.networkClient.send(request: request, type: OrderResult.self) { (result: Result<OrderResult, Error>) in
+            self.currentTask = self.networkClient.send(request: request, type: OrderResponce.self) { (result: Result<OrderResponce, Error>) in
                 switch result {
                 case .success(let order):
                     DispatchQueue.main.async {
@@ -80,7 +80,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
-            self.currentTask = self.networkClient.send(request: request, type: LikesResult.self, onResponse: { (result: Result<LikesResult, Error>) in
+            self.currentTask = self.networkClient.send(request: request, type: LikesNetworkModel.self, onResponse: { (result: Result<LikesNetworkModel, Error>) in
                 switch result {
                 case .success(let likes):
                     DispatchQueue.main.async {
@@ -105,14 +105,14 @@ final class CollectionDetailsCellViewModel: Identifiable {
         dispatchGroup.notify(queue: .global()) { [weak self] in
             guard let self else { return }
             
-            var orderIds = orderNftsIds
+            var orderIds = self.orderNftsIds
             var request = AddToOrderRequest()
-            if isInCart {
+            if self.isInCart {
                 orderIds = orderIds.filter({ $0 != self.id })
             } else {
-                orderIds.append(id)
+                orderIds.append(self.id)
             }
-            request.dto = OrderModel(nfts: orderIds)
+            request.dto = OrderNetworkModel(nfts: orderIds)
             
             self.currentTask = self.networkClient.send(request: request, onResponse: { result in
                 switch result {
@@ -145,7 +145,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             } else {
                 likesIds.append(self.id)
             }
-            request.dto = LikesResult(likes: likesIds)
+            request.dto = LikesNetworkModel(likes: likesIds)
             
             self.currentTask = self.networkClient.send(request: request) { result in
                 switch result {
