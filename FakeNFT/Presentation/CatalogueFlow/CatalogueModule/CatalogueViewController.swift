@@ -18,6 +18,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         collectionView.delegate = self
         collectionView.register(CatalogueSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "Footer")
         collectionView.backgroundColor = Asset.Colors.ypWhite.color
+        collectionView.refreshControl = refreshControl
         return collectionView
     }()
     private lazy var sortButton: UIBarButtonItem = {
@@ -72,37 +73,11 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Asset.Colors.ypWhite.color
-        navigationItem.rightBarButtonItem = sortButton
-        navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: "",
-            style: .done,
-            target: nil,
-            action: nil
-        )
-        
-        collectionView.insertSubview(refreshControl, at: 0)
+        configureViewController()
         addSubviews()
         setupLayouts()
-        
+        binds()
         CustomProgressHUD.show()
-        
-        nftCollectionsCancellable = viewModel.nftCollectionsPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                self?.collectionView.reloadData()
-            })
-        
-        isGotCollectionCancellable = viewModel.isGotCollectionPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] check in
-                CustomProgressHUD.dismiss()
-                if !check {
-                    self?.setupErrorContent()
-                }
-            }
     }
     
     @objc
@@ -123,6 +98,36 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         viewModel.requestCollections()
         collectionView.reloadData()
         refreshControl.endRefreshing()
+    }
+    
+    private func configureViewController() {
+        view.backgroundColor = Asset.Colors.ypWhite.color
+        navigationItem.rightBarButtonItem = sortButton
+        navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: "",
+            style: .done,
+            target: nil,
+            action: nil
+        )
+    }
+    
+    private func binds() {
+        nftCollectionsCancellable = viewModel.nftCollectionsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.collectionView.reloadData()
+            })
+        
+        isGotCollectionCancellable = viewModel.isGotCollectionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] check in
+                CustomProgressHUD.dismiss()
+                if !check {
+                    self?.setupErrorContent()
+                }
+            }
     }
     
     private func forceHideRefreshControl(for collectionView: UICollectionView) {
