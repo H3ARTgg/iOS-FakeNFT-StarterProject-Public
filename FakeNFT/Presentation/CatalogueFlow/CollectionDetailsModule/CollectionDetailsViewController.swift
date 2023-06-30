@@ -20,6 +20,7 @@ final class CollectionDetailsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.delegate = self
+        textView.backgroundColor = .clear
         return textView
     }()
     private lazy var descriptionTextView: UITextView = {
@@ -28,6 +29,7 @@ final class CollectionDetailsViewController: UIViewController {
         textView.isEditable = false
         textView.textColor = Asset.Colors.ypBlack.color
         textView.font = Consts.Fonts.regular13
+        textView.backgroundColor = .clear
         return textView
     }()
     private lazy var collectionView: UICollectionView = {
@@ -87,6 +89,7 @@ final class CollectionDetailsViewController: UIViewController {
         let author = NSMutableAttributedString(string: author)
         author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
         let attributedString = NSMutableAttributedString(string: "\(Consts.LocalizedStrings.collectionAuthor): ")
+        attributedString.addAttributes([.foregroundColor: Asset.Colors.ypBlack.color], range: NSRange(location: 0, length: attributedString.length))
         attributedString.append(author)
         attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 17, length: author.length))
         return attributedString
