@@ -15,6 +15,7 @@ final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = Asset.Colors.ypWhite.color
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     private lazy var failButton: UIButton = {
