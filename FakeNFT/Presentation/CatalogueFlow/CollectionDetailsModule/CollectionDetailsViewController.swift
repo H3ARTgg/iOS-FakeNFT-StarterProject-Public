@@ -45,10 +45,24 @@ final class CollectionDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Asset.Colors.ypWhite.color
+        
         addSubviews()
         setupLayouts()
         CustomProgressHUD.show()
+        binds()
         
+    }
+    
+    init(viewModel: CollectionDetailsViewModel) {
+        super.init(nibName: .none, bundle: .main)
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func binds() {
         viewModel?.$nftCollection.bind(action: { [weak self] collection in
             guard let collection else { return }
             guard let self else { return }
@@ -65,15 +79,6 @@ final class CollectionDetailsViewController: UIViewController {
                 self?.collectionView.insertItems(at: [IndexPath(row: (self?.viewModel?.nfts.count ?? 0) - 1, section: 0)])
             })
         })
-    }
-    
-    init(viewModel: CollectionDetailsViewModel) {
-        super.init(nibName: .none, bundle: .main)
-        self.viewModel = viewModel
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func presentNftViewViewController() {
