@@ -47,6 +47,7 @@ final class CollectionDetailsViewController: UIViewController {
         view.backgroundColor = Asset.Colors.ypWhite.color
         addSubviews()
         setupLayouts()
+        CustomProgressHUD.show()
         
         viewModel?.$nftCollection.bind(action: { [weak self] collection in
             guard let collection else { return }
@@ -56,6 +57,7 @@ final class CollectionDetailsViewController: UIViewController {
             self.descriptionTextView.text = collection.description
             self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection.author)
             self.viewModel?.downloadImageFor(self.coverImageView)
+            CustomProgressHUD.dismiss()
         })
         
         viewModel?.$nfts.bind(action: { [weak self] _ in
