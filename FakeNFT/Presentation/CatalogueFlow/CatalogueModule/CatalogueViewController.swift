@@ -225,18 +225,7 @@ extension CatalogueViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        var id: String
-        
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            id = "Header"
-        case UICollectionView.elementKindSectionFooter:
-            id = "Footer"
-        default:
-            id = ""
-        }
-        
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: id, for: indexPath) as? CatalogueSupplementaryView else {
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as? CatalogueSupplementaryView else {
             assertionFailure("No SupplementaryView")
             return UICollectionReusableView(frame: .zero)
         }
