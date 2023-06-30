@@ -1,14 +1,15 @@
 import UIKit
 
 final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
+    private var ratingStackView: UIStackView? {
+        didSet {
+            setupRatingStackView()
+        }
+    }
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
-        return imageView
-    }()
-    private lazy var ratingImageView: UIImageView = {
-        let imageView = UIImageView()
         return imageView
     }()
     private lazy var name: UILabel = {
@@ -35,22 +36,23 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     }()
         var viewModel: CollectionDetailsCellViewModel? {
             didSet {
-                name.text = viewModel?.name
-                price.text = "\(viewModel?.price ?? 0) ETH"
-                viewModel?.downloadImageFor(nftImageView)
-                ratingImageView.image = viewModel?.getImageForRating()
+                guard let viewModel else { return }
+                name.text = viewModel.name
+                price.text = "\(viewModel.price) ETH"
+                viewModel.downloadImageFor(nftImageView)
+                ratingStackView = viewModel.getImageForRating()
                 
-                viewModel?.$isInCart.bind(action: { [weak self] check in
+                viewModel.$isInCart.bind(action: { [weak self] check in
                     CustomProgressHUD.dismiss()
                     _ = check ? self?.setInCart() : self?.setOutCart()
                 })
                 
-                viewModel?.$isFavorite.bind(action: { [weak self] check in
+                viewModel.$isFavorite.bind(action: { [weak self] check in
                     CustomProgressHUD.dismiss()
                     _ = check ? self?.setFavorite() : self?.setNotFavorite()
                 })
                 
-                viewModel?.$isFailed.bind(action: { check in
+                viewModel.$isFailed.bind(action: { check in
                     if check {
                         CustomProgressHUD.dismiss()
                     }
@@ -108,8 +110,20 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
+    private func setupRatingStackView() {
+        guard let ratingStackView else { return }
+        ratingStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(ratingStackView)
+        
+        ratingStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.top.equalTo(nftImageView.snp.bottom).offset(8)
+        }
+        
+    }
+    
     private func addSubviews() {
-        [name, nftImageView, ratingImageView, price, cartButton, favoriteButton].forEach {
+        [name, nftImageView, price, cartButton, favoriteButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -126,13 +140,8 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
             make.height.equalTo(108)
         }
         
-        ratingImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.top.equalTo(nftImageView.snp.bottom).offset(8)
-        }
-        
         name.snp.makeConstraints { make in
-            make.top.equalTo(ratingImageView.snp.bottom).offset(5)
+            make.top.equalTo(nftImageView.snp.bottom).offset(25)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
         }
@@ -144,7 +153,7 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         
         cartButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
-            make.top.equalTo(ratingImageView.snp.bottom).offset(5)
+            make.top.equalTo(nftImageView.snp.bottom).offset(25)
             make.bottom.equalToSuperview().offset(-20)
         }
         

@@ -30,8 +30,10 @@ final class CollectionDetailsCellViewModel: Identifiable {
         imageView.kf.setImage(with: URL(string: images[0]))
     }
     
-    func getImageForRating() -> UIImage {
-        return Rating(rating).image
+    func getImageForRating() -> UIStackView {
+        let stackView = RatingStackView()
+        stackView.setupRating(rating)
+        return stackView
     }
     
     func didTapCart() {

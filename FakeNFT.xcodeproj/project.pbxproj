@@ -37,7 +37,6 @@
 		1D7CD1232A4E35F300921667 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD1222A4E35F300921667 /* NFT.swift */; };
 		1D7CD1252A4E35F900921667 /* OrderNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD1242A4E35F900921667 /* OrderNetworkModel.swift */; };
 		1D7CD1272A4E35FE00921667 /* OrderResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD1262A4E35FE00921667 /* OrderResponce.swift */; };
-		1D7CD1292A4E360500921667 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD1282A4E360500921667 /* Rating.swift */; };
 		1D7CD12B2A4E361800921667 /* CatalogueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD12A2A4E361800921667 /* CatalogueViewModel.swift */; };
 		1D7CD12D2A4E362000921667 /* CustomProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD12C2A4E362000921667 /* CustomProgressHUD.swift */; };
 		1D7CD12F2A4E362800921667 /* NTFCollectionResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7CD12E2A4E362800921667 /* NTFCollectionResponce.swift */; };
@@ -133,7 +132,6 @@
 		1D7CD1222A4E35F300921667 /* NFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		1D7CD1242A4E35F900921667 /* OrderNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderNetworkModel.swift; sourceTree = "<group>"; };
 		1D7CD1262A4E35FE00921667 /* OrderResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderResponce.swift; sourceTree = "<group>"; };
-		1D7CD1282A4E360500921667 /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		1D7CD12A2A4E361800921667 /* CatalogueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueViewModel.swift; sourceTree = "<group>"; };
 		1D7CD12C2A4E362000921667 /* CustomProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomProgressHUD.swift; sourceTree = "<group>"; };
 		1D7CD12E2A4E362800921667 /* NTFCollectionResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NTFCollectionResponce.swift; sourceTree = "<group>"; };
@@ -243,7 +241,6 @@
 				1D7CD1222A4E35F300921667 /* NFT.swift */,
 				1D7CD1242A4E35F900921667 /* OrderNetworkModel.swift */,
 				1D7CD1262A4E35FE00921667 /* OrderResponce.swift */,
-				1D7CD1282A4E360500921667 /* Rating.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -910,7 +907,6 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				1D7CD1192A4E35C200921667 /* CollectionDetailsViewController.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
-				1D7CD1292A4E360500921667 /* Rating.swift in Sources */,
 				1D7CD1332A4E363900921667 /* CatalogueSupplementaryViewModel.swift in Sources */,
 				1D7CD1272A4E35FE00921667 /* OrderResponce.swift in Sources */,
 				1DECC1DF2A4540B4005A9116 /* (null) in Sources */,
