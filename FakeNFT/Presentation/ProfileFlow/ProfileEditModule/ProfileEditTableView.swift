@@ -6,47 +6,69 @@
 //
 
 import UIKit
+import Combine
 
 final class ProfileEditTableView: UITableViewController {
-    let profileData = [ProfileTableDataModel(sectionCaption: "Имя", cellText: "Joaquin Phoenix"),
-                       ProfileTableDataModel(sectionCaption: "Описание", cellText: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."),
-                       ProfileTableDataModel(sectionCaption: "Сайт", cellText: "Apple")]
+    private let viewModel: ProfileEditViewModelProtocol
     
-    private lazy var dataSource = ProfileEditDiffableDataSource(tableView: tableView)
     private lazy var tableHeaderView = ProfileEditTableHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 174))
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init(viewModel: ProfileEditViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(ProfileEditCell.self,
-                           forCellReuseIdentifier: ProfileEditCell.identifier)
-        tableView.register(ProfileEditSectionHeaderView.self,
-                           forHeaderFooterViewReuseIdentifier: ProfileEditSectionHeaderView.identifier)
-        tableView.dataSource = dataSource
-        tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.tableHeaderView = tableHeaderView
-        tableHeaderView.closeButtonClosure = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        setupTableView()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        dataSource.reload(profileData)
-        tableHeaderView.userPicUrl = URL(string: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG")
+        tableHeaderView.userPicUrl = viewModel.urlForProfileImage
     }
 }
 
+// MARK: - TableView Data Sourece
+
+extension ProfileEditTableView {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileEditCell.identifier,
+                                                       for: indexPath)
+                as? ProfileEditCell
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.cellText = viewModel.cellDataForRow(indexPath.section).cellText
+        
+        cell.cellOutput.sink { [weak self] text in
+            self?.viewModel.storeText(text, at: indexPath.section)
+        }
+        .store(in: &cancellables)
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRowsInSections
+    }
+}
+
+// MARK: - TableView Delegate
+
 extension ProfileEditTableView {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        viewModel.cellDataForRow(indexPath.section).сellAppearance.cellHeight
     }
-    
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
-    }
-    
+
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         34
     }
@@ -56,7 +78,35 @@ extension ProfileEditTableView {
             .dequeueReusableHeaderFooterView(withIdentifier: ProfileEditSectionHeaderView.identifier) as? ProfileEditSectionHeaderView
         else { return UIView() }
         
-        sectionHeaderView.headerText = profileData[section].sectionCaption
+        sectionHeaderView.headerText = viewModel
+            .cellDataForRow(section)
+            .сellAppearance
+            .cellIdentifier
+            .rawValue
         return sectionHeaderView
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.numberOfSections
+    }
+}
+
+// MARK: - Private Methods
+
+private extension ProfileEditTableView {
+    func setupTableView() {
+        tableView.register(ProfileEditCell.self,
+                           forCellReuseIdentifier: ProfileEditCell.identifier)
+        tableView.register(ProfileEditSectionHeaderView.self,
+                           forHeaderFooterViewReuseIdentifier: ProfileEditSectionHeaderView.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.tableHeaderView = tableHeaderView
+        tableHeaderView.closeButtonClosure = { [weak self] in
+            self?.viewModel.closeButtonTapped()
+            self?.dismiss(animated: true)
+        }
     }
 }

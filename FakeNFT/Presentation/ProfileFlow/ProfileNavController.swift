@@ -11,7 +11,8 @@ final class ProfileNavController: UINavigationController {
     
     init() {
         let networkService = DefaultNetworkClient()
-        let viewModel: ProfileViewModel = ProfileViewModel(networkService: networkService)
+        let networkManager = NetworkManager(networkService: networkService)
+        let viewModel: ProfileViewModel = ProfileViewModel(networkManager: networkManager)
         super.init(rootViewController: ProfileViewController(viewModel: viewModel))
     }
     

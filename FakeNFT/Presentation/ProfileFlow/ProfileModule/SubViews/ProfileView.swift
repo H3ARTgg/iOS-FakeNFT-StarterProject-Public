@@ -10,13 +10,24 @@ import Kingfisher
 
 final class ProfileView: UIView {
     
-    var profileModel: ProfileModel? {
+    var profileModel: ProfileUserViewModel? {
         didSet {
             guard let profileModel else { return }
-            userPicImageView.kf.setImage(with: profileModel.imageUrl)
+            if let imageUrl = URL(string: profileModel.imageUrl) {
+                userPicImageView.kf.setImage(with: imageUrl)
+            }
+            
             userNameLabel.text = profileModel.name
             aboutUserLabel.text = profileModel.about
-            siteLabel.text = profileModel.site
+            
+            let link = profileModel.site
+            let attributedString = NSMutableAttributedString(string: profileModel.site)
+            let attributes: [NSAttributedString.Key: Any] = [.link: link,
+                                                            .font: Consts.Fonts.regular15]
+            attributedString.addAttributes(attributes,
+                                           range: NSRange(location: 0,
+                                                          length: link.count))
+            siteLabel.attributedText = attributedString
         }
     }
     
@@ -57,19 +68,20 @@ final class ProfileView: UIView {
     private lazy var aboutUserLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.regular13
-        label.numberOfLines = 4
-        
+        label.numberOfLines = 10
         label.accessibilityIdentifier = "aboutUserLabel"
         label.setLineSpacing(lineSpacing: 3)
         return label
     }()
     
-    private lazy var siteLabel: UILabel = {
-        let label = UILabel()
-        label.font = Consts.Fonts.regular15
-        label.textColor = Asset.Colors.ypBlueUniversal.color
-        label.accessibilityIdentifier = "siteLabel"
-        return label
+    private lazy var siteLabel: UITextView = {
+        let textView = UITextView()
+        textView.textColor = Asset.Colors.ypBlueUniversal.color
+        textView.isScrollEnabled = false
+        textView.accessibilityIdentifier = "siteLabel"
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        return textView
     }()
     
     override init(frame: CGRect) {
@@ -85,6 +97,7 @@ final class ProfileView: UIView {
 }
 
 // MARK: - Subviews configure + layout
+
 private extension ProfileView {
     func addSubviews() {
         addSubview(profileStack)

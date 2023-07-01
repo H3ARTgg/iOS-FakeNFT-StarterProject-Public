@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Combine
 
-final class ProfileEditCell: UITableViewCell {
+final class ProfileEditCell: UITableViewCell, UITextViewDelegate {
     static let identifier = "ProfileEditCell"
     
     var cellText: String? {
@@ -15,16 +16,18 @@ final class ProfileEditCell: UITableViewCell {
             cellTextView.insertText(cellText ?? "")
         }
     }
-    
+
+    private(set) var cellOutput = PassthroughSubject<String, Never>()
+
     private lazy var cellTextView: UITextView = {
         let cellTextView = UITextView()
         cellTextView.font = Consts.Fonts.regular17
         cellTextView.textColor = Asset.Colors.ypBlack.color
         cellTextView.backgroundColor = .clear
         cellTextView.accessibilityIdentifier = "profileEditCellTextField"
-        cellTextView.isScrollEnabled = false
         cellTextView.textContainerInset = .zero
         cellTextView.textContainer.lineFragmentPadding = 0
+        cellTextView.delegate = self
         return cellTextView
     }()
     
@@ -42,6 +45,10 @@ final class ProfileEditCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        cellOutput.send(textView.text)
     }
 }
 
@@ -62,7 +69,6 @@ private extension ProfileEditCell {
         NSLayoutConstraint.activate([
             cellTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
             cellTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -11),
-            
             cellTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             cellTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])

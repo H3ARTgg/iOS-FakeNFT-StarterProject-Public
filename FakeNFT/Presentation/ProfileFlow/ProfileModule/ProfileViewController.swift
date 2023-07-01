@@ -4,11 +4,8 @@ import Combine
 final class ProfileViewController: UIViewController {
     
     private let viewModel: ProfileViewModelProtocol
-    
     private lazy var dataSource = ProfileDiffableDataSource(tableView: tableView)
-    
     private var cancellables: Set<AnyCancellable> = []
-    
     private lazy var profileView = ProfileView()
     
     private lazy var tableView: UITableView = {
@@ -48,9 +45,7 @@ final class ProfileViewController: UIViewController {
         configure()
         applyLayout()
         tableView.dataSource = dataSource
-        
         setupBindings()
-        
         viewModel.viewDidLoad()
     }
 }
@@ -69,6 +64,7 @@ private extension ProfileViewController {
     func setupBindings() {
         viewModel.profileData.sink { [weak self] profileData in
             self?.profileView.profileModel = profileData
+            guard let profileData else { return }
             self?.dataSource.reload([ProfileCellModel(text: Consts.LocalizedStrings.ownedNfts,
                                                       amount: profileData.ownedNft),
                                      ProfileCellModel(text: Consts.LocalizedStrings.favoriteNfts,
@@ -78,9 +74,19 @@ private extension ProfileViewController {
         }
         .store(in: &cancellables)
     }
+    
     @objc
     func showEditProfile() {
-        present(ProfileEditTableView(), animated: true)
+        guard let profileData = viewModel.profileData.value else { return }
+        let profileEditUserViewModel = ProfileEditUserViewModel(imageUrl: profileData.imageUrl,
+                                                                name: profileData.name,
+                                                                description: profileData.about,
+                                                                website: profileData.site)
+        
+        let profileEditViewModel = ProfileEditViewModel(profile: profileEditUserViewModel,
+                                                        saveCallback: viewModel.setProfile(_:))
+        
+        present(ProfileEditTableView(viewModel: profileEditViewModel), animated: true)
     }
 }
 

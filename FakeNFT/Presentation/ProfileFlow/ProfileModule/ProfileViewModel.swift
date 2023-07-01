@@ -9,49 +9,51 @@ import Foundation
 import Combine
 
 protocol ProfileViewModelProtocol {
-    var profileData: PassthroughSubject<ProfileModel, Never> { get }
+    var profileData: CurrentValueSubject<ProfileUserViewModel?, Never> { get }
     
     func viewDidLoad()
+    func setProfile(_ profile: ProfileEditUserViewModel)
 }
 
 final class ProfileViewModel {
-    var profileData = PassthroughSubject<ProfileModel, Never>()
+    private(set) var profileData = CurrentValueSubject<ProfileUserViewModel?, Never>(nil)
     
-    private let networkService: NetworkClient
+    private let networkManager: NetworkManagerProtocol
+    private var profile: ProfileResponseModel?
     
-    init(networkService: NetworkClient) {
-        self.networkService = networkService
+    init(networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
     }
 }
 
 extension ProfileViewModel: ProfileViewModelProtocol {
-    func viewDidLoad() {
-        getProfile()
-    }
-}
-
-private extension ProfileViewModel {
-    func getProfile() {
-        let profileRequestGet = ProfileRequestGet()
-        networkService.send(request: profileRequestGet, type: ProfileResponseModel.self) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.profileData.send(self.convert(profileResponceData: data))
-                }
-                
-            case .failure(let error): print("ERROR ", error.localizedDescription)
+    func setProfile(_ profile: ProfileEditUserViewModel) {
+        networkManager.setProfile(profile, likes: self.profile?.likes ?? []) { data in
+            DispatchQueue.main.async {
+                self.profileData.send(self.convert(profileResponseData: data))
             }
         }
     }
     
-    func convert(profileResponceData: ProfileResponseModel) -> ProfileModel {
-        ProfileModel(imageUrl: URL(string: profileResponceData.avatar),
-                    name: profileResponceData.name,
-                    about: profileResponceData.description,
-                    site: profileResponceData.website,
-                    ownedNft: profileResponceData.nfts.count,
-                    favouriteNft: profileResponceData.likes.count)
+    func viewDidLoad() {
+        networkManager.getProfile { data in
+            self.profile = data
+            DispatchQueue.main.async {
+                self.profileData.send(self.convert(profileResponseData: data))
+            }
+        }
+    }
+    
+    
+}
+
+private extension ProfileViewModel {
+    func convert(profileResponseData: ProfileResponseModel) -> ProfileUserViewModel {
+        ProfileUserViewModel(imageUrl: profileResponseData.avatar,
+                    name: profileResponseData.name,
+                    about: profileResponseData.description,
+                    site: profileResponseData.website,
+                    ownedNft: profileResponseData.nfts.count,
+                    favouriteNft: profileResponseData.likes.count)
     }
 }
