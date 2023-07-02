@@ -7,13 +7,14 @@
 
 import Foundation
 
-protocol NetworkManagerProtocol {
+protocol NftDataManagerProtocol {
     func setProfile(_ profile: ProfileEditUserViewModel, likes: [String], handler: @escaping (ProfileResponseModel) -> Void)
     func getProfile(handler: @escaping (ProfileResponseModel) -> Void)
+    func getNft(nftId: String, handler: @escaping (NftResponseModel) -> Void)
 }
 
 
-final class NetworkManager: NetworkManagerProtocol {
+final class NftDataManager: NftDataManagerProtocol {
     private let networkService: NetworkClient
     
     init(networkService: NetworkClient) {
@@ -27,8 +28,7 @@ final class NetworkManager: NetworkManagerProtocol {
                                                      likes: likes)
         let profileRequestPut = ProfileRequestPut(dto: profileToSend)
         
-        networkService.send(request: profileRequestPut, type: ProfileResponseModel.self) { [weak self] result in
-            guard let self else { return }
+        networkService.send(request: profileRequestPut, type: ProfileResponseModel.self) { result in
             switch result {
             case .success(let data): handler(data)
             case .failure(let error): print("ERROR ", error.localizedDescription)
@@ -38,11 +38,19 @@ final class NetworkManager: NetworkManagerProtocol {
     
     func getProfile(handler: @escaping (ProfileResponseModel) -> Void) {
         let profileRequestGet = ProfileRequestGet()
-        networkService.send(request: profileRequestGet, type: ProfileResponseModel.self) { [weak self] result in
-            guard let self else { return }
+        networkService.send(request: profileRequestGet, type: ProfileResponseModel.self) { result in
             switch result {
             case .success(let data): handler(data)
- 
+            case .failure(let error): print("ERROR ", error.localizedDescription)
+            }
+        }
+    }
+    
+    func getNft(nftId: String, handler: @escaping (NftResponseModel) -> Void) {
+        let nftGetRequest = NftGetRequest(id: nftId)
+        networkService.send(request: nftGetRequest, type: NftResponseModel.self) { result in
+            switch result {
+            case .success(let data): handler(data)
             case .failure(let error): print("ERROR ", error.localizedDescription)
             }
         }
