@@ -8,10 +8,10 @@
 import UIKit
 
 final class ProfileNavController: UINavigationController {
-    
+        
     init() {
         let networkService = DefaultNetworkClient()
-        let networkManager = NetworkManager(networkService: networkService)
+        let networkManager = NftDataManager(networkService: networkService)
         let viewModel: ProfileViewModel = ProfileViewModel(networkManager: networkManager)
         super.init(rootViewController: ProfileViewController(viewModel: viewModel))
     }
