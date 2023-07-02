@@ -15,7 +15,6 @@ final class ProfileViewController: UIViewController {
         tableView.backgroundColor = Asset.Colors.ypWhite.color
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -45,6 +44,7 @@ final class ProfileViewController: UIViewController {
         configure()
         applyLayout()
         tableView.dataSource = dataSource
+        setupNavBar()
         setupBindings()
         viewModel.viewDidLoad()
     }
@@ -55,6 +55,14 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         54
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vm = OwnedNftViewModel(ownedNfts: viewModel.ownedNfts)
+        let vc = OwnedNftTableViewController(viewModel: vm)
+        
+        navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -87,6 +95,12 @@ private extension ProfileViewController {
                                                         saveCallback: viewModel.setProfile(_:))
         
         present(ProfileEditTableView(viewModel: profileEditViewModel), animated: true)
+    }
+    
+    func setupNavBar() {
+        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backButtonItem.tintColor = Asset.Colors.ypBlack.color
+        navigationItem.backBarButtonItem = backButtonItem
     }
 }
 

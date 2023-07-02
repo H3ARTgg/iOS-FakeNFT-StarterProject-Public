@@ -10,6 +10,8 @@ import Combine
 
 protocol ProfileViewModelProtocol {
     var profileData: CurrentValueSubject<ProfileUserViewModel?, Never> { get }
+    var ownedNfts: [String] { get }
+    var favoriteNfts: [String] { get }
     
     func viewDidLoad()
     func setProfile(_ profile: ProfileEditUserViewModel)
@@ -18,15 +20,23 @@ protocol ProfileViewModelProtocol {
 final class ProfileViewModel {
     private(set) var profileData = CurrentValueSubject<ProfileUserViewModel?, Never>(nil)
     
-    private let networkManager: NetworkManagerProtocol
-    private var profile: ProfileResponseModel?
+    private let networkManager: NftDataManagerProtocol
+    private(set) var profile: ProfileResponseModel?
     
-    init(networkManager: NetworkManagerProtocol) {
+    init(networkManager: NftDataManagerProtocol) {
         self.networkManager = networkManager
     }
 }
 
 extension ProfileViewModel: ProfileViewModelProtocol {
+    var ownedNfts: [String] {
+        profile?.nfts ?? []
+    }
+    
+    var favoriteNfts: [String] {
+        profile?.likes ?? []
+    }
+    
     func setProfile(_ profile: ProfileEditUserViewModel) {
         networkManager.setProfile(profile, likes: self.profile?.likes ?? []) { data in
             DispatchQueue.main.async {
@@ -43,8 +53,6 @@ extension ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-    
-    
 }
 
 private extension ProfileViewModel {
