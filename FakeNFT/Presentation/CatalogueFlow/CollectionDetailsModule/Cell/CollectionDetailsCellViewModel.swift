@@ -27,7 +27,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
     }
     
     func downloadImageFor(_ imageView: UIImageView) {
-        imageView.kf.setImage(with: URL(string: images[0]))
+        imageView.kf.setImage(with: URL(string: images[0]), options: [.transition(.fade(0.75))])
     }
     
     func getImageForRating() -> UIStackView {
