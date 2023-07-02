@@ -1,5 +1,10 @@
 import Foundation
 
+protocol CartNetworkServiceProtocol {
+    func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void)
+    func putProducts()
+}
+
 final class CartNetworkService {
     private let baseURL = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/nft/"
     private let session = URLSession.shared
@@ -9,25 +14,6 @@ final class CartNetworkService {
     
     init(networkClient: DefaultNetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
-    }
-    
-    func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void) {
-        let request = OrderRequest()
-        
-        networkClient.send(request: request) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let order = try JSONDecoder().decode(OrderResult.self, from: data)
-                    self.idProducts = order.nfts ?? []
-                    self.fetchNfts(completion)
-                } catch {
-                    completion(.failure(error))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
     }
     
     private func fetchNfts(_ completion: @escaping (Result<[Nft], Error>) -> Void) {
@@ -56,5 +42,56 @@ final class CartNetworkService {
         group.notify(queue: .main) {
             completion(.success(fetchedProducts))
         }
+    }
+}
+
+extension CartNetworkService: CartNetworkServiceProtocol {
+    func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void) {
+        let request = OrderRequest()
+        
+        networkClient.send(request: request) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let order = try JSONDecoder().decode(OrderResult.self, from: data)
+                    self.idProducts = order.nfts ?? []
+                    self.fetchNfts(completion)
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func putProducts() {
+        guard let url = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/orders/1") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        
+        let ids = [
+            "68", "69", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81"
+        ]
+        
+        do {
+            let jsonData = try JSONEncoder().encode(ids)
+            request.httpBody = jsonData
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { (_, response, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
+            }
+        }
+        task.resume()
     }
 }

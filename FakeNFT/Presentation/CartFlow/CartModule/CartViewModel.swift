@@ -17,12 +17,12 @@ final class CartViewModel: ObservableObject {
         }
     }
     
-    private var cartNetworkService: CartNetworkService
+    private var cartNetworkService: CartNetworkServiceProtocol
     private var callback: (([Nft]) -> Void)?
     
     private var isInitialLoadCompleted = false
     
-    init(cartNetworkService: CartNetworkService = CartNetworkService()) {
+    init(cartNetworkService: CartNetworkServiceProtocol = CartNetworkService()) {
         self.cartNetworkService = cartNetworkService
         fetchProducts()
     }
