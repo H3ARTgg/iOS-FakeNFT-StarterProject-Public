@@ -53,6 +53,11 @@ final class CollectionDetailsViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        CustomProgressHUD.dismiss()
+    }
+    
     init(viewModel: CollectionDetailsViewModel) {
         super.init(nibName: .none, bundle: .main)
         self.viewModel = viewModel
