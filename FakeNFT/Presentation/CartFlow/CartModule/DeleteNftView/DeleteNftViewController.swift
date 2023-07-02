@@ -8,11 +8,11 @@ protocol DeleteNftViewControllerDelegate: AnyObject {
 final class DeleteNftViewController: UIViewController {
 
     // MARK: - Properties
-    private var viewModel: CartViewModel
+    private var viewModel: CartViewModelProtocol
     var nft: Nft?
 
     // MARK: - Lifecycle
-    init(viewModel: CartViewModel) {
+    init(viewModel: CartViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

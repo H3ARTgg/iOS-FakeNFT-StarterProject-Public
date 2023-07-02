@@ -11,12 +11,12 @@ protocol CartViewControllerDelegate: AnyObject {
 
 final class CartViewController: UIViewController {
     // MARK: - Properties
-    private var viewModel: CartViewModel
+    private var viewModel: CartViewModelProtocol
     
     weak var updateDelegate: UpdateCartViewDelegate?
     
     // MARK: - Lifecycle
-    init(viewModel: CartViewModel = CartViewModel()) {
+    init(viewModel: CartViewModelProtocol = CartViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
@@ -41,21 +41,21 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         
-        if viewModel.isInitialLoadCompleted {
+        if viewModel.isLoadCompleted {
             updateDelegate?.reloadTableView()
             updateDelegate?.refreshPayment()
         } else {
             UIBlockingProgressHUD.show()
         }
         
-        viewModel.$products.bind { [weak self] _ in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.updateDelegate?.reloadTableView()
-                self.updateDelegate?.refreshPayment()
-                UIBlockingProgressHUD.dismiss()
-            }
-        }
+        viewModel.bind(callback: { [weak self] _ in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.updateDelegate?.reloadTableView()
+                    self.updateDelegate?.refreshPayment()
+                    UIBlockingProgressHUD.dismiss()
+                }
+        })
     }
     
     // MARK: - Actions
@@ -117,7 +117,7 @@ extension CartViewController {
 // MARK: - UITableViewDataSource
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.products.count
+        viewModel.listProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -127,7 +127,7 @@ extension CartViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let nft = viewModel.products[indexPath.row]
+        let nft = viewModel.listProducts[indexPath.row]
         
         cell.delegate = self
         cell.configure(nft)
@@ -139,13 +139,13 @@ extension CartViewController: UITableViewDataSource {
 // MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
     func getQuantityNfts() -> Int {
-        return viewModel.products.count
+        return viewModel.listProducts.count
     }
     
     func getTotalPrice() -> Double {
         var total: Double = 0
         
-        for item in viewModel.products {
+        for item in viewModel.listProducts {
             let price = item.price
             total += price
         }
