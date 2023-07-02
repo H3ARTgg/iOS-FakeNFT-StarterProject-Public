@@ -23,6 +23,8 @@ struct Consts {
         static let chevron = UIImage(systemName: "chevron.right")
         static let cross = UIImage(systemName: "xmark")
         static let backButton = Asset.Assets.chevronBackward.image
+        static let sorMenu = Asset.Assets.sortMenu.image
+        static let like = Asset.Assets.like.image
     }
     
     struct Fonts {
