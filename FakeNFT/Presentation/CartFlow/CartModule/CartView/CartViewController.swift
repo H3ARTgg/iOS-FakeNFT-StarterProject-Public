@@ -76,33 +76,39 @@ extension CartViewController {
     }
     
     private func showAlert() {
+        let alertTitle = Consts.LocalizedStrings.cartAlertTitle
+        let actionSortFromPrice = Consts.LocalizedStrings.cartSortFromPrice
+        let actionSortFromRating = Consts.LocalizedStrings.cartSortFromRating
+        let actionSortFromTitle = Consts.LocalizedStrings.cartSortFromTitle
+        let actionClose = Consts.LocalizedStrings.cartCloseAlert
+        
         let alert = UIAlertController(
-            title: "Сортировка", message: nil, preferredStyle: .actionSheet
+            title: alertTitle, message: nil, preferredStyle: .actionSheet
         )
         
         let priceFilter = UIAlertAction(
-            title: "По цене", style: .default
+            title: actionSortFromPrice, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.sortFromPrice()
         }
         
         let ratingFilter = UIAlertAction(
-            title: "По рейтингу", style: .default
+            title: actionSortFromRating, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.sortFromRating()
         }
         
         let titleFilter = UIAlertAction(
-            title: "По названию", style: .default
+            title: actionSortFromTitle, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.sortFromTitle()
         }
         
         let closeAction = UIAlertAction(
-            title: "Закрыть", style: .cancel
+            title: actionClose, style: .cancel
         )
         
         alert.addAction(priceFilter)

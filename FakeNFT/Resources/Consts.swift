@@ -15,6 +15,11 @@ struct Consts {
         static let cartDeleteMessage = NSLocalizedString("label.delete.nft", value: "Вы уверены, что хотите удалить объект из корзины?", comment: "Message for user when deleting nft")
         static let cartDeleteButton = NSLocalizedString("button.delete.nft", value: "Удалить", comment: "Delete nft")
         static let cartCancelButton = NSLocalizedString("label.cancel", value: "Вернуться", comment: "cancel deletion of nft")
+        static let cartAlertTitle = NSLocalizedString("alert.sort", value: "Сортировка", comment: "title alert controller")
+        static let cartSortFromPrice = NSLocalizedString("sort.price", value: "По цене", comment: "sort nfts rom price")
+        static let cartSortFromRating = NSLocalizedString("sort.rating", value: "По рейтингу", comment: "sort nfts from rating")
+        static let cartSortFromTitle = NSLocalizedString("sort.title", value: "По названию", comment: "sort nfts from title")
+        static let cartCloseAlert = NSLocalizedString("alert.close", value: "Закрыть", comment: "action for close alert")
     }
     
     struct Images {
