@@ -45,7 +45,7 @@ final class CartViewController: UIViewController {
             updateDelegate?.reloadTableView()
             updateDelegate?.refreshPayment()
         } else {
-            UIBlockingProgressHUD.show()
+            UIProgressHUD.show()
         }
         
         viewModel.bind(callback: { [weak self] _ in
@@ -53,7 +53,7 @@ final class CartViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.updateDelegate?.reloadTableView()
                     self.updateDelegate?.refreshPayment()
-                    UIBlockingProgressHUD.dismiss()
+                    UIProgressHUD.dismiss()
                 }
         })
     }
