@@ -43,8 +43,8 @@ final class RatingViewController: UIViewController {
     }
 }
 
-extension RatingViewController {
-    private func makeRatingTableView() -> UITableView {
+private extension RatingViewController {
+    func makeRatingTableView() -> UITableView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UserTableViewCell.self)
@@ -57,19 +57,19 @@ extension RatingViewController {
         return tableView
     }
     
-    private func makeRefreshControll() -> UIRefreshControl {
+    func makeRefreshControll() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .clear
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         return refreshControl
     }
     
-    private func viewSetup() {
+    func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         navigationItem.title = ""
     }
     
-    private func  navigationItemSetup() {
+    func navigationItemSetup() {
         let filterButton = UIBarButtonItem(
             image: Consts.Images.sortIcon.withTintColor(Asset.Colors.ypBlack.color, renderingMode: .alwaysTemplate),
             style: .done,
@@ -79,11 +79,11 @@ extension RatingViewController {
         navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
     }
     
-    private func addViews() {
+    func addViews() {
         view.addSubview(ratingTableView)
     }
     
-    private func activateConstraints() {
+    func activateConstraints() {
         NSLayoutConstraint.activate([
             ratingTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant),
             ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
@@ -92,7 +92,7 @@ extension RatingViewController {
         ])
     }
     
-    private func bind() {
+    func bind() {
         viewModel.updateViewData = { [weak self] _ in
             guard let self else { return }
             self.reloadRatingTableView()
@@ -120,12 +120,12 @@ extension RatingViewController {
     }
     
     @objc
-    private func sortedButtonTapped() {
-        viewModel.showActionSheep()
+    func sortedButtonTapped() {
+        viewModel.showActionSheet()
     }
     
     @objc
-    private func refresh(_ sender: UIRefreshControl) {
+    func refresh(_ sender: UIRefreshControl) {
         ProgressHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
@@ -134,7 +134,7 @@ extension RatingViewController {
         }
     }
     
-    private func presentActionSheet(alertModel: AlertModel) {
+    func presentActionSheet(alertModel: AlertModel) {
         let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
         alertModel.alertActions.forEach { alertAction in
             let actionStyle: UIAlertAction.Style
@@ -155,7 +155,7 @@ extension RatingViewController {
         present(alert, animated: true)
     }
     
-    private func reloadRatingTableView() {
+    func reloadRatingTableView() {
         ratingTableView.reloadData()
         ratingTableView.layoutIfNeeded()
         ratingTableView.setContentOffset(.zero, animated: true)
@@ -184,7 +184,10 @@ extension RatingViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: UserTableViewCell.defaultReuseIdentifier,
             for: indexPath
-        ) as? UserTableViewCell else { return UITableViewCell() }
+        ) as? UserTableViewCell
+        else {
+            return UITableViewCell()
+        }
         let cellViewModel = viewModel.viewModelForCell(at: indexPath.row)
         cell.initialize(viewModel: cellViewModel)
         cell.selectionStyle = .none

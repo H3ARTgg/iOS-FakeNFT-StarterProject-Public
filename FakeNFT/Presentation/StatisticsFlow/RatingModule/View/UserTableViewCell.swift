@@ -46,7 +46,7 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 }
 
-extension UserTableViewCell {
+private extension UserTableViewCell {
     func makePositionInRatingLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

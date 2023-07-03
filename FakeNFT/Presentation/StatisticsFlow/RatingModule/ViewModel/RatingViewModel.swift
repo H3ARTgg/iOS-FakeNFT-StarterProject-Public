@@ -11,7 +11,7 @@ protocol RatingViewModelProtocol {
     func fetchUsers()
     func viewModelForCell(at index: Int) -> UserTableViewCellViewModel
     func viewModelForUserCard(at index: Int) -> UserCardViewModel
-    func showActionSheep()
+    func showActionSheet()
     func checkUsers()
 }
 
@@ -103,7 +103,7 @@ extension RatingViewModel: RatingViewModelProtocol {
         return viewModel
     }
     
-    public func showActionSheep() {
+    public func showActionSheet() {
         let alertModel = createAlertModel()
         headForAlert?(alertModel)
     }

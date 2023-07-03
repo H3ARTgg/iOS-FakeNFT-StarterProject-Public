@@ -9,11 +9,11 @@ protocol NftViewCellViewModelProtocol {
 }
 
 final class NftViewCellViewModel: NftViewCellViewModelProtocol {
-    private(set) var imageURL: URL?
-    private(set) var nftName: String
-    private(set) var nftPrice: String?
-    private(set) var rating: Int
-    private(set) var isLiked: Bool
+   let imageURL: URL?
+   let nftName: String
+   let nftPrice: String?
+   let rating: Int
+   let isLiked: Bool
 
     init(nft: Nft, isLiked: Bool) {
         imageURL = URL(string: nft.images.first ?? "Error")

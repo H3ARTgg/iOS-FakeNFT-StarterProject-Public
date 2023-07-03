@@ -9,11 +9,11 @@ protocol UserCardViewModelProtocol {
 }
 
 final class UserCardViewModel: UserCardViewModelProtocol {
-   private(set) var avatarURL: URL?
-   private(set) var userName: String
-   private(set) var description: String
-   private(set) var website: URL?
-   private(set) var nfts: [String]?
+    let avatarURL: URL?
+    let userName: String
+    let description: String
+    let website: URL?
+    let nfts: [String]?
     
     init(user: User) {
         avatarURL = URL(string: user.avatar)

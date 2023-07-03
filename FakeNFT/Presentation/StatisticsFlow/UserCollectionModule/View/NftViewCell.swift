@@ -46,8 +46,8 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
     }
 }
 
-extension NftViewCell {
-    private func makeNftImageView() -> UIImageView {
+private extension NftViewCell {
+    func makeNftImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -57,7 +57,7 @@ extension NftViewCell {
         return imageView
     }
     
-    private func makeLikeButton() -> UIButton {
+    func makeLikeButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
@@ -65,26 +65,26 @@ extension NftViewCell {
         return button
     }
     
-    private func makeRatingView() -> UIView {
+    func makeRatingView() -> UIView {
         let view = UIView()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
     
-    private func makeNftNameLabel() -> UILabel {
+    func makeNftNameLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.bodyBold
         return label
     }
     
-    private func makeNftPriceLabel() -> UILabel {
+    func makeNftPriceLabel() -> UILabel {
         let label = makeLabel()
         label.font = Consts.Fonts.medium10
         return label
     }
     
-    private func makeLabel() -> UILabel {
+    func makeLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Asset.Colors.ypBlack.color
@@ -92,7 +92,7 @@ extension NftViewCell {
         return label
     }
     
-    private func makeCartButton() -> UIButton {
+    func makeCartButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
@@ -103,7 +103,7 @@ extension NftViewCell {
         return button
     }
     
-    private func makeStackView() -> UIStackView {
+    func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -113,14 +113,14 @@ extension NftViewCell {
         return stackView
     }
     
-    private func makeLablesView() -> UIView {
+    func makeLablesView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
     }
     
-    private func makeButtonAndLablesStackStackView() -> UIStackView {
+    func makeButtonAndLablesStackStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -128,16 +128,16 @@ extension NftViewCell {
         return stackView
     }
     
-    private func makeRatingStackView() -> RatingStackView {
+    func makeRatingStackView() -> RatingStackView {
         let stackView = RatingStackView()
         return stackView
     }
     
-    private func viewSetup() {
+    func viewSetup() {
         contentView.backgroundColor = .clear
     }
     
-    private func addViews() {
+    func addViews() {
         [stackView, likeButton].forEach {
             contentView.addSubview($0)
         }
@@ -157,7 +157,7 @@ extension NftViewCell {
         ratingView.addSubview(ratingStackView)
     }
     
-    private func activateConstraints() {
+    func activateConstraints() {
         let nftImageViewWidth = contentView.bounds.width
         
         NSLayoutConstraint.activate([
@@ -187,7 +187,7 @@ extension NftViewCell {
         ])
     }
     
-    private func bind() {
+    func bind() {
         guard let viewModel else { return }
         nftNameLabel.text = viewModel.nftName
         nftPriceLabel.text = viewModel.nftPrice
@@ -196,24 +196,24 @@ extension NftViewCell {
         loadImage()
     }
     
-    private func setLikeImage(isLiked: Bool) {
+    func setLikeImage(isLiked: Bool) {
         let image = isLiked ? Asset.Assets.like.image : Asset.Assets.noLike.image
         likeButton.setImage(image, for: .normal)
     }
     
-    private func loadImage() {
+    func loadImage() {
         guard let url = viewModel?.imageURL else { return }
         nftImageView.kf.indicatorType = .activity
         nftImageView.kf.setImage(with: url)
     }
     
     @objc
-    private func cartButtonTapped() {
+    func cartButtonTapped() {
         print("add to cart")
     }
     
     @objc
-    private func likeButtonTapped() {
+    func likeButtonTapped() {
         print("Like")
     }
 }

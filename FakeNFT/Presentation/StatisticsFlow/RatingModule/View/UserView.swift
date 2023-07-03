@@ -47,7 +47,7 @@ final class UserView: UIView {
     }
 }
 
-extension UserView {
+private extension UserView {
     func makePhotoImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

@@ -55,18 +55,19 @@ final class UserCardViewController: UIViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.userInterfaceStyle == .dark {
-            userSiteButton.layer.borderColor = Asset.Colors.ypWhiteUniversal.color.cgColor
-        }
-        
-        if traitCollection.userInterfaceStyle == .light {
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
             userSiteButton.layer.borderColor = Asset.Colors.ypBlackUniversal.color.cgColor
+        case .dark:
+            userSiteButton.layer.borderColor = Asset.Colors.ypWhiteUniversal.color.cgColor
+        @unknown default:
+            return
         }
     }
 }
 
-extension UserCardViewController {
-    private func makeStackView() -> UIStackView {
+private extension UserCardViewController {
+    func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -75,7 +76,7 @@ extension UserCardViewController {
         return stackView
     }
     
-    private func makeUserStackView() -> UIStackView {
+    func makeUserStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -84,7 +85,7 @@ extension UserCardViewController {
         return stackView
     }
     
-    private func makeAvatarImageView() -> UIImageView {
+    func makeAvatarImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -95,7 +96,7 @@ extension UserCardViewController {
         return imageView
     }
     
-    private func makeUserNameLabel() -> UILabel {
+    func makeUserNameLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.headline3
         label.textAlignment = .left
@@ -104,7 +105,7 @@ extension UserCardViewController {
         return label
     }
     
-    private func makeDescriptionLabel() -> UILabel {
+    func makeDescriptionLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.caption2
         label.textAlignment = .left
@@ -113,7 +114,7 @@ extension UserCardViewController {
         return label
     }
     
-    private func makeLabel() -> UILabel {
+    func makeLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Asset.Colors.ypBlack.color
@@ -121,7 +122,7 @@ extension UserCardViewController {
         return label
     }
     
-    private func makeUserSiteButton() -> UIButton {
+    func makeUserSiteButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserSiteButtonTapped), for: .touchUpInside)
@@ -135,7 +136,7 @@ extension UserCardViewController {
         return button
     }
     
-    private func makeUserCollectionButton() -> UIButton {
+    func makeUserCollectionButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserCollectionButtonTapped), for: .touchUpInside)
@@ -146,7 +147,7 @@ extension UserCardViewController {
         return button
     }
     
-    private func makeChevronForwardImageView() -> UIImageView {
+    func makeChevronForwardImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.image = Asset.Assets.chevronForward.image
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -155,13 +156,13 @@ extension UserCardViewController {
         return imageView
     }
     
-    private func viewSetup() {
+    func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         tabBarController?.tabBar.isHidden = true
         title = ""
     }
     
-    private func addViews() {
+    func addViews() {
         view.addSubview(stackView)
         
         [ userStackView, descriptionLabel, userSiteButton, userCollectionButton ].forEach {
@@ -175,7 +176,7 @@ extension UserCardViewController {
         userCollectionButton.addSubview(chevronForwardImageView)
     }
     
-    private func activateConstraints() {
+    func activateConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: ViewControllerConstants.stackViewTopAnchorConstant),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
@@ -192,27 +193,33 @@ extension UserCardViewController {
         ])
     }
     
-    private func bind() {
+    func bind() {
         userNameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.description
         let numberOfSubscribers = viewModel.nfts?.count ?? 0
-        let userCollectionButtonTitle = String(format: Consts.LocalizedStrings.userCollectionButtonTitle, numberOfSubscribers)
-        userCollectionButton.setTitle(userCollectionButtonTitle, for: .normal)
+        let userCollectionButtonTitle = String(
+            format: Consts.LocalizedStrings.userCollectionButtonTitle,
+            numberOfSubscribers
+        )
+        userCollectionButton.setTitle(
+            userCollectionButtonTitle,
+            for: .normal
+        )
         loadAvatar()
     }
     
-    private func loadAvatar() {
+    func loadAvatar() {
         guard let url = viewModel.avatarURL else { return }
         avatarImageView.kf.setImage(with: url)
     }
     
     @objc
-    private func showUserSiteButtonTapped() {
+    func showUserSiteButtonTapped() {
         showWebViewController(type: .userSite)
     }
     
     @objc
-    private func showUserCollectionButtonTapped() {
+    func showUserCollectionButtonTapped() {
         showWebViewController(type: .userCollection)
     }
     

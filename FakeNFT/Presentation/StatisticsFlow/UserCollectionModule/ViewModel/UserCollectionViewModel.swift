@@ -18,7 +18,7 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
     public var showCollectionView: ((Bool) -> Void)?
     public var showPlugView: ((String) -> Void)?
     
-    private var nftsId: [String]? 
+    private var nftsId: [String]?
     
     private var nfts: [Nft] = [] {
         didSet {
@@ -55,11 +55,12 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
         }
         hideCollectionView?(true)
         nftsId.forEach({ [weak self] id in
-            nftsProvider.fetchNft(id: id) { result in
+            guard let self else { return }
+            self.nftsProvider.fetchNft(id: id) { result in
                 switch result {
                 case .success(let nft):
                     DispatchQueue.main.async {
-                        self?.nfts.append(nft)
+                        self.nfts.append(nft)
                     }
                 case .failure(let failure):
                     print(failure.localizedDescription)

@@ -32,8 +32,8 @@ final class UserCollectionViewController: UIViewController {
     }
 }
 
-extension UserCollectionViewController {
-    private func makeCollectionView() -> UICollectionView {
+private extension UserCollectionViewController {
+    func makeCollectionView() -> UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -48,7 +48,7 @@ extension UserCollectionViewController {
         return collectionView
     }
     
-    private func makePlugLabel() -> UILabel {
+    func makePlugLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Asset.Colors.ypBlack.color
@@ -58,18 +58,18 @@ extension UserCollectionViewController {
         return label
     }
     
-    private func viewSetup() {
+    func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         title = Consts.LocalizedStrings.userCollectionViewControllerTitle
     }
     
-    private func addViews() {
+    func addViews() {
         [collectionView, plugLabel].forEach {
             view.addSubview($0)
         }
     }
     
-    private func activateConstraints() {
+    func activateConstraints() {
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant).isActive = true
@@ -80,7 +80,7 @@ extension UserCollectionViewController {
         plugLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
     }
     
-    private func bind() {
+    func bind() {
         viewModel.updateViewData = { [weak self] _ in
             guard let self else { return }
             DispatchQueue.main.async { [weak self] in
@@ -114,7 +114,7 @@ extension UserCollectionViewController {
         }
     }
     
-    private func makeRefreshControll() -> UIRefreshControl {
+    func makeRefreshControll() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .clear
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
@@ -142,8 +142,13 @@ extension UserCollectionViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         guard
             let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NftViewCell.defaultReuseIdentifier, for: indexPath) as? NftViewCell
-        else { return UICollectionViewCell() }
+                withReuseIdentifier: NftViewCell.defaultReuseIdentifier,
+                for: indexPath
+            ) as? NftViewCell
+        else {
+            return UICollectionViewCell()
+            
+        }
         let cellViewModel = viewModel.nftCellViewModel(at: indexPath.row)
         cell.initialize(viewModel: cellViewModel)
         return cell
