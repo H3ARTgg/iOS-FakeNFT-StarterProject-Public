@@ -48,7 +48,7 @@ final class CartViewController: UIViewController {
             UIProgressHUD.show()
         }
         
-        viewModel.bind(callback: { [weak self] _ in
+        viewModel.bind(updateViewController: { [weak self] _ in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     self.updateDelegate?.reloadTableView()

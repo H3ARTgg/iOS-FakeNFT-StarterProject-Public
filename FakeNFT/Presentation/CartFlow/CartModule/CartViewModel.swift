@@ -7,18 +7,18 @@ protocol CartViewModelProtocol {
     func sortFromRating()
     func sortFromTitle()
     func delete(from id: Int)
-    func bind(callback: @escaping ([Nft]) -> Void)
+    func bind(updateViewController: @escaping ([Nft]) -> Void)
 }
 
 final class CartViewModel: ObservableObject {
     @Observable var products: [Nft] = [] {
         didSet {
-            callback?(products)
+            updateViewController?(products)
         }
     }
     
     private var cartNetworkService: CartNetworkServiceProtocol
-    private var callback: (([Nft]) -> Void)?
+    private var updateViewController: (([Nft]) -> Void)?
     
     private var isInitialLoadCompleted = false
     
@@ -70,7 +70,7 @@ extension CartViewModel: CartViewModelProtocol {
         }
     }
 
-    func bind(callback: @escaping ([Nft]) -> Void) {
-        self.callback = callback
+    func bind(updateViewController: @escaping ([Nft]) -> Void) {
+        self.updateViewController = updateViewController
     }
 }
