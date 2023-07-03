@@ -45,6 +45,12 @@ struct Consts {
         static let sideConstant: CGFloat = 16
         static let heightUserTableViewCell: CGFloat = 88
         
+        // UserCardViewController
+        static let userCollectionButtonHeight: CGFloat = 54
+        static let userSiteButtonHeight: CGFloat = 40
+        static let avatarWidth: CGFloat = 70
+        static let stackViewTopAnchorConstant: CGFloat = 10
+        
         // Network
         static let urlStatistic: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/users")
         static let urlNft: URL? = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/nft/")

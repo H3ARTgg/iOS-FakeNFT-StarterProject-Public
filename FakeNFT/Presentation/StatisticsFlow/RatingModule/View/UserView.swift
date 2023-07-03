@@ -5,8 +5,8 @@ final class UserView: UIView {
     
     // MARK: Helpers
     private struct ViewConstants {
-        static let imageViewWidth = UIScreen.main.bounds.width / 13.3
-        static let countNFTLabelWidth = UIScreen.main.bounds.width / 8
+        static let imageViewWidth: CGFloat = 28
+        static let countNFTLabelWidth: CGFloat = 38
         static let edgeDistance: CGFloat = 8
         static let cornerRadius: CGFloat = 12
     }

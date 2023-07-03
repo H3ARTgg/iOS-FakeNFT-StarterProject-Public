@@ -5,13 +5,6 @@ import Kingfisher
 final class UserCardViewController: UIViewController {
     
     // MARK: Helpers
-    private struct ViewControllerConstants {
-        static let userCollectionButtonHeight = UIScreen.main.bounds.height / 12
-        static let userSiteButtonHeight = UIScreen.main.bounds.height / 20
-        static let avatarWidth = UIScreen.main.bounds.width / 5.4
-        static let stackViewTopAnchorConstant: CGFloat = 10
-    }
-    
     private enum TypeViewController {
         case userSite
         case userCollection
@@ -178,15 +171,15 @@ private extension UserCardViewController {
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: ViewControllerConstants.stackViewTopAnchorConstant),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant),
             
-            avatarImageView.widthAnchor.constraint(equalToConstant: ViewControllerConstants.avatarWidth),
+            avatarImageView.widthAnchor.constraint(equalToConstant: Consts.Statistic.avatarWidth),
             avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             
-            userCollectionButton.heightAnchor.constraint(equalToConstant: ViewControllerConstants.userCollectionButtonHeight),
-            userSiteButton.heightAnchor.constraint(equalToConstant: ViewControllerConstants.userSiteButtonHeight),
+            userCollectionButton.heightAnchor.constraint(equalToConstant: Consts.Statistic.userCollectionButtonHeight),
+            userSiteButton.heightAnchor.constraint(equalToConstant: Consts.Statistic.userSiteButtonHeight),
             
             chevronForwardImageView.centerYAnchor.constraint(equalTo: userCollectionButton.centerYAnchor),
             chevronForwardImageView.rightAnchor.constraint(equalTo: userCollectionButton.rightAnchor)

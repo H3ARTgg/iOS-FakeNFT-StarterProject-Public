@@ -7,7 +7,6 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
     static var defaultReuseIdentifier: String { "UserCell" }
     
     private struct CellConstants {
-        static let userViewWidth = (UIScreen.main.bounds.width - Consts.Statistic.sideConstant * 2) / 1.1111
         static let positionInRatingLabelHeight: CGFloat = 20
         static let edgeDistance: CGFloat = 4
         static let stackViewCornerRadius: CGFloat = 12
@@ -78,7 +77,7 @@ private extension UserTableViewCell {
             positionInRatingLabel.rightAnchor.constraint(equalTo: userView.leftAnchor),
             positionInRatingLabel.heightAnchor.constraint(equalToConstant: CellConstants.positionInRatingLabelHeight),
             
-            userView.widthAnchor.constraint(equalToConstant: CellConstants.userViewWidth),
+            userView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
             userView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellConstants.edgeDistance),
             userView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CellConstants.edgeDistance),
             userView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)

@@ -160,7 +160,7 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let bounds = UIScreen.main.bounds
         let width = (bounds.width - 42) / 3
-        let heightConstant = bounds.height / 4.229
+        let heightConstant: CGFloat = 192
         let size = CGSize(width: width, height: heightConstant)
         return size
     }
