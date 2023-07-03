@@ -2,8 +2,6 @@ import Foundation
 
 protocol RatingViewModelProtocol {
     var headForAlert: ((AlertModel) -> Void)? { get set }
-    var updateViewData: ((Bool) -> Void)? { get set }
-    var hideTableView: ((Bool) -> Void)? { get set }
     var showTableView: ((Bool) -> Void)? { get set }
     
     var countUsers: Int { get }
@@ -12,57 +10,40 @@ protocol RatingViewModelProtocol {
     func viewModelForCell(at index: Int) -> UserTableViewCellViewModel
     func viewModelForUserCard(at index: Int) -> UserCardViewModel
     func showActionSheet()
-    func checkUsers()
 }
 
 final class RatingViewModel {
     public var headForAlert: ((AlertModel) -> Void)?
-    public var updateViewData: ((Bool) -> Void)?
-    public var hideTableView: ((Bool) -> Void)?
     public var showTableView: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
     
-    private lazy var filter: StatisticFilter = .rating
-    
-    private var sortedUsers: [User] = [] {
+    private lazy var filter: StatisticFilter = .rating {
         didSet {
-            showTableView?(true)
-            updateViewData?(true)
+            showTableView?(false)
+            fetchedUsers = sortUsers(users: fetchedUsers)
         }
     }
     
     private var fetchedUsers: [User] = [] {
         didSet {
-            sortUsers()
+            showTableView?(true)
         }
     }
-    
-    private var nameSorting: [User ] {
-        fetchedUsers.sorted(by: {
-            $0 < $1
-        })
-    }
-    
-    private var ratingSorting: [User ] {
-        fetchedUsers.sorted(by: {
-            $0.rating < $1.rating
-        })
-    }
-    
+        
     init(statisticProvider: StatisticProviderProtocol? = nil) {
         self.statisticProvider = statisticProvider
         getUsers()
     }
     
-    private func getUsers() {
+    private func getUsers() {      
         statisticProvider?.fetchUsersNextPage(completion: { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let users):
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
-                    self.fetchedUsers = users
+                    self.fetchedUsers = self.sortUsers(users: users)
                 }
             case .failure(let failure):
                 // TODO: show error alert
@@ -70,21 +51,11 @@ final class RatingViewModel {
             }
         })
     }
-    
-    private func sortUsers() {
-        hideTableView?(true)
-        switch self.filter {
-        case .name:
-            self.sortedUsers = self.nameSorting
-        case .rating:
-            self.sortedUsers = self.ratingSorting
-        }
-    }
 }
 
 extension RatingViewModel: RatingViewModelProtocol {
     public var countUsers: Int {
-        sortedUsers.count
+        fetchedUsers.count
     }
     
     public func fetchUsers() {
@@ -92,13 +63,13 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     public func viewModelForCell(at index: Int) -> UserTableViewCellViewModel {
-        let user = sortedUsers[index]
+        let user = fetchedUsers[index]
         let viewModel = UserTableViewCellViewModel(user: user)
         return viewModel
     }
     
     public func viewModelForUserCard(at index: Int) -> UserCardViewModel {
-        let user = sortedUsers[index]
+        let user = fetchedUsers[index]
         let viewModel = UserCardViewModel(user: user)
         return viewModel
     }
@@ -107,24 +78,18 @@ extension RatingViewModel: RatingViewModelProtocol {
         let alertModel = createAlertModel()
         headForAlert?(alertModel)
     }
-    
-    public func checkUsers() {
-        if sortedUsers.isEmpty {
-            hideTableView?(true)
-            fetchUsers()
-        } else {
-            showTableView?(true)
+        
+    func sortUsers(users: [User]) -> [User] {
+        switch filter {
+        case .name:
+           return users.sorted(by: {
+                $0 < $1
+            })
+        case .rating:
+            return users.sorted(by: {
+                $0.rating < $1.rating
+            })
         }
-    }
-    
-    private func sortByName() {
-        filter = .name
-        sortUsers()
-    }
-    
-    private func sortByRating() {
-        filter = .rating
-        sortUsers()
     }
     
     private func createAlertModel() -> AlertModel {
@@ -138,7 +103,7 @@ extension RatingViewModel: RatingViewModelProtocol {
             actionRole: .regular,
             action: { [weak self] in
                 guard let self else { return }
-                self.sortByName()
+                self.filter = .name
             })
         
         let alertSortBynameRating = AlertAction(
@@ -146,7 +111,7 @@ extension RatingViewModel: RatingViewModelProtocol {
             actionRole: .regular,
             action: { [weak self] in
                 guard let self else { return }
-                self.sortByRating()
+                self.filter = .rating
             })
         let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
         let alertModel = AlertModel(

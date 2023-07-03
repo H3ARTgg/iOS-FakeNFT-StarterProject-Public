@@ -33,7 +33,6 @@ final class RatingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.checkUsers()
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -93,29 +92,18 @@ private extension RatingViewController {
     }
     
     func bind() {
-        viewModel.updateViewData = { [weak self] _ in
-            guard let self else { return }
-            self.reloadRatingTableView()
-        }
-        
         viewModel.headForAlert = { [weak self] alertModel in
             guard let self else { return }
             self.presentActionSheet(alertModel: alertModel)
         }
         
-        viewModel.hideTableView = { [weak self] _ in
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                guard let self else { return }
-                self.ratingTableView.alpha = 0
+        viewModel.showTableView = { [weak self] check in
+            if check {
+                self?.showTableView()
+            } else {
+                self?.hideTableView()
             }
-        }
-        
-        viewModel.showTableView = { [weak self] _ in
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                guard let self else { return }
-                self.ratingTableView.alpha = 1
-            }
-            ProgressHUD.dismiss()
+            self?.reloadRatingTableView()
         }
     }
     
@@ -159,6 +147,21 @@ private extension RatingViewController {
         ratingTableView.reloadData()
         ratingTableView.layoutIfNeeded()
         ratingTableView.setContentOffset(.zero, animated: true)
+    }
+    
+    func hideTableView() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self else { return }
+            self.ratingTableView.alpha = 0
+        }
+    }
+    
+    func showTableView() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self else { return }
+            self.ratingTableView.alpha = 1
+        }
+        ProgressHUD.dismiss()
     }
 }
 

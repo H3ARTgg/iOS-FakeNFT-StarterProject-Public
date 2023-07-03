@@ -6,7 +6,6 @@ protocol StatisticProviderProtocol {
 
 struct StatisticProvider {
     private let networkClient = DefaultNetworkClient()
-    private var lastLoadedPage: Int?
 }
 
 extension StatisticProvider: StatisticProviderProtocol {
