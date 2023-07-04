@@ -22,5 +22,5 @@ __Экран просмотра коллекции (Каталог):__
 8. Реализовать логику добавления в корзину (и удаления из корзины) - est: 1ч, spent: 30м
 9. Реализовать логику перехода по имени автора (WebView) - est: 1ч, spent: 5м
 
-Trello: https://trello.com/b/hlowcESl/fakenft-yp
+Trello: https://trello.com/invite/b/hlowcESl/ATTI9aee0b0fafc2ab533de682313a68be8620835EC3/fakenft-yp
 
