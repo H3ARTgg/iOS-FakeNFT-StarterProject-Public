@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 final class CatalogueSupplementaryView: UICollectionReusableView {
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let title = UILabel()
         title.font = .bodyBold
         title.textColor = Asset.Colors.ypBlack.color
