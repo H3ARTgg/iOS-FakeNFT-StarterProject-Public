@@ -241,6 +241,7 @@ extension CatalogueViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = false
         presentCollectionDetailsViewController(at: indexPath)
     }
     

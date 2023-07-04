@@ -44,6 +44,7 @@ final class CollectionDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = true
         view.backgroundColor = Asset.Colors.ypWhite.color
         
         addSubviews()
