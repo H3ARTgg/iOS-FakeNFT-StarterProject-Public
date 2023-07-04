@@ -15,7 +15,7 @@ final class CollectionDetailsViewModel {
     }
     
     func requestCollection() {
-        let request = CollectionRequest(id: collectionId)
+        let request = CollectionRequestGet(id: collectionId)
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             self.networkClient.send(request: request, type: NFTCollectionResponce.self) { (result: Result<NFTCollectionResponce, Error>) in
@@ -52,7 +52,7 @@ final class CollectionDetailsViewModel {
     
     private func requestNfts(_ ids: [String]) {
         // Загружаю все NFT, так как иначе быстрее достигается лимит запросов.
-        let request = NFTsRequest()
+        let request = NftsRequestGet()
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             

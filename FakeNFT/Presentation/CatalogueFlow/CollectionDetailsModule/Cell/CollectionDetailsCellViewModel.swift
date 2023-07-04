@@ -52,7 +52,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
     
     private func isInOrderFor(_ nftId: String) {
         dispatchGroup.enter()
-        let request = OrderRequest()
+        let request = OrderRequestGet()
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
@@ -78,7 +78,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
     
     private func isInFavoritesFor(_ nftId: String) {
         dispatchGroup.enter()
-        let request = ProfileRequest()
+        let request = ProfileRequestGet()
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
@@ -108,7 +108,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             guard let self else { return }
             
             var orderIds = self.orderNftsIds
-            var request = AddToOrderRequest()
+            var request = OrderRequestPut()
             if self.isInCart {
                 orderIds = orderIds.filter({ $0 != self.id })
             } else {
@@ -141,7 +141,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             guard let self else { return }
             
             var likesIds = self.likesNftIds
-            var request = AddToFavoritesRequest()
+            var request = ProfileRequestPut()
             if self.isFavorite {
                 likesIds = likesIds.filter({ $0 != self.id })
             } else {
