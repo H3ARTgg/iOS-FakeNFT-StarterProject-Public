@@ -11,6 +11,12 @@ struct Consts {
         static let favoriteNfts = NSLocalizedString("profile.favorite", value: "Избранные NFT", comment: "Personal favorite NFTs")
         static let aboutDeveloper = NSLocalizedString("profile.developer", value: "О разработчике", comment: "About developer")
         static let changePhoto = NSLocalizedString("profileEdit.changePhoto", value: "Сменить фото", comment: "Change photo")
+        static let profileSortAlertTitle = NSLocalizedString("profile.sort", value: "Сортировка", comment: "Text for sort action sheet title")
+        static let profileSortAlertByPriceText = NSLocalizedString("profile.byPrice", value: "По цене", comment: "Text for sort action sheet price button")
+        static let profileSortAlertByRatingText = NSLocalizedString("profile.byRating", value: "По рейтингу", comment: "Text for sort action sheet rating button")
+        static let profileSortAlertByNameText = NSLocalizedString("profile.byTitle", value: "По названию", comment: "Text for sort action sheet title button")
+        static let profileSortAlertCloseText = NSLocalizedString("profile.close", value: "Закрыть", comment: "Text for sort action sheet close button")
+        static let profileYouHaveNotAnyNfts = NSLocalizedString("profile.noNfts", value: "У Вас еще нет NFT", comment: "Text for no nfts")
     }
     
     struct Images {
@@ -23,7 +29,7 @@ struct Consts {
         static let chevron = UIImage(systemName: "chevron.right")
         static let cross = UIImage(systemName: "xmark")
         static let backButton = Asset.Assets.chevronBackward.image
-        static let sorMenu = Asset.Assets.sortMenu.image
+        static let sortMenu = Asset.Assets.sortMenu.image
         static let like = Asset.Assets.like.image
     }
     

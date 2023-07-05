@@ -59,9 +59,8 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vm = OwnedNftViewModel(ownedNfts: viewModel.ownedNfts)
-        let vc = OwnedNftTableViewController(viewModel: vm)
-        
-        navigationController?.pushViewController(vc, animated: true)
+        let vc = OwnedNftViewController(viewModel: vm)
+        self.navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

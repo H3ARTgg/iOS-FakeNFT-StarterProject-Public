@@ -1,5 +1,9 @@
 import UIKit
 
+protocol RouterDelegate: AnyObject {
+    func setRootViewController(_ viewController: Presentable?)
+}
+
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
@@ -10,5 +14,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
+    }
+}
+
+extension SceneDelegate: RouterDelegate {
+    func setRootViewController(_ viewController: Presentable?) {
+        window?.rootViewController = viewController?.toPresent()
     }
 }

@@ -11,17 +11,18 @@ import Combine
 protocol OwnedNftViewModelProtocol {
     var nfts: PassthroughSubject<[NftViewModel], Never> { get }
     var alert: PassthroughSubject<AlertModel, Never> { get }
+    var thereIsNfts: PassthroughSubject<Bool, Never> { get }
 
     var numberOfSections: Int { get }
         
     func viewDidLoad()
-    func loadNextNfts(_ index: Int)
+    func sortButtonTapped()
 }
 
 final class OwnedNftViewModel {
-   
     var nfts = PassthroughSubject<[NftViewModel], Never>()
     var alert = PassthroughSubject<AlertModel, Never>()
+    var thereIsNfts = PassthroughSubject<Bool, Never>()
     
     var loadedNfts: [NftResponseModel] = [] {
         didSet {
@@ -40,7 +41,7 @@ final class OwnedNftViewModel {
     private var ownedNfts: [String]
     private let networkManager: NftDataManagerProtocol = NftDataManager(networkService: DefaultNetworkClient())
     private var lastLoadedNft: Int = -1
-    
+        
     init(ownedNfts: [String]) {
         self.ownedNfts = ownedNfts
     }
@@ -52,45 +53,75 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
     }
     
     func viewDidLoad() {
-        loadNextNfts(0)
+        loadNextNfts()
     }
     
-    func loadNextNfts(_ index: Int) {
-        if index > lastLoadedNft, ownedNfts.indices ~= index {
-            lastLoadedNft += 4
-            ownedNfts[index...min(ownedNfts.count - 1, lastLoadedNft)].forEach { nftIndex in
-                networkManager.getNft(nftId: nftIndex) { [weak self] nft in
-                    self?.loadedNfts.append(nft)
-                }
+    func loadNextNfts() {
+        ownedNfts.forEach { nftIndex in
+            networkManager.getNft(nftId: nftIndex) { [weak self] nft in
+                self?.loadedNfts.append(nft)
+                self?.thereIsNfts.send(true)
             }
         }
     }
     
+    func sortButtonTapped() {
+        let alertText = Consts.LocalizedStrings.profileSortAlertTitle
+        let alertByPriceActionText = Consts.LocalizedStrings.profileSortAlertByPriceText
+        let alertByRatingActionText = Consts.LocalizedStrings.profileSortAlertByRatingText
+        let alertByNameActionText = Consts.LocalizedStrings.profileSortAlertByNameText
+        let alertCloseText = Consts.LocalizedStrings.profileSortAlertCloseText
+        
+        let alertSortByPriceAction = AlertAction(
+            actionText: alertByPriceActionText,
+            actionRole: .regular,
+            action: { [unowned self] in
+                self.sortBy(.price)
+            }
+        )
+        
+        let alertSortByRatingAction = AlertAction(
+            actionText: alertByRatingActionText,
+            actionRole: .regular,
+            action: { [unowned self] in
+                self.sortBy(.rating)
+            }
+        )
+        
+        let alertSortByNameAction = AlertAction(
+            actionText: alertByNameActionText,
+            actionRole: .regular,
+            action: { [unowned self] in
+                self.sortBy(.name)
+            }
+        )
+        
+        let alertSortCloseAction = AlertAction(
+            actionText: alertCloseText,
+            actionRole: .cancel,
+            action: { }
+        )
+        
+        let alertModel = AlertModel(
+            alertText: alertText,
+            alertActions: [
+                alertSortByPriceAction,
+                alertSortByRatingAction,
+                alertSortByNameAction,
+                alertSortCloseAction
+            ])
+        
+        alert.send(alertModel)
+    }
+}
+
+private extension OwnedNftViewModel {
     func sortBy(_ order: SortOrder) {
         switch order {
-        case .price: break
-        case .rating: break
-        case .name: break 
+        case .price: loadedNfts = loadedNfts.sorted(by: { $0.price < $1.price })
+        case .rating: loadedNfts = loadedNfts.sorted(by: { $0.rating > $1.rating })
+        case .name: loadedNfts = loadedNfts.sorted(by: { $0.name < $1.name })
         }
-    }
-    
-    func alertButtonTapped() {
-        let alertText = NSLocalizedString("deleteTrackerAlertText", comment: "Text for tracker delete alert")
-        let alertDeleteActionText = NSLocalizedString("deleteActionText", comment: "Text for alert delete button")
-        let alertCancelText = NSLocalizedString("cancelActionText", comment: "Text for alert cancel button")
-        let alertDeleteAction = AlertAction(actionText: alertDeleteActionText, actionRole: .destructive, action: { [unowned self] in
-            let tracker = visibleCategories[indexPath.section].trackers[indexPath.row]
-            do {
-                try dataProvider.deleteTracker(tracker)
-            } catch {
-                handleError(message: error.localizedDescription)
-            }
-            
-            dateChangedTo(date)
-        })
-        
-        let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
-        let alertModel = AlertModel(alertText: alertText, alertActions: [alertDeleteAction, alertCancelAction])
     }
 }
 
