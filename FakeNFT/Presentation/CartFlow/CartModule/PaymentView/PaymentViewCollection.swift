@@ -4,6 +4,18 @@ final class PaymentViewCollection: UIView {
     
     private let paymentView = FinalPaymentView()
     
+    private lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        view.register(
+            CurrencyCollectionViewCell.self,
+            forCellWithReuseIdentifier: Consts.Cart.CellIdentifier.currencyCartViewCell
+        )
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     weak var delegate: PaymentViewControllerDelegate?
     
     func configure(delegate: PaymentViewController) {
@@ -11,25 +23,43 @@ final class PaymentViewCollection: UIView {
         
         self.delegate = delegate
         paymentView.delegate = self.delegate
+        collectionView.dataSource = delegate
+        collectionView.delegate = delegate
         
         addElements()
         setupConstraints()
     }
     
     private func addElements() {
-        addSubview(paymentView)
+        [
+            collectionView,
+            paymentView
+        ].forEach { addSubview($0) }
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            paymentView.bottomAnchor.constraint(
-                equalTo: bottomAnchor
+            collectionView.topAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.topAnchor, constant: 20
             ),
+            collectionView.leftAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.leftAnchor
+            ),
+            collectionView.trailingAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.trailingAnchor
+            ),
+            collectionView.bottomAnchor.constraint(
+                equalTo: paymentView.topAnchor
+            ),
+            
             paymentView.leadingAnchor.constraint(
                 equalTo: leadingAnchor
             ),
             paymentView.trailingAnchor.constraint(
                 equalTo: trailingAnchor
+            ),
+            paymentView.bottomAnchor.constraint(
+                equalTo: bottomAnchor
             )
         ])
     }

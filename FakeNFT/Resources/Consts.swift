@@ -62,6 +62,7 @@ struct Consts {
         
         struct CellIdentifier {
             static let productCartCellIdentifier = "cartCell"
+            static let currencyCartViewCell = "cartCurrency"
         }
         
         struct Url {
