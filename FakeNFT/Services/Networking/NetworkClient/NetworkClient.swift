@@ -1,10 +1,28 @@
 import Foundation
+import Combine
 
 enum NetworkClientError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
     case parsingError
+}
+
+enum NetworkError: LocalizedError {
+    case addressUnreachable(URL)
+    case invalidResponse
+    case badRequest
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidResponse:
+            return "Invalid response from the server"
+        case .addressUnreachable(let url):
+            return "Unreachable URL: \(url.absoluteString)"
+        case .badRequest:
+            return "Bad request"
+        }
+    }
 }
 
 protocol NetworkClient {
@@ -16,6 +34,11 @@ protocol NetworkClient {
     func send<T: Decodable>(request: NetworkRequest,
                             type: T.Type,
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    
+    func networkPublisher<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type
+    ) -> AnyPublisher<T, NetworkError>
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -102,5 +125,24 @@ struct DefaultNetworkClient: NetworkClient {
         } catch {
             onResponse(.failure(NetworkClientError.parsingError))
         }
+    }
+    
+    func networkPublisher<T: Decodable>(request: NetworkRequest, type: T.Type) -> AnyPublisher<T, NetworkError> {
+        guard let urlRequest = create(request: request) else {
+            return Fail(error: NetworkError.badRequest).eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: urlRequest)
+            .map(\.data)
+            .decode(type: type.self, decoder: decoder)
+            .mapError { (error) -> NetworkError in
+                switch error {
+                case is URLError:
+                    return NetworkError.addressUnreachable(request.endpoint!)
+                default:
+                    return NetworkError.invalidResponse
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }
