@@ -1,12 +1,16 @@
 import UIKit
 
+protocol PaymentViewControllerDelegate: AnyObject {
+    func openWebViewController()
+}
+
 final class PaymentViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
         tabBarController?.tabBar.isHidden = true
-        let customView = PaymentViewCollection()
-        customView.configure()
+        let customView = PaymentViewCollection(frame: view.frame)
+        customView.configure(delegate: self)
         view = customView
     }
     
@@ -35,5 +39,14 @@ final class PaymentViewController: UIViewController {
     
     @objc private func close() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension PaymentViewController: PaymentViewControllerDelegate {
+    func openWebViewController() {
+        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
+        let webViewModel = WebViewViewModel(url: url)
+        let webView = WebViewViewController(viewModel: webViewModel)
+        navigationController?.pushViewController(webView, animated: true)
     }
 }
