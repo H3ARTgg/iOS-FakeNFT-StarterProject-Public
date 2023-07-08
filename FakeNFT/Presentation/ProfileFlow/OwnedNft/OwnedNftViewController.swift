@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 final class OwnedNftViewController: UIViewController {
-    
     private lazy var nftsDataSource = OwnedNftDataSource(tableView: nftsTableView)
     private let viewModel: OwnedNftViewModelProtocol
     
@@ -20,7 +19,7 @@ final class OwnedNftViewController: UIViewController {
         tableView.delegate = self
         tableView.register(OwnedNftTableViewCell.self, forCellReuseIdentifier: OwnedNftTableViewCell.identifier)
         tableView.separatorStyle = .none
-        tableView.isHidden = true
+        tableView.isHidden = false
         return tableView
     }()
     
@@ -48,18 +47,16 @@ final class OwnedNftViewController: UIViewController {
         super.viewDidLoad()
         nftsTableView.dataSource = nftsDataSource
         setupBindings()
-        viewModel.viewDidLoad()
-    }
-
-    @objc
-    func showSortMenu() {
-        viewModel.sortButtonTapped()
     }
     
     func setupBindings() {
-        viewModel.nfts.sink { [weak self] nfts in
-            self?.nftsDataSource.reload(nfts)
-        }
+        viewModel.nfts.sink(
+            receiveCompletion: { error in
+                print(error)
+            },
+            receiveValue: { [weak self] nfts in
+                self?.nftsDataSource.reload(nfts)
+            })
         .store(in: &cancellables)
         
         viewModel.alert.sink { [weak self] alertModel in
@@ -68,7 +65,6 @@ final class OwnedNftViewController: UIViewController {
         .store(in: &cancellables)
         
         viewModel.thereIsNfts
-            .removeDuplicates()
             .sink { [weak self] state in
                 guard let self = self else { return }
                 let rightBarButtonItem = UIBarButtonItem(image: Consts.Images.sortMenu,
@@ -88,6 +84,11 @@ final class OwnedNftViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    @objc
+    func showSortMenu() {
+        viewModel.sortButtonTapped()
     }
 }
 
@@ -123,6 +124,7 @@ extension OwnedNftViewController {
 }
 
 // MARK: - Subviews configure + layout
+
 private extension OwnedNftViewController {
     func addSubviews() {
         view.addSubview(nftsTableView)

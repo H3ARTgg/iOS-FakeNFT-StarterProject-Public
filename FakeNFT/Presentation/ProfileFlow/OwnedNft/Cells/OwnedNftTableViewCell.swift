@@ -9,12 +9,13 @@ import UIKit
 import Kingfisher
 
 final class OwnedNftTableViewCell: UITableViewCell {
-    
     static let identifier = "OwnedNftTableViewCell"
 
     var cellModel: NftViewModel? {
         didSet {
-            guard let cellModel else { return }
+            guard let cellModel else {
+                return
+            }
             
             if let url = URL(string: cellModel.image) {
                 nftImageView.kf.setImage(with: url)
@@ -23,7 +24,8 @@ final class OwnedNftTableViewCell: UITableViewCell {
             nftTitleLabel.text = cellModel.name
             ratingStackView.setupRating(cellModel.rating)
             authorNameLabel.text = cellModel.author
-            priceLabel.text = String(format: "%.3f", cellModel.price) + currency
+            priceLabel.text = String(format: "%.2f", cellModel.price) + currency
+            likeImageView.image = cellModel.isLiked ? Asset.Assets.likeSet.image : Asset.Assets.like.image
         }
     }
     
@@ -47,9 +49,7 @@ final class OwnedNftTableViewCell: UITableViewCell {
     
     private lazy var likeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = Asset.Colors.ypWhiteUniversal.color
-        imageView.image = Asset.Assets.like.image
-        
+        imageView.tintColor = Asset.Colors.ypWhiteUniversal.color        
         return imageView
     }()
     
@@ -132,6 +132,7 @@ final class OwnedNftTableViewCell: UITableViewCell {
 }
 
 // MARK: - Subviews configure + layout
+
 private extension OwnedNftTableViewCell {
     func addSubviews() {
         contentView.addSubview(cellHStack)
@@ -146,7 +147,6 @@ private extension OwnedNftTableViewCell {
         cellHStack.addArrangedSubview(nftPriceStack)
         nftPriceStack.addArrangedSubview(priceTitleLabel)
         nftPriceStack.addArrangedSubview(priceLabel)
-        
         nftImageView.addSubview(likeImageView)
     }
     
@@ -166,7 +166,6 @@ private extension OwnedNftTableViewCell {
             
             likeImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12),
             likeImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12)
-
         ])
     }
 }

@@ -9,41 +9,58 @@ import Foundation
 import Combine
 
 protocol OwnedNftViewModelProtocol {
-    var nfts: PassthroughSubject<[NftViewModel], Never> { get }
+    var nfts: CurrentValueSubject<[NftViewModel], Never> { get }
     var alert: PassthroughSubject<AlertModel, Never> { get }
     var thereIsNfts: PassthroughSubject<Bool, Never> { get }
-
-    var numberOfSections: Int { get }
         
-    func viewDidLoad()
+    var numberOfSections: Int { get }
+
     func sortButtonTapped()
 }
 
 final class OwnedNftViewModel {
-    var nfts = PassthroughSubject<[NftViewModel], Never>()
+    var nfts = CurrentValueSubject<[NftViewModel], Never>([])
     var alert = PassthroughSubject<AlertModel, Never>()
     var thereIsNfts = PassthroughSubject<Bool, Never>()
     
-    var loadedNfts: [NftResponseModel] = [] {
-        didSet {
-            let data = loadedNfts.map { model in
-                NftViewModel(image: model.images[0],
-                             name: model.name,
-                             rating: model.rating,
-                             author: model.author,
-                             price: model.price)
-            }
-            
-            nfts.send(data)
-        }
-    }
+    private var cancellables: Set<AnyCancellable> = []
+    private var likes: [String] = []
     
-    private var ownedNfts: [String]
     private let networkManager: NftDataManagerProtocol = NftDataManager(networkService: DefaultNetworkClient())
-    private var lastLoadedNft: Int = -1
-        
+    
     init(ownedNfts: [String]) {
-        self.ownedNfts = ownedNfts
+        networkManager.getNftsPublisher(nftIds: ownedNfts)
+            .flatMap { nftsResponses in
+                nftsResponses.publisher.setFailureType(to: NetworkError.self)
+            }
+            .flatMap { [unowned self] nftsResponse in
+                self.networkManager.getUserNamePublisher(id: nftsResponse.author)
+                    .map { author in
+                        self.convert(nftsResponse, author: author)
+                    }
+            }
+            .flatMap { [unowned self] viewModel in
+                self.networkManager.getProfilePublisher()
+                    .map { response in
+                        self.convert(viewModel, likes: response.likes)
+                    }
+            }
+            .collect()
+            .handleEvents(
+                receiveCompletion: { [unowned self] _ in
+                    self.thereIsNfts.send(true)
+                }
+            )
+            .eraseToAnyPublisher()
+            .sink(
+                receiveCompletion: { error in
+                    print(error)
+                },
+                receiveValue: { [weak self] nfts in
+                    self?.nfts.send(nfts)
+                }
+            )
+            .store(in: &cancellables)
     }
 }
 
@@ -51,20 +68,7 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
     var numberOfSections: Int {
         1
     }
-    
-    func viewDidLoad() {
-        loadNextNfts()
-    }
-    
-    func loadNextNfts() {
-        ownedNfts.forEach { nftIndex in
-            networkManager.getNft(nftId: nftIndex) { [weak self] nft in
-                self?.loadedNfts.append(nft)
-                self?.thereIsNfts.send(true)
-            }
-        }
-    }
-    
+
     func sortButtonTapped() {
         let alertText = Consts.LocalizedStrings.profileSortAlertTitle
         let alertByPriceActionText = Consts.LocalizedStrings.profileSortAlertByPriceText
@@ -116,15 +120,35 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
 }
 
 private extension OwnedNftViewModel {
+    enum SortOrder {
+        case price, rating, name
+    }
+    
     func sortBy(_ order: SortOrder) {
         switch order {
-        case .price: loadedNfts = loadedNfts.sorted(by: { $0.price < $1.price })
-        case .rating: loadedNfts = loadedNfts.sorted(by: { $0.rating > $1.rating })
-        case .name: loadedNfts = loadedNfts.sorted(by: { $0.name < $1.name })
+        case .price: nfts.send(nfts.value.sorted { $0.price < $1.price })
+        case .rating: nfts.send(nfts.value.sorted { $0.rating > $1.rating })
+        case .name: nfts.send(nfts.value.sorted { $0.name < $1.name })
         }
     }
-}
-
-enum SortOrder {
-    case price, rating, name
+    
+    func convert(_ response: NftResponseModel, author: String) -> NftViewModel {
+        NftViewModel(id: response.id,
+                     image: response.images[0],
+                     name: response.name,
+                     rating: response.rating,
+                     author: author,
+                     price: response.price,
+                     isLiked: false)
+    }
+    
+    func convert(_ viewModel: NftViewModel, likes: [String]) -> NftViewModel {
+        NftViewModel(id: viewModel.id,
+                     image: viewModel.image,
+                     name: viewModel.name,
+                     rating: viewModel.rating,
+                     author: viewModel.author,
+                     price: viewModel.price,
+                     isLiked: likes.contains(viewModel.id))
+    }
 }

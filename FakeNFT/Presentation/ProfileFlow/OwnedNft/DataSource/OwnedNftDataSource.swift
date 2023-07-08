@@ -11,10 +11,10 @@ final class OwnedNftDataSource: UITableViewDiffableDataSource<Int, NftViewModel>
     
     init(tableView: UITableView) {
         super.init(tableView: tableView) { tableView, indexPath, itemIdentifier in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: OwnedNftTableViewCell.identifier,
-                                                           for: indexPath)
-                    as? OwnedNftTableViewCell
-            else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: OwnedNftTableViewCell.identifier,
+                for: indexPath
+            ) as? OwnedNftTableViewCell else {
                 return UITableViewCell()
             }
             
@@ -30,23 +30,4 @@ final class OwnedNftDataSource: UITableViewDiffableDataSource<Int, NftViewModel>
         snapshot.appendItems(data)
         apply(snapshot, animatingDifferences: animated)
     }
-}
-
-struct NftResponseModel: Codable {
-    let createdAt: String
-    let name: String
-    let images: [String]
-    let rating: Int
-    let description: String
-    let price: Double
-    let author: String
-    let id: String
-}
-
-struct NftViewModel: Hashable {
-    let image: String
-    let name: String
-    let rating: Int
-    let author: String
-    let price: Double
 }
