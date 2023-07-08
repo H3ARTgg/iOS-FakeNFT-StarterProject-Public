@@ -47,6 +47,11 @@ final class CollectionDetailsViewController: UIViewController {
         gesture.numberOfTouchesRequired = 1
         return gesture
     }()
+    private lazy var errorButton: UIButton = {
+        let button = UIButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+        return button
+    }()
+    private let errorTitle = UILabel()
     private var viewModel: CollectionDetailsViewModel?
     
     override func viewDidLoad() {
@@ -77,6 +82,12 @@ final class CollectionDetailsViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    @objc
+    private func didTapErrorButton() {
+        CustomProgressHUD.show()
+        viewModel?.requestCollection()
+    }
+    
     private func configureViewController() {
         (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = true
         view.backgroundColor = Asset.Colors.ypWhite.color
@@ -86,14 +97,20 @@ final class CollectionDetailsViewController: UIViewController {
     
     private func binds() {
         viewModel?.$nftCollection.bind(action: { [weak self] collection in
-            guard let collection else { return }
-            guard let self else { return }
-            
-            self.collectionLabel.text = collection.name
-            self.descriptionTextView.text = collection.description
-            self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection.author)
-            self.viewModel?.downloadImageFor(self.coverImageView)
-            CustomProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                guard let self else { return }
+                guard let collection else {
+                    self.setupErrorContent(with: (self.errorTitle, self.errorButton))
+                    CustomProgressHUD.dismiss()
+                    return
+                }
+                
+                self.collectionLabel.text = collection.name
+                self.descriptionTextView.text = collection.description
+                self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection.author)
+                self.viewModel?.downloadImageFor(self.coverImageView)
+                CustomProgressHUD.dismiss()
+            }
         })
         
         viewModel?.$nfts.bind(action: { [weak self] _ in
