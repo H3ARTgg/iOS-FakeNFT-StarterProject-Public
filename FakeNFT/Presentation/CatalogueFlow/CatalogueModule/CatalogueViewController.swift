@@ -37,24 +37,9 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     }()
     private lazy var errorButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
-        button.setImage(nil, for: .normal)
-        button.setTitle(Consts.LocalizedStrings.errorAlertAgain, for: .normal)
-        button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
-        button.titleLabel?.font = Consts.Fonts.bold17
-        button.layer.cornerRadius = 8
-        button.layer.masksToBounds = true
-        button.backgroundColor = Asset.Colors.ypLightGray.color
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private lazy var errorTitle: UILabel = {
-        let title = UILabel()
-        title.text = Consts.LocalizedStrings.errorConnectionMessage
-        title.font = Consts.Fonts.regular17
-        title.textColor = Asset.Colors.ypBlack.color
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
+    private let errorTitle = UILabel()
     private(set) var viewModel: CatalogueViewModelProtocol
     private(set) var isFailedCancellable: AnyCancellable?
     private(set) var nftCollectionsCancellable: AnyCancellable?
@@ -124,9 +109,10 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         isFailedCancellable = viewModel.isFailedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
+                guard let self else { return }
                 CustomProgressHUD.dismiss()
                 if $0 {
-                    self?.setupErrorContent()
+                    self.setupErrorContent(with: (self.errorTitle, self.errorButton))
                 }
             }
     }
@@ -180,25 +166,6 @@ private extension CatalogueViewController {
         alert.addAction(cancelAction)
         
         present(alert, animated: true)
-    }
-    
-    private func setupErrorContent() {
-        [errorTitle, errorButton].forEach {
-            view.addSubview($0)
-        }
-        
-        errorTitle.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-        
-        errorButton.snp.makeConstraints { make in
-            make.top.equalTo(errorTitle.snp.bottom).offset(10)
-            make.leading.equalTo(view.snp.leading).offset(60)
-            make.trailing.equalTo(view.snp.trailing).offset(-60)
-            make.height.equalTo(35)
-            
-        }
     }
     
     private func removeErrorContent() {
