@@ -26,6 +26,7 @@ final class CollectionDetailsViewModel {
                     }
                     self.requestNfts(collection.nfts)
                 case .failure(let error):
+                    self.nftCollection = nil
                     print("failed collection: \(error.localizedDescription)")
                 }
             }
@@ -51,30 +52,29 @@ final class CollectionDetailsViewModel {
     }
     
     private func requestNfts(_ ids: [String]) {
-        // Загружаю все NFT, так как иначе быстрее достигается лимит запросов.
-        let request = NftsRequestGet()
-        DispatchQueue.global().async { [weak self] in
+        ids.forEach { [weak self] in
             guard let self else { return }
             
-            self.networkClient.send(request: request, type: [NFT].self, onResponse: { (result: Result<[NFT], Error>) in
-                switch result {
-                case .success(let nfts):
-                    DispatchQueue.main.async {
-                        ids.forEach { id in
-                            if let nft = nfts.first(where: { $0.id == id }) {
-                                self.nfts.append(
-                                    CollectionDetailsCellViewModel(
-                                        nft: nft,
-                                        networkClient: self.networkClient
-                                    )
+            let request = NftGetRequest(id: $0)
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                
+                self.networkClient.send(request: request, type: NFT.self, onResponse: { (result: Result<NFT, Error>) in
+                    switch result {
+                    case .success(let nft):
+                        DispatchQueue.main.async {
+                            self.nfts.append(
+                                CollectionDetailsCellViewModel(
+                                    nft: nft,
+                                    networkClient: self.networkClient
                                 )
-                            }
+                            )
                         }
+                    case .failure(let error):
+                        print("failed nft: \(error.localizedDescription)")
                     }
-                case .failure(let error):
-                    print("failed nft: \(error.localizedDescription)")
-                }
-            })
+                })
+            }
         }
+        
     }
 }
