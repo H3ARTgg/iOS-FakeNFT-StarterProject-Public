@@ -112,7 +112,7 @@ final class DeleteNftStackView: UIStackView {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             messageStackView.widthAnchor.constraint(
-                equalToConstant: Consts.Cart.widthMessageStackView
+                equalToConstant: Consts.Cart.MessageStackView.widthMessageStackView
             ),
             buttonStackView.trailingAnchor.constraint(
                 equalTo: trailingAnchor

@@ -11,11 +11,7 @@ protocol CartViewModelProtocol {
 }
 
 final class CartViewModel: ObservableObject {
-    @Observable var products: [Nft] = [] {
-        didSet {
-            updateViewController?(products)
-        }
-    }
+    @Observable var products: [Nft] = []
     
     private var cartNetworkService: CartNetworkServiceProtocol
     private var updateViewController: (([Nft]) -> Void)?
@@ -67,10 +63,12 @@ extension CartViewModel: CartViewModelProtocol {
     func delete(from id: Int) {
         if let index = products.firstIndex(where: { $0.id == id }) {
             products.remove(at: index)
+            let ids = products.map { String($0.id) }
+            cartNetworkService.putProducts(productIds: ids)
         }
     }
 
     func bind(updateViewController: @escaping ([Nft]) -> Void) {
-        self.updateViewController = updateViewController
+        $products.bind(action: updateViewController)
     }
 }

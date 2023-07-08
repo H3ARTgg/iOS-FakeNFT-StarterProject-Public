@@ -2,11 +2,11 @@ import Foundation
 
 protocol CartNetworkServiceProtocol {
     func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void)
-    func putProducts()
+    func putProducts(productIds: [String])
 }
 
 final class CartNetworkService {
-    private let baseURL = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/nft/"
+    private let baseURL = Consts.Cart.Url.baseURL
     private let session = URLSession.shared
     private let networkClient: DefaultNetworkClient
     
@@ -23,7 +23,7 @@ final class CartNetworkService {
         for id in idProducts {
             group.enter()
 
-            guard let url = URL(string: "\(baseURL)\(id)") else {
+            guard let url = URL(string: "\(baseURL)nft/\(id)") else {
                 group.leave()
                 continue
             }
@@ -54,7 +54,7 @@ extension CartNetworkService: CartNetworkServiceProtocol {
             case .success(let data):
                 do {
                     let order = try JSONDecoder().decode(OrderResult.self, from: data)
-                    self.idProducts = order.nfts ?? []
+                    self.idProducts = order.nfts
                     self.fetchNfts(completion)
                 } catch {
                     completion(.failure(error))
@@ -65,22 +65,19 @@ extension CartNetworkService: CartNetworkServiceProtocol {
         }
     }
     
-    func putProducts() {
-        guard let url = URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/orders/1") else {
+    func putProducts(productIds: [String]) {
+        guard let url = URL(string: "\(Consts.Cart.Url.baseURL)orders/1") else {
             return
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         
-        let ids = [
-            "68", "69", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81"
-        ]
-        
         do {
-            let jsonData = try JSONEncoder().encode(ids)
+            let jsonData = try JSONEncoder().encode(productIds)
             request.httpBody = jsonData
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         } catch {
             print(error.localizedDescription)
         }

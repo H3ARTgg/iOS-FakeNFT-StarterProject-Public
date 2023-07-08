@@ -8,7 +8,7 @@ final class CartTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-        view.layer.cornerRadius = Consts.Cart.imageProductRadius
+        view.layer.cornerRadius = Consts.Cart.ProductImageView.imageProductRadius
         return view
     }()
     
@@ -89,7 +89,7 @@ extension CartTableViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             productImageView.heightAnchor.constraint(
-                equalToConstant: Consts.Cart.heightProductImage
+                equalToConstant: Consts.Cart.ProductImageView.heightProductImageView
             ),
             productImageView.widthAnchor.constraint(
                 equalTo: productImageView.heightAnchor
@@ -122,7 +122,7 @@ extension CartTableViewCell {
             ),
             
             productRatingStackView.widthAnchor.constraint(
-                equalToConstant: Consts.Cart.widthProductRating
+                equalToConstant: Consts.Cart.ProductRating.widthProductRating
             ),
             productRatingStackView.topAnchor.constraint(
                 equalTo: productTitleLabel.bottomAnchor, constant: 4

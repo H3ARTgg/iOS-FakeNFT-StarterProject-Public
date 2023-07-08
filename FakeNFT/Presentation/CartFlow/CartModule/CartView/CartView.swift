@@ -14,7 +14,7 @@ final class CartView: UIView {
         let table = UITableView()
         table.register(
             CartTableViewCell.self,
-            forCellReuseIdentifier: Consts.Cart.cartCellIdentifier
+            forCellReuseIdentifier: Consts.Cart.CellIdentifier.productCartCellIdentifier
         )
         
         table.backgroundColor = .clear

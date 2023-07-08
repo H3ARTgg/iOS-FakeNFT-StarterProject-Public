@@ -5,7 +5,7 @@ class CustomView: UIView {
         super.init(frame: .zero)
         backgroundColor = Asset.Colors.ypLightGray.color
         translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = Consts.Cart.paymentViewRadius
+        layer.cornerRadius = Consts.Cart.PaymentView.paymentViewRadius
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     

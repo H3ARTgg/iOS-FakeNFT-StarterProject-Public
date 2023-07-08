@@ -42,15 +42,32 @@ struct Consts {
     }
     
     struct Cart {
-        static let heightProductImage: CGFloat = 108
-        static let widthProductRating: CGFloat = 68
+        struct ProductRating {
+            static let widthProductRating: CGFloat = 68
+        }
+        
+        struct MessageStackView {
+            static let widthMessageStackView: CGFloat = 180
+        }
+                
+        struct ProductImageView {
+            static let heightProductImageView: CGFloat = 108
+            static let imageProductRadius: CGFloat = 12
+        }
+        
+        struct PaymentView {
+            static let paymentViewRadius: CGFloat = 12
+        }
+        
+        struct CellIdentifier {
+            static let productCartCellIdentifier = "cartCell"
+        }
+        
+        struct Url {
+            static let baseURL = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/"
+        }
+        
         static let heightButton: CGFloat = 44
-        static let widthMessageStackView: CGFloat = 180
-        
-        static let imageProductRadius: CGFloat = 12
         static let buttonRadius: CGFloat = 16
-        static let paymentViewRadius: CGFloat = 12
-        
-        static let cartCellIdentifier = "cartCell"
     }
 }

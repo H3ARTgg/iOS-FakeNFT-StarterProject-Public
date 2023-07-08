@@ -2,7 +2,7 @@ import Foundation
 
 @propertyWrapper
 final class Observable<Value> {
-    private var onChange: ((Value) -> Void)?
+    var onChange: ((Value) -> Void)?
     var wrappedValue: Value {
         didSet {
             onChange?(wrappedValue)
