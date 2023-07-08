@@ -66,7 +66,7 @@ extension CartNetworkService: CartNetworkServiceProtocol {
     }
     
     func putProducts(productIds: [String]) {
-        guard let url = URL(string: "\(Consts.Cart.Url.baseURL)orders/1") else {
+        guard let url = URL(string: "\(baseURL)orders/1") else {
             return
         }
         
