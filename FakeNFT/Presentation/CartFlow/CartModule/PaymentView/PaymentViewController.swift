@@ -7,6 +7,7 @@ protocol PaymentViewControllerDelegate: AnyObject {
 final class PaymentViewController: UIViewController {
     
     private var viewModel: PaymentViewModelProtocol
+    private var selectedIndexPath: IndexPath?
     
     weak var updateDelegate: UpdateCurrenciesDelegate?
     
@@ -84,6 +85,24 @@ extension PaymentViewController: UICollectionViewDataSource {
         cell.configure(currency)
         
         return cell
+    }
+}
+
+extension PaymentViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if selectedIndexPath != nil {
+            if let cell = collectionView.cellForItem(at: selectedIndexPath ?? IndexPath()) {
+                cell.layer.borderWidth = 0
+            }
+        }
+        
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.layer.cornerRadius = 12
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = Asset.Colors.ypBlack.color.cgColor
+            selectedIndexPath = indexPath
+        }
     }
 }
 
