@@ -5,7 +5,7 @@ import Combine
 
 protocol CatalogueViewControllerProtocol {
     var viewModel: CatalogueViewModelProtocol { get }
-    var isGotCollectionCancellable: AnyCancellable? { get }
+    var isFailedCancellable: AnyCancellable? { get }
     var nftCollectionsCancellable: AnyCancellable? { get }
 }
 
@@ -56,7 +56,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         return title
     }()
     private(set) var viewModel: CatalogueViewModelProtocol
-    private(set) var isGotCollectionCancellable: AnyCancellable?
+    private(set) var isFailedCancellable: AnyCancellable?
     private(set) var nftCollectionsCancellable: AnyCancellable?
     
     init(viewModel: CatalogueViewModelProtocol) {
@@ -73,6 +73,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.requestCollections()
         configureViewController()
         addSubviews()
         setupLayouts()
@@ -120,11 +121,11 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
                 self?.collectionView.reloadData()
             })
         
-        isGotCollectionCancellable = viewModel.isGotCollectionPublisher
+        isFailedCancellable = viewModel.isFailedPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] check in
+            .sink { [weak self] in
                 CustomProgressHUD.dismiss()
-                if !check {
+                if $0 {
                     self?.setupErrorContent()
                 }
             }

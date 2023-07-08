@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 protocol CatalogueViewModelProtocol {
-    var isGotCollectionPublisher: AnyPublisher<Bool, Never> { get }
+    var isFailedPublisher: AnyPublisher<Bool, Never> { get }
     var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> { get }
     func requestCollections()
     func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModelProtocol?
@@ -17,16 +17,15 @@ final class CatalogueViewModel: CatalogueViewModelProtocol {
     var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> {
         nftCollectionsSubject.eraseToAnyPublisher()
     }
-    var isGotCollectionPublisher: AnyPublisher<Bool, Never> {
-        isGotCollectionSubject.eraseToAnyPublisher()
+    var isFailedPublisher: AnyPublisher<Bool, Never> {
+        isFailedSubject.eraseToAnyPublisher()
     }
-    private let isGotCollectionSubject = CurrentValueSubject<Bool, Never>(false)
+    private let isFailedSubject = PassthroughSubject<Bool, Never>()
     private let nftCollectionsSubject = CurrentValueSubject<[CatalogueSupplementaryViewModel], Never>([])
     private var networkClient: NetworkClient
     
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
-        requestCollections()
     }
     
     func requestCollections() {
@@ -45,10 +44,10 @@ final class CatalogueViewModel: CatalogueViewModelProtocol {
                     )
                     self.nftCollectionsSubject.value.append(collection)
                 }
-                self.isGotCollectionSubject.send(true)
+                self.isFailedSubject.send(false)
             case .failure:
                 self.nftCollectionsSubject.send([])
-                self.isGotCollectionSubject.send(false)
+                self.isFailedSubject.send(true)
             }
         }
     }
