@@ -40,18 +40,22 @@ final class CollectionDetailsViewController: UIViewController {
         collectionView.backgroundColor = Asset.Colors.ypWhite.color
         return collectionView
     }()
+    private lazy var gesture: UISwipeGestureRecognizer = {
+        let gesture = UISwipeGestureRecognizer()
+        gesture.direction = .right
+        gesture.addTarget(self, action: #selector(didSwipeRight))
+        gesture.numberOfTouchesRequired = 1
+        return gesture
+    }()
     var viewModel: CollectionDetailsViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = true
-        view.backgroundColor = Asset.Colors.ypWhite.color
-        
+        configureViewController()
         addSubviews()
         setupLayouts()
-        CustomProgressHUD.show()
         binds()
-        
+        CustomProgressHUD.show()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +70,18 @@ final class CollectionDetailsViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    private func didSwipeRight() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    private func configureViewController() {
+        (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = true
+        view.backgroundColor = Asset.Colors.ypWhite.color
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(gesture)
     }
     
     private func binds() {
