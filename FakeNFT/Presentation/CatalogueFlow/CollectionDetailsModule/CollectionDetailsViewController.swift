@@ -47,7 +47,7 @@ final class CollectionDetailsViewController: UIViewController {
         gesture.numberOfTouchesRequired = 1
         return gesture
     }()
-    var viewModel: CollectionDetailsViewModel?
+    private var viewModel: CollectionDetailsViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
