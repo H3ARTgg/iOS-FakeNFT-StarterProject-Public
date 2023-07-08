@@ -11,9 +11,9 @@ import Combine
 final class ProfileEditTableView: UITableViewController {
     private let viewModel: ProfileEditViewModelProtocol
     
-    private lazy var tableHeaderView = ProfileEditTableHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 174))
-    
     private var cancellables: Set<AnyCancellable> = []
+
+    private lazy var tableHeaderView = ProfileEditTableHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 174))
     
     init(viewModel: ProfileEditViewModelProtocol) {
         self.viewModel = viewModel
@@ -36,14 +36,14 @@ final class ProfileEditTableView: UITableViewController {
     }
 }
 
-// MARK: - TableView Data Sourece
+// MARK: - TableView Data Source
 
 extension ProfileEditTableView {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileEditCell.identifier,
-                                                       for: indexPath)
-                as? ProfileEditCell
-        else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ProfileEditCell.identifier,
+            for: indexPath
+        ) as? ProfileEditCell else {
             return UITableViewCell()
         }
         
@@ -74,18 +74,19 @@ extension ProfileEditTableView {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionHeaderView = tableView
-            .dequeueReusableHeaderFooterView(withIdentifier: ProfileEditSectionHeaderView.identifier) as? ProfileEditSectionHeaderView
-        else { return UIView() }
+        guard let sectionHeaderView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: ProfileEditSectionHeaderView.identifier
+        ) as? ProfileEditSectionHeaderView else {
+            return UIView()
+        }
         
-        sectionHeaderView.headerText = viewModel
-            .cellDataForRow(section)
+        sectionHeaderView.headerText = viewModel.cellDataForRow(section)
             .сellAppearance
             .cellIdentifier
             .rawValue
         return sectionHeaderView
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.numberOfSections
     }
@@ -97,8 +98,10 @@ private extension ProfileEditTableView {
     func setupTableView() {
         tableView.register(ProfileEditCell.self,
                            forCellReuseIdentifier: ProfileEditCell.identifier)
+        
         tableView.register(ProfileEditSectionHeaderView.self,
                            forHeaderFooterViewReuseIdentifier: ProfileEditSectionHeaderView.identifier)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none

@@ -12,7 +12,6 @@ struct ProfileTableDataModel {
     let cellText: String
 }
 
-
 struct CellAppearanceModel: Hashable {
     let cellHeight: CGFloat
     let cellIdentifier: CellIdentifier
