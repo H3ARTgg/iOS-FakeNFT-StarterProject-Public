@@ -20,6 +20,7 @@ struct Consts {
         static let cartSortFromRating = NSLocalizedString("sort.rating", value: "По рейтингу", comment: "sort nfts from rating")
         static let cartSortFromTitle = NSLocalizedString("sort.title", value: "По названию", comment: "sort nfts from title")
         static let cartCloseAlert = NSLocalizedString("alert.close", value: "Закрыть", comment: "action for close alert")
+        static let paymentTitleNavBar = NSLocalizedString("payment.title.navBar", value: "Выберите способ оплаты", comment: "Title navigation bar for payment viewController")
     }
     
     struct Images {
