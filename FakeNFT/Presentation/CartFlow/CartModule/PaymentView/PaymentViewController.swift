@@ -6,17 +6,42 @@ protocol PaymentViewControllerDelegate: AnyObject {
 
 final class PaymentViewController: UIViewController {
     
+    private var viewModel: PaymentViewModelProtocol
+    
+    weak var updateDelegate: UpdateCurrenciesDelegate?
+    
+    init(viewModel: PaymentViewModelProtocol = PaymentViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         super.loadView()
         tabBarController?.tabBar.isHidden = true
         let customView = PaymentViewCollection(frame: view.frame)
         customView.configure(delegate: self)
+        updateDelegate = customView
         view = customView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavBar()
+        
+        if viewModel.isLoadCompleted {
+            updateDelegate?.updateCollectionView()
+        } else {
+            UIProgressHUD.show()
+        }
+        
+        viewModel.bind { [weak self] _ in
+            self?.updateDelegate?.updateCollectionView()
+            UIProgressHUD.dismiss()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,7 +69,7 @@ final class PaymentViewController: UIViewController {
 
 extension PaymentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        viewModel.currenciesList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,8 +79,9 @@ extension PaymentViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configure()
-        cell.layoutIfNeeded()
+        let currency = viewModel.currenciesList[indexPath.row]
+        
+        cell.configure(currency)
         
         return cell
     }

@@ -1,5 +1,9 @@
 import UIKit
 
+protocol UpdateCurrenciesDelegate: AnyObject {
+    func updateCollectionView()
+}
+
 final class PaymentViewCollection: UIView {
     
     private let paymentView = FinalPaymentView()
@@ -12,6 +16,7 @@ final class PaymentViewCollection: UIView {
             forCellWithReuseIdentifier: Consts.Cart.CellIdentifier.currencyCartViewCell
         )
         
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -62,5 +67,11 @@ final class PaymentViewCollection: UIView {
                 equalTo: bottomAnchor
             )
         ])
+    }
+}
+
+extension PaymentViewCollection: UpdateCurrenciesDelegate {
+    func updateCollectionView() {
+        collectionView.reloadData()
     }
 }

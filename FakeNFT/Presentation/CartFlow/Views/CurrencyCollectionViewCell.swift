@@ -14,9 +14,12 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     
     private let currencyImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .center
+        view.backgroundColor = Asset.Colors.ypBlackUniversal.color
+        view.contentMode = .scaleAspectFit
         view.clipsToBounds = true
         view.layer.cornerRadius = 6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: 36).isActive = true
         return view
     }()
     
@@ -42,14 +45,14 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    func configure() {
+    func configure(_ currency: Currency) {
         contentView.backgroundColor = Asset.Colors.ypLightGray.color
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 12
         
-//        currencyImageView.kf.setImage(with: URL(string: currency.image))
-//        currencyNameLabel.text = currency.title
-//        currencyShortNameLabel.text = currency.name
+        currencyImageView.kf.setImage(with: URL(string: currency.image))
+        currencyNameLabel.text = currency.title
+        currencyShortNameLabel.text = currency.name
         
         addElements()
         setupConstraints()
@@ -81,7 +84,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
             currencyStackView.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor, constant: -5
             ),
-            currencyStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -74)
+            currencyStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
         ])
     }
 }
