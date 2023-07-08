@@ -83,7 +83,7 @@ private extension FavoriteNftViewController {
                 
                 DispatchQueue.main.async {
                     if state {
-                        self.title = "Избранные Nft" // TODO: Localization
+                        self.title = Consts.LocalizedStrings.favoriteNfts
                     }
                     
                     self.nftsCollectionView.isHidden = false

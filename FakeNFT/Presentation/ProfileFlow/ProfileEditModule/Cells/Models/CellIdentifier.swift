@@ -7,8 +7,16 @@
 
 import Foundation
 
-enum CellIdentifier: String, Hashable { // TODO: Localization
-    case name = "Имя"
-    case description = "Описание"
-    case website = "Сайт"
+enum CellIdentifier: String, Hashable {
+    case name
+    case description
+    case website
+    
+    var localizedString: String {
+        switch self {
+        case .name: return Consts.LocalizedStrings.name
+        case .description: return Consts.LocalizedStrings.description
+        case .website: return Consts.LocalizedStrings.website
+        }
+    }
 }

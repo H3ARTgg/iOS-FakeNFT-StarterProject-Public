@@ -83,7 +83,7 @@ extension ProfileEditTableView {
         sectionHeaderView.headerText = viewModel.cellDataForRow(section)
             .сellAppearance
             .cellIdentifier
-            .rawValue
+            .localizedString
         return sectionHeaderView
     }
     

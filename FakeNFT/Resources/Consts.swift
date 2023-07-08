@@ -17,6 +17,13 @@ struct Consts {
         static let profileSortAlertByNameText = NSLocalizedString("profile.byTitle", value: "По названию", comment: "Text for sort action sheet title button")
         static let profileSortAlertCloseText = NSLocalizedString("profile.close", value: "Закрыть", comment: "Text for sort action sheet close button")
         static let profileYouHaveNotAnyNfts = NSLocalizedString("profile.noNfts", value: "У Вас еще нет NFT", comment: "Text for no nfts")
+        static let profileYouHaveNotAnyFavoriteNfts = NSLocalizedString("profile.noFavoriteNfts", value: "У Вас еще нет избранных NFT", comment: "Text for no favorite nfts")
+        static let from = NSLocalizedString("profile.from", value: "от", comment: "from")
+        static let price = NSLocalizedString("profile.price", value: "Цена", comment: "Price")
+        static let name = NSLocalizedString("profile.name", value: "Имя", comment: "Name")
+        static let description = NSLocalizedString("profile.about", value: "Описание", comment: "About")
+        static let website = NSLocalizedString("profile.site", value: "Сайт", comment: "Site")
+
     }
     
     struct Images {

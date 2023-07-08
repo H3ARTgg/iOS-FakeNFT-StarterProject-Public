@@ -76,7 +76,7 @@ final class OwnedNftViewController: UIViewController {
                 DispatchQueue.main.async {
                     if state {
                         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-                        self.title = "Мои Nft" // TODO: Localization
+                        self.title = Consts.LocalizedStrings.ownedNfts
                     }
 
                     self.nftsTableView.isHidden = false
