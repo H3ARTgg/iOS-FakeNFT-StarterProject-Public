@@ -72,8 +72,3 @@ private extension ProfileTableViewCell {
         ])
     }
 }
-
-struct ProfileCellModel: Hashable {
-    let text: String
-    let amount: Int?
-}

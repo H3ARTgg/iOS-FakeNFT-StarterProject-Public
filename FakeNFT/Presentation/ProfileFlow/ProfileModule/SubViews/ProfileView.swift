@@ -9,10 +9,12 @@ import UIKit
 import Kingfisher
 
 final class ProfileView: UIView {
-    
     var profileModel: ProfileUserViewModel? {
         didSet {
-            guard let profileModel else { return }
+            guard let profileModel else {
+                return
+            }
+            
             if let imageUrl = URL(string: profileModel.imageUrl) {
                 userPicImageView.kf.setImage(with: imageUrl)
             }
@@ -23,13 +25,17 @@ final class ProfileView: UIView {
             let link = profileModel.site
             let attributedString = NSMutableAttributedString(string: profileModel.site)
             let attributes: [NSAttributedString.Key: Any] = [.link: link,
-                                                            .font: Consts.Fonts.regular15]
+                                                             .font: Consts.Fonts.regular15]
+            
             attributedString.addAttributes(attributes,
                                            range: NSRange(location: 0,
                                                           length: link.count))
+            
             siteLabel.attributedText = attributedString
         }
     }
+    
+    private let userPicSize: CGFloat = 70
     
     private var profileStack: UIStackView = {
         let stack = UIStackView()
@@ -54,7 +60,7 @@ final class ProfileView: UIView {
         imageView.clipsToBounds = true
         imageView.tintColor = Asset.Colors.ypGrayUniversal.color
         imageView.backgroundColor = Asset.Colors.ypWhite.color
-        imageView.layer.cornerRadius = 70 / 2
+        imageView.layer.cornerRadius = userPicSize / 2
         return imageView
     }()
     
@@ -120,7 +126,7 @@ private extension ProfileView {
             profileStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             profileStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            userpicAndUsernameStack.heightAnchor.constraint(equalToConstant: 70),
+            userpicAndUsernameStack.heightAnchor.constraint(equalToConstant: userPicSize),
             
             userPicImageView.heightAnchor.constraint(equalTo: userpicAndUsernameStack.heightAnchor),
             userPicImageView.widthAnchor.constraint(equalTo: userPicImageView.heightAnchor)

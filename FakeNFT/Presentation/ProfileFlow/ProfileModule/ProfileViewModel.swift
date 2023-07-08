@@ -9,7 +9,8 @@ import Foundation
 import Combine
 
 protocol ProfileViewModelProtocol {
-    var profileData: CurrentValueSubject<ProfileUserViewModel?, Never> { get }
+    var profileDataPublisher: AnyPublisher<ProfileUserViewModel?, NetworkError>? { get }
+    var profileData: ProfileUserViewModel? { get }
     var ownedNfts: [String] { get }
     var favoriteNfts: [String] { get }
     
@@ -18,10 +19,12 @@ protocol ProfileViewModelProtocol {
 }
 
 final class ProfileViewModel {
-    private(set) var profileData = CurrentValueSubject<ProfileUserViewModel?, Never>(nil)
-    
     private let networkManager: NftDataManagerProtocol
-    private(set) var profile: ProfileResponseModel?
+    
+    private(set) var profileDataPublisher: AnyPublisher<ProfileUserViewModel?, NetworkError>?
+    private(set) var profileData: ProfileUserViewModel?
+    private(set) var ownedNfts: [String] = []
+    private(set) var favoriteNfts: [String] = []
     
     init(networkManager: NftDataManagerProtocol) {
         self.networkManager = networkManager
@@ -29,39 +32,42 @@ final class ProfileViewModel {
 }
 
 extension ProfileViewModel: ProfileViewModelProtocol {
-    var ownedNfts: [String] {
-        profile?.nfts ?? []
-    }
-    
-    var favoriteNfts: [String] {
-        profile?.likes ?? []
+    func viewDidLoad() {
+        profileDataPublisher = networkManager.getProfilePublisher()
+            .handleEvents(receiveOutput: { [weak self] profileResponse in
+                self?.ownedNfts = profileResponse.nfts
+                self?.favoriteNfts = profileResponse.likes
+            })
+            .map { [weak self] profileResponse in
+                self?.convert(profileResponseData: profileResponse)
+            }
+            .handleEvents(receiveOutput: { [weak self] profileData in
+                self?.profileData = profileData
+            })
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
     
     func setProfile(_ profile: ProfileEditUserViewModel) {
-        networkManager.setProfile(profile, likes: self.profile?.likes ?? []) { data in
-            DispatchQueue.main.async {
-                self.profileData.send(self.convert(profileResponseData: data))
+        profileDataPublisher = networkManager.setProfilePublisher(profile, likes: favoriteNfts)
+            .map { [weak self] profileResponse in
+                self?.convert(profileResponseData: profileResponse)
             }
-        }
-    }
-    
-    func viewDidLoad() {
-        networkManager.getProfile { data in
-            self.profile = data
-            DispatchQueue.main.async {
-                self.profileData.send(self.convert(profileResponseData: data))
-            }
-        }
+            .handleEvents(receiveOutput: { [weak self] profileData in
+                self?.profileData = profileData
+            })
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 }
 
 private extension ProfileViewModel {
     func convert(profileResponseData: ProfileResponseModel) -> ProfileUserViewModel {
         ProfileUserViewModel(imageUrl: profileResponseData.avatar,
-                    name: profileResponseData.name,
-                    about: profileResponseData.description,
-                    site: profileResponseData.website,
-                    ownedNft: profileResponseData.nfts.count,
-                    favouriteNft: profileResponseData.likes.count)
+                             name: profileResponseData.name,
+                             about: profileResponseData.description,
+                             site: profileResponseData.website,
+                             ownedNft: profileResponseData.nfts.count,
+                             favoriteNft: profileResponseData.likes.count)
     }
 }

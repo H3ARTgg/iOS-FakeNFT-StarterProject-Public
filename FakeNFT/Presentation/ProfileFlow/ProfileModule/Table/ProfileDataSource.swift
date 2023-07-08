@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class ProfileDiffableDataSource: UITableViewDiffableDataSource<Int, ProfileCellModel> {
+final class ProfileDataSource: UITableViewDiffableDataSource<Int, ProfileCellModel> {
     
     init(tableView: UITableView) {
         super.init(tableView: tableView) { tableView, indexPath, itemIdentifier in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier,
-                                                           for: indexPath)
-                    as? ProfileTableViewCell
-            else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: ProfileTableViewCell.identifier,
+                for: indexPath
+            ) as? ProfileTableViewCell else {
                 return UITableViewCell()
             }
             
