@@ -35,8 +35,9 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         control.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return control
     }()
-    private lazy var errorButton: UIButton = {
-        let button = UIButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+    private lazy var errorButton: CustomButton = {
+        let button = CustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+        button.configure(text: Consts.LocalizedStrings.errorAlertAgain)
         return button
     }()
     private let errorTitle = UILabel()
