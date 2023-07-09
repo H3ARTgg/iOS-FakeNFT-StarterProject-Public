@@ -8,12 +8,18 @@ protocol PaymentViewControllerDelegate: AnyObject {
 final class PaymentViewController: UIViewController {
     
     private var viewModel: PaymentViewModelProtocol
+    private var paymentResultViewModel: PaymentResultViewModelProtocol
     private var selectedIndexPath: IndexPath?
+    private var currencyId: String?
     
     weak var updateDelegate: UpdateCurrenciesDelegate?
     
-    init(viewModel: PaymentViewModelProtocol = PaymentViewModel()) {
+    init(
+        viewModel: PaymentViewModelProtocol = PaymentViewModel(),
+        paymentResultViewModel: PaymentResultViewModelProtocol = PaymentResultViewModel()
+    ) {
         self.viewModel = viewModel
+        self.paymentResultViewModel = paymentResultViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -95,6 +101,9 @@ extension PaymentViewController: UICollectionViewDelegate {
         }
         
         if let cell = collectionView.cellForItem(at: indexPath) {
+            let currency = viewModel.currenciesList[indexPath.row]
+            currencyId = currency.id
+            
             cell.layer.cornerRadius = 12
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Asset.Colors.ypBlack.color.cgColor
@@ -126,8 +135,17 @@ extension PaymentViewController: PaymentViewControllerDelegate {
     }
     
     func openPaymentResult() {
-        let paymentResultViewController = PaymentResultViewController()
-        paymentResultViewController.modalPresentationStyle = .fullScreen
-        present(paymentResultViewController, animated: true)
+        if currencyId != nil {
+            guard let currencyId else { return }
+            
+            let paymentResultViewController = PaymentResultViewController(paymentResultViewModel: paymentResultViewModel)
+            paymentResultViewController.modalPresentationStyle = .fullScreen
+                    
+            present(paymentResultViewController, animated: true)
+            
+            paymentResultViewModel.fetchPaymentResult(currencyId)
+        } else {
+            // alert
+        }
     }
 }

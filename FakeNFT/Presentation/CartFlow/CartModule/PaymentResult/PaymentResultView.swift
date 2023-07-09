@@ -1,5 +1,9 @@
 import UIKit
 
+protocol PaymentResultViewDelegate: AnyObject {
+    func updateUi(_ image: UIImage, _ text: String, _ textButton: String)
+}
+
 final class PaymentResultView: UIView {
     
     private let paymentResultStackView = PaymentResultStackView()
@@ -7,19 +11,9 @@ final class PaymentResultView: UIView {
     
     func configure() {
         backgroundColor = Asset.Colors.ypWhite.color
-        
+                
         addElements()
         setupConstraints()
-        
-        paymentResultStackView.configure(
-            Asset.Assets.failResult.image,
-            textLabel:
-                        """
-                        Упс! Что-то пошло не так :(
-                        Попробуйте ещё раз!
-                        """
-        )
-        paymentResultButton.setTitle("Попробовать еще раз", for: .normal)
     }
     
     private func addElements() {
@@ -32,10 +26,10 @@ final class PaymentResultView: UIView {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             paymentResultStackView.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16
+                equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 26
             ),
             paymentResultStackView.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16
+                equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -26
             ),
             paymentResultStackView.centerYAnchor.constraint(
                 equalTo: centerYAnchor
@@ -51,5 +45,12 @@ final class PaymentResultView: UIView {
                 equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16
             )
         ])
+    }
+}
+
+extension PaymentResultView: PaymentResultViewDelegate {
+    func updateUi(_ image: UIImage, _ textLabel: String, _ textButton: String) {
+        paymentResultStackView.configure(image, textLabel)
+        paymentResultButton.setTitle(textButton, for: .normal)
     }
 }
