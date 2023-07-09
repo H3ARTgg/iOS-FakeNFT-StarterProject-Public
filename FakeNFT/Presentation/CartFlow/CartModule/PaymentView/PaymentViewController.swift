@@ -45,10 +45,6 @@ final class PaymentViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
     private func configureNavBar() {
         title = Consts.LocalizedStrings.paymentTitleNavBar
         
@@ -124,6 +120,7 @@ extension PaymentViewController: PaymentViewControllerDelegate {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
         let webViewModel = WebViewViewModel(url: url)
         let webView = WebViewViewController(viewModel: webViewModel)
+        webView.tabBarController?.tabBar.isHidden = false
         navigationController?.pushViewController(webView, animated: true)
     }
 }

@@ -14,7 +14,6 @@ final class CartViewModel: ObservableObject {
     @Observable var products: [Nft] = []
     
     private var cartNetworkService: CartNetworkServiceProtocol
-    private var updateViewController: (([Nft]) -> Void)?
     
     private var isInitialLoadCompleted = false
     
