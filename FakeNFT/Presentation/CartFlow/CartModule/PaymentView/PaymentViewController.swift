@@ -2,6 +2,7 @@ import UIKit
 
 protocol PaymentViewControllerDelegate: AnyObject {
     func openWebViewController()
+    func openPaymentResult()
 }
 
 final class PaymentViewController: UIViewController {
@@ -122,5 +123,11 @@ extension PaymentViewController: PaymentViewControllerDelegate {
         let webView = WebViewViewController(viewModel: webViewModel)
         webView.tabBarController?.tabBar.isHidden = false
         navigationController?.pushViewController(webView, animated: true)
+    }
+    
+    func openPaymentResult() {
+        let paymentResultViewController = PaymentResultViewController()
+        paymentResultViewController.modalPresentationStyle = .fullScreen
+        present(paymentResultViewController, animated: true)
     }
 }

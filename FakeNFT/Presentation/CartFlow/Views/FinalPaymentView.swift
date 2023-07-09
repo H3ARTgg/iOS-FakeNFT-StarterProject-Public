@@ -63,7 +63,7 @@ final class FinalPaymentView: CustomView {
     }
     
     @objc private func paymentTapped() {
-        print("PAY")
+        delegate?.openPaymentResult()
     }
     
     private func addElements() {
