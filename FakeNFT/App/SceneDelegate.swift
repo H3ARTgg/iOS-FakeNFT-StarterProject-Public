@@ -28,9 +28,3 @@ extension SceneDelegate: RouterDelegate {
         window?.rootViewController = viewController?.toPresent()
     }
 }
-
-extension SceneDelegate: RouterDelegate {
-    func setRootViewController(_ viewController: Presentable?) {
-        window?.rootViewController = viewController?.toPresent()
-    }
-}

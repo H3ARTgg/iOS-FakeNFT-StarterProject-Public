@@ -8,9 +8,12 @@
 import Foundation
 import Combine
 
+protocol OwnedNftCoordination {
+    var headForActionSheet: ((AlertModel) -> Void)? { get set }
+}
+
 protocol OwnedNftViewModelProtocol {
     var nfts: CurrentValueSubject<[NftViewModel], Never> { get }
-    var alert: PassthroughSubject<AlertModel, Never> { get }
     var thereIsNfts: PassthroughSubject<Bool, Never> { get }
         
     var numberOfSections: Int { get }
@@ -18,37 +21,36 @@ protocol OwnedNftViewModelProtocol {
     func sortButtonTapped()
 }
 
-final class OwnedNftViewModel {
-    var nfts = CurrentValueSubject<[NftViewModel], Never>([])
-    var alert = PassthroughSubject<AlertModel, Never>()
-    var thereIsNfts = PassthroughSubject<Bool, Never>()
+final class OwnedNftViewModel: OwnedNftCoordination {
+    var headForActionSheet: ((AlertModel) -> Void)?
+    
+    private(set) var nfts = CurrentValueSubject<[NftViewModel], Never>([])
+    private(set) var thereIsNfts = PassthroughSubject<Bool, Never>()
     
     private var cancellables: Set<AnyCancellable> = []
     private var likes: [String] = []
-    
-    private let networkManager: NftDataManagerProtocol = NftDataManager(networkService: DefaultNetworkClient())
-    
-    init(ownedNfts: [String]) {
+        
+    init(networkManager: NftDataManagerProtocol, ownedNfts: [String]) {
         networkManager.getNftsPublisher(nftIds: ownedNfts)
             .flatMap { nftsResponses in
                 nftsResponses.publisher.setFailureType(to: NetworkError.self)
             }
-            .flatMap { [unowned self] nftsResponse in
-                self.networkManager.getUserNamePublisher(id: nftsResponse.author)
-                    .map { author in
-                        self.convert(nftsResponse, author: author)
+            .flatMap { [weak self] nftsResponse in
+                networkManager.getUserNamePublisher(id: nftsResponse.author)
+                    .compactMap { author in
+                        self?.convert(nftsResponse, author: author)
                     }
             }
-            .flatMap { [unowned self] viewModel in
-                self.networkManager.getProfilePublisher()
-                    .map { response in
-                        self.convert(viewModel, likes: response.likes)
+            .flatMap { [weak self] viewModel in
+                networkManager.getSetProfilePublisher(nil)
+                    .compactMap { response in
+                        self?.convert(viewModel, likes: response.likes)
                     }
             }
             .collect()
             .handleEvents(
-                receiveCompletion: { [unowned self] _ in
-                    self.thereIsNfts.send(true)
+                receiveCompletion: { [weak self] _ in
+                    self?.thereIsNfts.send(true)
                 }
             )
             .eraseToAnyPublisher()
@@ -115,7 +117,7 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
                 alertSortCloseAction
             ])
         
-        alert.send(alertModel)
+        headForActionSheet?(alertModel)
     }
 }
 

@@ -10,10 +10,11 @@ import UIKit
 final class ProfileNavController: UINavigationController {
         
     init() {
-        let networkService = DefaultNetworkClient()
-        let networkManager = NftDataManager(networkService: networkService)
-        let viewModel: ProfileViewModel = ProfileViewModel(networkManager: networkManager)
-        super.init(rootViewController: ProfileViewController(viewModel: viewModel))
+        super.init(nibName: nil, bundle: nil)
+        
+        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
+                                       image: Consts.Images.profile,
+                                       tag: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -12,5 +12,5 @@ struct ProfileEditUserViewModel {
     let name: String
     let description: String
     let website: String
+    let likes: [String]
 }
-

@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+protocol FavoriteNftCoordination { }
+
 protocol FavoriteNftViewModelProtocol {
     var nftsPublisher: AnyPublisher<[NftViewModel], NetworkError>? { get }
     var thereIsNfts: PassthroughSubject<Bool, Never> { get }
@@ -15,7 +17,7 @@ protocol FavoriteNftViewModelProtocol {
     func viewDidLoad()
 }
 
-final class FavoriteNftViewModel {
+final class FavoriteNftViewModel: FavoriteNftCoordination {
     var nftsPublisher: AnyPublisher<[NftViewModel], NetworkError>?
     var thereIsNfts = PassthroughSubject<Bool, Never>()
 

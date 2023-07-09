@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+protocol ProfileEditCoordination {
+    var finish: ((ProfileEditUserViewModel) -> Void)? { get set }
+}
+
 protocol ProfileEditViewModelProtocol {
     var numberOfSections: Int { get }
     var numberOfRowsInSections: Int { get }
@@ -18,27 +22,32 @@ protocol ProfileEditViewModelProtocol {
     func closeButtonTapped()
 }
 
-final class ProfileEditViewModel {
-    private let profile: ProfileEditUserViewModel
-    private let saveCallback: ((ProfileEditUserViewModel) -> Void)?
-   
-    private var profileData: [ProfileTableDataModel]
-
-    init(profile: ProfileEditUserViewModel, saveCallback: ((ProfileEditUserViewModel) -> Void)?) {
-        self.profile = profile
-        self.saveCallback = saveCallback
-        self.profileData = [
+final class ProfileEditViewModel: ProfileEditCoordination {
+    var finish: ((ProfileEditUserViewModel) -> Void)?
+    
+    private let profileEdit: ProfileEditUserViewModel
+    
+    private var profileTableData: [ProfileTableDataModel]
+    
+    init(profile: ProfileUserViewModel) {
+        self.profileEdit = ProfileEditUserViewModel(imageUrl: profile.imageUrl,
+                                                    name: profile.name,
+                                                    description: profile.about,
+                                                    website: profile.site,
+                                                    likes: profile.favoriteNft)
+        
+        self.profileTableData = [
             ProfileTableDataModel(
                 сellAppearance: .init(cellHeight: 46, cellIdentifier: .name),
-                cellText: profile.name
+                cellText: profileEdit.name
             ),
             ProfileTableDataModel(
                 сellAppearance: .init(cellHeight: 132, cellIdentifier: .description),
-                cellText: profile.description
+                cellText: profileEdit.description
             ),
             ProfileTableDataModel(
                 сellAppearance: .init(cellHeight: 46, cellIdentifier: .website),
-                cellText: profile.website
+                cellText: profileEdit.website
             )
         ]
     }
@@ -46,7 +55,7 @@ final class ProfileEditViewModel {
 
 extension ProfileEditViewModel: ProfileEditViewModelProtocol {
     var numberOfSections: Int {
-        profileData.count
+        profileTableData.count
     }
     
     var numberOfRowsInSections: Int {
@@ -54,22 +63,24 @@ extension ProfileEditViewModel: ProfileEditViewModelProtocol {
     }
     
     var urlForProfileImage: URL? {
-        URL(string: profile.imageUrl)
+        URL(string: profileEdit.imageUrl)
     }
 
     func cellDataForRow(_ index: Int) -> ProfileTableDataModel {
-        profileData[index]
+        profileTableData[index]
     }
     
     func storeText(_ text: String, at index: Int) {
-        profileData[index] = ProfileTableDataModel(сellAppearance: profileData[index].сellAppearance, cellText: text)
+        profileTableData[index] = ProfileTableDataModel(сellAppearance: profileTableData[index].сellAppearance, cellText: text)
     }
     
     func closeButtonTapped() {
-        let newProfile = ProfileEditUserViewModel(imageUrl: profile.imageUrl,
-                                                  name: profileData[0].cellText,
-                                                  description: profileData[1].cellText,
-                                                  website: profileData[2].cellText)
-        saveCallback?(newProfile)
+        let newProfile = ProfileEditUserViewModel(imageUrl: profileEdit.imageUrl,
+                                                  name: profileTableData[0].cellText,
+                                                  description: profileTableData[1].cellText,
+                                                  website: profileTableData[2].cellText,
+                                                  likes: profileEdit.likes)
+        
+        finish?(newProfile)
     }
 }

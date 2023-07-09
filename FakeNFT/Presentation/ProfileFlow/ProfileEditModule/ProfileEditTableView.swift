@@ -84,6 +84,7 @@ extension ProfileEditTableView {
             .сellAppearance
             .cellIdentifier
             .localizedString
+        
         return sectionHeaderView
     }
     
@@ -109,7 +110,6 @@ private extension ProfileEditTableView {
         tableView.tableHeaderView = tableHeaderView
         tableHeaderView.closeButtonClosure = { [weak self] in
             self?.viewModel.closeButtonTapped()
-            self?.dismiss(animated: true)
         }
     }
 }

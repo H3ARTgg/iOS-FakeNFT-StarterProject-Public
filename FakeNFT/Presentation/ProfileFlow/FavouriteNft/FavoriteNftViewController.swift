@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 final class FavoriteNftViewController: UIViewController {
-    
     private let viewModel: FavoriteNftViewModelProtocol
     
     private lazy var dataSource = FavoriteNftDataSource(nftsCollectionView)
@@ -27,7 +26,7 @@ final class FavoriteNftViewController: UIViewController {
     private lazy var noNftsLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold17
-        label.text = Consts.LocalizedStrings.profileYouHaveNotAnyNfts
+        label.text = Consts.LocalizedStrings.profileYouHaveNotAnyFavoriteNfts
         label.textColor = Asset.Colors.ypBlack.color
         return label
     }()

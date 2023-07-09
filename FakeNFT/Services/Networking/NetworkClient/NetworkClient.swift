@@ -8,23 +8,6 @@ enum NetworkClientError: Error {
     case parsingError
 }
 
-enum NetworkError: LocalizedError {
-    case addressUnreachable(URL)
-    case invalidResponse
-    case badRequest
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidResponse:
-            return "Invalid response from the server"
-        case .addressUnreachable(let url):
-            return "Unreachable URL: \(url.absoluteString)"
-        case .badRequest:
-            return "Bad request"
-        }
-    }
-}
-
 protocol NetworkClient {
     @discardableResult
     func send(request: NetworkRequest,
@@ -138,7 +121,7 @@ struct DefaultNetworkClient: NetworkClient {
             .mapError { (error) -> NetworkError in
                 switch error {
                 case is URLError:
-                    return NetworkError.addressUnreachable(request.endpoint!)
+                    return NetworkError.addressUnreachable(request.endpoint)
                 default:
                     return NetworkError.invalidResponse
                 }

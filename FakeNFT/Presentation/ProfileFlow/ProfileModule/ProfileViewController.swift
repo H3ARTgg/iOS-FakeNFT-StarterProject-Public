@@ -25,10 +25,6 @@ final class ProfileViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
-                                       image: Consts.Images.profile,
-                                       tag: 0)
-        
         let rightBarButtonItem = UIBarButtonItem(image: Consts.Images.editBold,
                                                  style: .done,
                                                  target: self,
@@ -50,7 +46,8 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = dataSource
         setupNavBar()
         viewModel.viewDidLoad()
-        requestProfile()
+        setupBindings()
+        viewModel.requestProfile()
     }
 }
 
@@ -63,22 +60,9 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0:
-            let ownedNftViewModel = OwnedNftViewModel(ownedNfts: viewModel.ownedNfts)
-            let ownedNftViewController = OwnedNftViewController(viewModel: ownedNftViewModel)
-            self.navigationController?.pushViewController(ownedNftViewController, animated: true)
-            
-        case 1:
-            let favoriteNftViewModel = FavoriteNftViewModel(ownedNfts: viewModel.favoriteNfts)
-            let favoriteNftViewController = FavoriteNftViewController(viewModel: favoriteNftViewModel)
-            self.navigationController?.pushViewController(favoriteNftViewController, animated: true)
-            
-        case 2:
-            guard let url = URL(string: "https://practicum.yandex.ru/profile/ios-developer/") else { return }
-            let webViewViewModel = WebViewViewModel(url: url)
-            let webViewController = WebViewViewController(viewModel: webViewViewModel)
-            self.navigationController?.pushViewController(webViewController, animated: true)
-            
+        case 0: viewModel.ownedNftsTapped()
+        case 1: viewModel.favoritesNftsTapped()
+        case 2: viewModel.aboutTapped()
         default: break
         }
         
@@ -89,7 +73,7 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - Private Methods
 
 private extension ProfileViewController {
-    func requestProfile() {
+    func setupBindings() {
         guard let profileDataPublisher = viewModel.profileDataPublisher else { return }
         profileDataPublisher.sink(
             receiveCompletion: { error in
@@ -103,11 +87,11 @@ private extension ProfileViewController {
                 self?.dataSource.reload([
                     ProfileCellModel(
                         text: Consts.LocalizedStrings.ownedNfts,
-                        amount: profileData.ownedNft
+                        amount: profileData.ownedNft.count
                     ),
                     ProfileCellModel(
                         text: Consts.LocalizedStrings.favoriteNfts,
-                        amount: profileData.favoriteNft
+                        amount: profileData.favoriteNft.count
                     ),
                     ProfileCellModel(
                         text: Consts.LocalizedStrings.aboutDeveloper,
@@ -121,20 +105,7 @@ private extension ProfileViewController {
 
     @objc
     func showEditProfile() {
-        guard let profileData = viewModel.profileData else { return }
-        let profileEditUserViewModel = ProfileEditUserViewModel(imageUrl: profileData.imageUrl,
-                                                                name: profileData.name,
-                                                                description: profileData.about,
-                                                                website: profileData.site)
-        
-        let profileEditViewModel = ProfileEditViewModel(
-            profile: profileEditUserViewModel,
-            saveCallback: { [weak self] profile in
-                self?.viewModel.setProfile(profile)
-                self?.requestProfile()
-            })
-        
-        present(ProfileEditTableView(viewModel: profileEditViewModel), animated: true)
+        viewModel.editProfileTapped()
     }
     
     func setupNavBar() {

@@ -18,9 +18,9 @@ class BaseCoordinator {
             if childCoordinator === coordinator {
                 return
             }
-            
-            childCoordinators.append(coordinator)
         }
+        
+        childCoordinators.append(coordinator)
     }
     
     func removeDependency(_ coordinator: Coordinatable?) {

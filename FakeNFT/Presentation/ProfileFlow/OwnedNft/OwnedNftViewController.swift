@@ -58,12 +58,7 @@ final class OwnedNftViewController: UIViewController {
                 self?.nftsDataSource.reload(nfts)
             })
         .store(in: &cancellables)
-        
-        viewModel.alert.sink { [weak self] alertModel in
-            self?.presentActionSheet(alertModel: alertModel)
-        }
-        .store(in: &cancellables)
-        
+
         viewModel.thereIsNfts
             .sink { [weak self] state in
                 guard let self = self else { return }
@@ -101,25 +96,6 @@ extension OwnedNftViewController: UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         1
-    }
-}
-
-extension OwnedNftViewController {
-    func presentActionSheet(alertModel: AlertModel) {
-        let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
-        alertModel.alertActions.forEach { alertAction in
-            let actionStyle: UIAlertAction.Style
-            switch alertAction.actionRole {
-            case .destructive: actionStyle = .destructive
-            case .regular: actionStyle = .default
-            case .cancel: actionStyle = .cancel
-            }
-            
-            let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
-            alert.addAction(action)
-        }
-        
-        present(alert, animated: true)
     }
 }
 

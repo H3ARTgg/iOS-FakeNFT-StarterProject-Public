@@ -17,6 +17,7 @@ final class ProfileTableViewCell: UITableViewCell {
                 cellText.text = ""
                 return
             }
+            
             cellText.text = cellModel.text + (cellModel.amount != nil ? " (\(cellModel.amount!))" : "")
         }
     }

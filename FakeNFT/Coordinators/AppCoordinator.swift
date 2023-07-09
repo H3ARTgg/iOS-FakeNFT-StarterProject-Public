@@ -39,7 +39,9 @@ private extension AppCoordinator {
     }
     
     func createProfileFlow() {
-        
+        let profileCoordinator = coordinatorsFactory.makeProfileCoordinator(router: router)
+        addDependency(profileCoordinator)
+        profileCoordinator.startFlow()
     }
     
     func createCatalogueFlow() {

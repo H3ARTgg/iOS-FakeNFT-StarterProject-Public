@@ -12,6 +12,6 @@ struct ProfileUserViewModel {
     let name: String
     let about: String
     let site: String
-    let ownedNft: Int
-    let favoriteNft: Int
+    let ownedNft: [String]
+    let favoriteNft: [String]
 }
