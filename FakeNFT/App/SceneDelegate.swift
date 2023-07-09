@@ -4,7 +4,7 @@ protocol RouterDelegate: AnyObject {
     func setRootViewController(_ viewController: Presentable?)
 }
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
