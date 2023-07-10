@@ -3,6 +3,7 @@ import Foundation
 protocol CartNetworkServiceProtocol {
     func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void)
     func putProducts(productIds: [String])
+    func putNewProducts(_ completion: @escaping (Bool) -> Void)
 }
 
 final class CartNetworkService {
@@ -49,13 +50,13 @@ extension CartNetworkService: CartNetworkServiceProtocol {
     func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void) {
         let request = OrderRequest()
         
-        networkClient.send(request: request) { result in
+        networkClient.send(request: request) { [weak self] result in
             switch result {
             case .success(let data):
                 do {
                     let order = try JSONDecoder().decode(OrderResult.self, from: data)
-                    self.idProducts = order.nfts
-                    self.fetchNfts(completion)
+                    self?.idProducts = order.nfts
+                    self?.fetchNfts(completion)
                 } catch {
                     completion(.failure(error))
                 }
@@ -66,29 +67,36 @@ extension CartNetworkService: CartNetworkServiceProtocol {
     }
     
     func putProducts(productIds: [String]) {
-        guard let url = URL(string: "\(baseURL)orders/1") else {
-            return
-        }
+        var request = OrderRequestPut()
+        request.dto = OrderResult(nfts: productIds)
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        
-        do {
-            let jsonData = try JSONEncoder().encode(productIds)
-            request.httpBody = jsonData
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) { (_, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let response = response as? HTTPURLResponse {
-                print(response.statusCode)
+        networkClient.send(request: request, onResponse: { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self?.idProducts = []
+                }
+            case .failure(let error):
+                print("failed to put order: \(error)")
             }
-        }
-        task.resume()
+        })
+    }
+    
+    // Временный метод для проверки, если на сервере нет данных о заказе
+    func putNewProducts(_ completion: @escaping (Bool) -> Void) {
+        var request = OrderRequestPut()
+        request.dto = OrderResult(nfts: [
+            "68", "69", "71"
+        ])
+        
+        networkClient.send(request: request, onResponse: { result in
+            switch result {
+            case .success:
+                completion(true)
+            case .failure(let error):
+                print("failed to put order: \(error)")
+                completion(false)
+            }
+        })
     }
 }

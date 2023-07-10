@@ -1,7 +1,12 @@
 import UIKit
 
+protocol PaymentResultViewControllerDelegate: AnyObject {
+    func closePaymentResultViewController()
+}
+
 final class PaymentResultViewController: UIViewController {
     
+    private var cartViewModel: CartViewModelProtocol
     private var paymentResultViewModel: PaymentResultViewModelProtocol
     
     private var image: UIImage?
@@ -10,7 +15,11 @@ final class PaymentResultViewController: UIViewController {
     
     weak var updateDelegate: PaymentResultViewDelegate?
     
-    init(paymentResultViewModel: PaymentResultViewModelProtocol) {
+    init(
+        cartViewModel: CartViewModelProtocol,
+        paymentResultViewModel: PaymentResultViewModelProtocol
+    ) {
+        self.cartViewModel = cartViewModel
         self.paymentResultViewModel = paymentResultViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -22,6 +31,7 @@ final class PaymentResultViewController: UIViewController {
     override func loadView() {
         super.loadView()
         let customView = PaymentResultView()
+        customView.delegate = self
         customView.configure()
         view = customView
         updateDelegate = customView
@@ -29,6 +39,8 @@ final class PaymentResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.hidesBackButton = true
         
         UIProgressHUD.show()
 
@@ -67,5 +79,12 @@ final class PaymentResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
+    }
+}
+
+extension PaymentResultViewController: PaymentResultViewControllerDelegate {
+    func closePaymentResultViewController() {
+        cartViewModel.updateCart()
+        navigationController?.popToRootViewController(animated: true)
     }
 }

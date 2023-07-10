@@ -9,11 +9,23 @@ final class PaymentResultView: UIView {
     private let paymentResultStackView = PaymentResultStackView()
     private let paymentResultButton = CustomButton(text: "", height: 60)
     
+    weak var delegate: PaymentResultViewControllerDelegate?
+    
     func configure() {
         backgroundColor = Asset.Colors.ypWhite.color
                 
         addElements()
         setupConstraints()
+        
+        paymentResultButton.addTarget(
+            self,
+            action: #selector(openCart),
+            for: .touchUpInside
+        )
+    }
+    
+    @objc private func openCart() {
+        delegate?.closePaymentResultViewController()
     }
     
     private func addElements() {
