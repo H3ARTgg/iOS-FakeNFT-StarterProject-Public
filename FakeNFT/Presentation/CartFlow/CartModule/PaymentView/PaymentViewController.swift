@@ -7,18 +7,22 @@ protocol PaymentViewControllerDelegate: AnyObject {
 
 final class PaymentViewController: UIViewController {
     
-    private var viewModel: PaymentViewModelProtocol
+    private var cartViewModel: CartViewModelProtocol
+    private var paymentViewModel: PaymentViewModelProtocol
     private var paymentResultViewModel: PaymentResultViewModelProtocol
+    
     private var selectedIndexPath: IndexPath?
     private var currencyId: String?
     
     weak var updateDelegate: UpdateCurrenciesDelegate?
     
     init(
-        viewModel: PaymentViewModelProtocol = PaymentViewModel(),
+        cartViewModel: CartViewModelProtocol,
+        paymentViewModel: PaymentViewModelProtocol = PaymentViewModel(),
         paymentResultViewModel: PaymentResultViewModelProtocol = PaymentResultViewModel()
     ) {
-        self.viewModel = viewModel
+        self.cartViewModel = cartViewModel
+        self.paymentViewModel = paymentViewModel
         self.paymentResultViewModel = paymentResultViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,13 +44,13 @@ final class PaymentViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         
-        if viewModel.isLoadCompleted {
+        if paymentViewModel.isLoadCompleted {
             updateDelegate?.updateCollectionView()
         } else {
             UIProgressHUD.show()
         }
         
-        viewModel.bind { [weak self] _ in
+        paymentViewModel.bind { [weak self] _ in
             self?.updateDelegate?.updateCollectionView()
             UIProgressHUD.dismiss()
         }
@@ -73,7 +77,7 @@ final class PaymentViewController: UIViewController {
 
 extension PaymentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.currenciesList.count
+        paymentViewModel.currenciesList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,7 +87,7 @@ extension PaymentViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let currency = viewModel.currenciesList[indexPath.row]
+        let currency = paymentViewModel.currenciesList[indexPath.row]
         
         cell.configure(currency)
         
@@ -101,7 +105,7 @@ extension PaymentViewController: UICollectionViewDelegate {
         }
         
         if let cell = collectionView.cellForItem(at: indexPath) {
-            let currency = viewModel.currenciesList[indexPath.row]
+            let currency = paymentViewModel.currenciesList[indexPath.row]
             currencyId = currency.id
             
             cell.layer.cornerRadius = 12
@@ -138,10 +142,13 @@ extension PaymentViewController: PaymentViewControllerDelegate {
         if currencyId != nil {
             guard let currencyId else { return }
             
-            let paymentResultViewController = PaymentResultViewController(paymentResultViewModel: paymentResultViewModel)
+            let paymentResultViewController = PaymentResultViewController(
+                cartViewModel: cartViewModel,
+                paymentResultViewModel: paymentResultViewModel
+            )
             paymentResultViewController.modalPresentationStyle = .fullScreen
                     
-            present(paymentResultViewController, animated: true)
+            navigationController?.pushViewController(paymentResultViewController, animated: true)
             
             paymentResultViewModel.fetchPaymentResult(currencyId)
         } else {

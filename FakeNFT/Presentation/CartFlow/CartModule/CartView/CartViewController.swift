@@ -11,13 +11,13 @@ protocol CartViewControllerDelegate: AnyObject {
 
 final class CartViewController: UIViewController {
     // MARK: - Properties
-    private var viewModel: CartViewModelProtocol
+    private var cartViewModel: CartViewModelProtocol
     
     weak var updateDelegate: UpdateCartViewDelegate?
     
     // MARK: - Lifecycle
     init(viewModel: CartViewModelProtocol = CartViewModel()) {
-        self.viewModel = viewModel
+        self.cartViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
                                        image: Consts.Images.cart,
@@ -41,14 +41,14 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         
-        if viewModel.isLoadCompleted {
+        if cartViewModel.isLoadCompleted {
             updateDelegate?.reloadTableView()
             updateDelegate?.refreshPayment()
         } else {
             UIProgressHUD.show()
         }
         
-        viewModel.bind(updateViewController: { [weak self] _ in
+        cartViewModel.bind(updateViewController: { [weak self] _ in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     self.updateDelegate?.reloadTableView()
@@ -94,21 +94,21 @@ extension CartViewController {
             title: actionSortFromPrice, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel.sortFromPrice()
+            self.cartViewModel.sortFromPrice()
         }
         
         let ratingFilter = UIAlertAction(
             title: actionSortFromRating, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel.sortFromRating()
+            self.cartViewModel.sortFromRating()
         }
         
         let titleFilter = UIAlertAction(
             title: actionSortFromTitle, style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel.sortFromTitle()
+            self.cartViewModel.sortFromTitle()
         }
         
         let closeAction = UIAlertAction(
@@ -127,7 +127,7 @@ extension CartViewController {
 // MARK: - UITableViewDataSource
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.listProducts.count
+        cartViewModel.listProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,7 +137,7 @@ extension CartViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let nft = viewModel.listProducts[indexPath.row]
+        let nft = cartViewModel.listProducts[indexPath.row]
         
         cell.delegate = self
         cell.configure(nft)
@@ -149,13 +149,13 @@ extension CartViewController: UITableViewDataSource {
 // MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
     func getQuantityNfts() -> Int {
-        return viewModel.listProducts.count
+        return cartViewModel.listProducts.count
     }
     
     func getTotalPrice() -> Double {
         var total: Double = 0
         
-        for item in viewModel.listProducts {
+        for item in cartViewModel.listProducts {
             let price = item.price
             total += price
         }
@@ -164,14 +164,14 @@ extension CartViewController: CartViewControllerDelegate {
     }
     
     func openDeleteNftViewController(_ nft: Nft?) {
-        let deleteNftVC = DeleteNftViewController(viewModel: viewModel)
+        let deleteNftVC = DeleteNftViewController(viewModel: cartViewModel)
         deleteNftVC.nft = nft
         deleteNftVC.modalPresentationStyle = .overFullScreen
         present(deleteNftVC, animated: true)
     }
     
     func openPaymentViewController() {
-        let paymentVC = PaymentViewController()
+        let paymentVC = PaymentViewController(cartViewModel: cartViewModel)
         navigationController?.pushViewController(paymentVC, animated: true)
     }
     
