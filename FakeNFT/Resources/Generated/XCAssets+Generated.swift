@@ -30,6 +30,7 @@ internal enum Asset {
     internal static let nftCard = ImageAsset(name: "nftCard")
     internal static let sortButton = ImageAsset(name: "sortButton")
     internal static let chevronBackward = ImageAsset(name: "chevronBackward")
+    internal static let chevronBackward = ImageAsset(name: "chevronBackward")
     internal static let fillStar = ImageAsset(name: "fillStar")
     internal static let star = ImageAsset(name: "star")
   }
