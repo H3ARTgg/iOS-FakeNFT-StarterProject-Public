@@ -68,6 +68,11 @@ private extension ProfileCoordinator {
             
             let favoriteNftsModule = modulesFactory.makeFavoriteNftView(favoriteNfts: favoriteNfts)
             let favoriteNftsView = favoriteNftsModule.view
+            var favoriteNftsCoordination = favoriteNftsModule.coordination
+            
+            favoriteNftsCoordination.finish = { [weak profileCoordination] favoriteNfts in
+                profileCoordination?.onReturnFromFavorites(favoriteNfts)
+            }
             
             router.push(favoriteNftsView)
         }

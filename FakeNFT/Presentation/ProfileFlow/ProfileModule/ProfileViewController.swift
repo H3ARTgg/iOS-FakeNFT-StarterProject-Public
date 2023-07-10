@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
     private let viewModel: ProfileViewModelProtocol
@@ -45,7 +46,6 @@ final class ProfileViewController: UIViewController {
         applyLayout()
         tableView.dataSource = dataSource
         setupNavBar()
-        viewModel.viewDidLoad()
         setupBindings()
         viewModel.requestProfile()
     }
@@ -81,6 +81,7 @@ private extension ProfileViewController {
             },
             
             receiveValue: { [weak self] profileData in
+                ProgressHUD.dismiss()
                 self?.profileView.profileModel = profileData
                 guard let profileData else { return }
                 
@@ -101,6 +102,12 @@ private extension ProfileViewController {
             }
         )
         .store(in: &cancellables)
+        
+        viewModel.showLoading
+            .sink { [weak self] isVisible in
+                self?.displayLoading(isVisible)
+            }
+            .store(in: &cancellables)
     }
 
     @objc

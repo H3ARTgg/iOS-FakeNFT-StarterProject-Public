@@ -12,9 +12,11 @@ final class ProfileNavController: UINavigationController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
+        tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
                                        image: Consts.Images.profile,
                                        tag: 0)
+        
+        view.backgroundColor = Asset.Colors.ypWhite.color
     }
     
     required init?(coder aDecoder: NSCoder) {

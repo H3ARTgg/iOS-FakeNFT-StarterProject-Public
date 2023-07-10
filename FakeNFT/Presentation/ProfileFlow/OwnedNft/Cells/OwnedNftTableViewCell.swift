@@ -151,6 +151,8 @@ private extension OwnedNftTableViewCell {
     }
     
     func configure() {
+        backgroundColor = .clear
+
         cellHStack.translatesAutoresizingMaskIntoConstraints = false
         likeImageView.translatesAutoresizingMaskIntoConstraints = false
     }

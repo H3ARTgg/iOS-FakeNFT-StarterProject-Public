@@ -97,6 +97,8 @@ extension ProfileEditTableView {
 
 private extension ProfileEditTableView {
     func setupTableView() {
+        tableView.backgroundColor = Asset.Colors.ypWhite.color
+        
         tableView.register(ProfileEditCell.self,
                            forCellReuseIdentifier: ProfileEditCell.identifier)
         

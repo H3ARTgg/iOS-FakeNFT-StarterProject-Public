@@ -11,15 +11,18 @@ final class FavoriteNftDataSource: UICollectionViewDiffableDataSource<Int, NftVi
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, NftViewModel>
     private var snapshot = Snapshot()
     
-    init(_ collectionView: UICollectionView) {
+    init(_ collectionView: UICollectionView, viewModel: CollectionViewModelProtocol) {
         
-        super.init(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        super.init(collectionView: collectionView) { [weak viewModel] collectionView, indexPath, itemIdentifier in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteNftCollectionViewCell.identifier, for: indexPath) as? FavoriteNftCollectionViewCell else {
                 fatalError("cell not found")
             }
             
             cell.cellModel = itemIdentifier
-           
+            cell.likeButtonTapClosure = {
+                viewModel?.likeButtonTap(with: itemIdentifier.id)
+            }
+            
             return cell
         }
     }

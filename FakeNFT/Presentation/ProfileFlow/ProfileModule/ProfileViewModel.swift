@@ -15,13 +15,14 @@ protocol ProfileCoordination: AnyObject {
     var headForAbout: ((String) -> Void)? { get set }
     
     func setProfile(_ profile: ProfileEditUserViewModel)
+    func onReturnFromFavorites(_ favoriteNfts: [String])
 }
 
 protocol ProfileViewModelProtocol {
     var profileDataPublisher: AnyPublisher<ProfileUserViewModel?, NetworkError>? { get }
     var getSetProfile: PassthroughSubject<ProfileEditUserViewModel?, NetworkError> { get }
+    var showLoading: PassthroughSubject<Bool, Never> { get }
     
-    func viewDidLoad()
     func requestProfile()
     
     func editProfileTapped()
@@ -38,6 +39,7 @@ final class ProfileViewModel {
     
     private(set) var profileDataPublisher: AnyPublisher<ProfileUserViewModel?, NetworkError>?
     private(set) var getSetProfile = PassthroughSubject<ProfileEditUserViewModel?, NetworkError>()
+    private(set) var showLoading = PassthroughSubject<Bool, Never>()
     
     private var profileData: ProfileUserViewModel?
     private var ownedNfts: [String] = []
@@ -45,7 +47,8 @@ final class ProfileViewModel {
     
     init(networkManager: NftDataManagerProtocol) {
         profileDataPublisher = getSetProfile.flatMap { [weak self] profile in
-            networkManager.getSetProfilePublisher(profile)
+            self?.showLoading.send(true)
+            return networkManager.getSetProfilePublisher(profile)
                 .handleEvents(receiveOutput: { [weak self] profileResponse in
                     self?.ownedNfts = profileResponse.nfts
                     self?.favoriteNfts = profileResponse.likes
@@ -55,6 +58,10 @@ final class ProfileViewModel {
                 }
                 .handleEvents(receiveOutput: { [weak self] profileData in
                     self?.profileData = profileData
+                    self?.showLoading.send(false)
+                })
+                .handleEvents(receiveCompletion: { [weak self] _ in
+                    self?.showLoading.send(false)
                 })
                 .receive(on: DispatchQueue.main)
         }
@@ -63,10 +70,7 @@ final class ProfileViewModel {
 }
 
 extension ProfileViewModel: ProfileViewModelProtocol {
-    func viewDidLoad() {
-        
-    }
-    
+
     func requestProfile() {
         getSetProfile.send(nil)
     }
@@ -95,6 +99,10 @@ extension ProfileViewModel: ProfileViewModelProtocol {
 extension ProfileViewModel: ProfileCoordination {
     func setProfile(_ profile: ProfileEditUserViewModel) {
         getSetProfile.send(profile)
+    }
+    
+    func onReturnFromFavorites(_ favoriteNfts: [String]) {
+        getSetProfile.send(nil)
     }
 }
 

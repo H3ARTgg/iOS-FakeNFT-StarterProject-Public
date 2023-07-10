@@ -9,9 +9,9 @@ import UIKit
 import Combine
 
 final class FavoriteNftViewController: UIViewController {
-    private let viewModel: FavoriteNftViewModelProtocol
+    private let viewModel: FavoriteNftViewModelProtocol & CollectionViewModelProtocol
     
-    private lazy var dataSource = FavoriteNftDataSource(nftsCollectionView)
+    private lazy var dataSource = FavoriteNftDataSource(nftsCollectionView, viewModel: viewModel)
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -19,7 +19,7 @@ final class FavoriteNftViewController: UIViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collection.register(FavoriteNftCollectionViewCell.self,
                             forCellWithReuseIdentifier: FavoriteNftCollectionViewCell.identifier)
-        
+        collection.backgroundColor = .clear
         return collection
     }()
     
@@ -28,10 +28,11 @@ final class FavoriteNftViewController: UIViewController {
         label.font = Consts.Fonts.bold17
         label.text = Consts.LocalizedStrings.profileYouHaveNotAnyFavoriteNfts
         label.textColor = Asset.Colors.ypBlack.color
+        label.isHidden = true
         return label
     }()
     
-    init(viewModel: FavoriteNftViewModelProtocol) {
+    init(viewModel: FavoriteNftViewModelProtocol & CollectionViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         addSubviews()
@@ -47,9 +48,13 @@ final class FavoriteNftViewController: UIViewController {
         super.viewDidLoad()
         nftsCollectionView.dataSource = dataSource
         setupBindings()
-        viewModel.viewDidLoad()
-        requestNfts()
+        viewModel.requestNfts()
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.backButtonTapped()
+    } 
 }
 
 private extension FavoriteNftViewController {
@@ -71,37 +76,43 @@ private extension FavoriteNftViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: regularSection)
         return layout
-
+        
     }
     
     func setupBindings() {
         viewModel.thereIsNfts
             .removeDuplicates()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    if state {
-                        self.title = Consts.LocalizedStrings.favoriteNfts
-                    }
-                    
-                    self.nftsCollectionView.isHidden = false
-                    self.noNftsLabel.isHidden = true
+                guard let self = self else {
+                    return
                 }
+                
+                if state {
+                    self.title = Consts.LocalizedStrings.favoriteNfts
+                }
+                
+                self.nftsCollectionView.isHidden = false
+                self.noNftsLabel.isHidden = true
             }
             .store(in: &cancellables)
-    }
-    
-    func requestNfts() {
-        viewModel.nftsPublisher?.sink(
-            receiveCompletion: { error in
-                print(error)
-            },
-            receiveValue: { [weak self] nfts in
-                self?.dataSource.reload(nfts)
+        
+        viewModel.nftsPublisher?
+            .sink(
+                receiveCompletion: { error in
+                    print(error)
+                },
+                receiveValue: { [weak self] nfts in
+                    self?.dataSource.reload(nfts)
+                }
+            )
+            .store(in: &cancellables)
+        
+        viewModel.showLoading
+            .sink { [weak self] isVisible in
+                self?.displayLoading(isVisible)
             }
-        )
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
 }
 
@@ -114,6 +125,8 @@ private extension FavoriteNftViewController {
     }
     
     func configure() {
+        view.backgroundColor = Asset.Colors.ypWhite.color
+        
         nftsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         noNftsLabel.translatesAutoresizingMaskIntoConstraints = false
     }

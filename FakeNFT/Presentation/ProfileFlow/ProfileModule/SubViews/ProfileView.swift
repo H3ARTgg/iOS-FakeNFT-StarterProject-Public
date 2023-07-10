@@ -83,6 +83,7 @@ final class ProfileView: UIView {
     private lazy var siteLabel: UITextView = {
         let textView = UITextView()
         textView.textColor = Asset.Colors.ypBlueUniversal.color
+        textView.backgroundColor = .clear
         textView.isScrollEnabled = false
         textView.accessibilityIdentifier = "siteLabel"
         textView.textContainerInset = .zero

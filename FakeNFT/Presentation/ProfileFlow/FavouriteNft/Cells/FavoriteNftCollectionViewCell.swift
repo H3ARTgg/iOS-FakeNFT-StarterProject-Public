@@ -24,6 +24,8 @@ final class FavoriteNftCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var likeButtonTapClosure: (() -> Void)?
+    
     private let currency = " ETH"
     
     private var cellHStack: UIStackView = {
@@ -42,12 +44,12 @@ final class FavoriteNftCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var likeImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = Asset.Colors.ypWhiteUniversal.color
-        imageView.image = Asset.Assets.likeSet.image
-        
-        return imageView
+    private lazy var likeImageButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = Asset.Colors.ypWhiteUniversal.color
+        button.setImage(Asset.Assets.likeSet.image, for: .normal)
+        button.addTarget(nil, action: #selector(likeButtonTapped), for: .touchUpInside)
+        return button
     }()
     
     private var nftPropertiesStack: UIStackView = {
@@ -85,6 +87,13 @@ final class FavoriteNftCollectionViewCell: UICollectionViewCell {
     }
 }
 
+private extension FavoriteNftCollectionViewCell {
+    @objc
+    func likeButtonTapped() {
+        likeButtonTapClosure?()
+    }
+}
+
 // MARK: - Subviews configure + layout
 private extension FavoriteNftCollectionViewCell {
     func addSubviews() {
@@ -95,12 +104,14 @@ private extension FavoriteNftCollectionViewCell {
         nftPropertiesStack.addArrangedSubview(ratingStackView)
         nftPropertiesStack.setCustomSpacing(8, after: ratingStackView)
         nftPropertiesStack.addArrangedSubview(priceLabel)
-        nftImageView.addSubview(likeImageView)
+        contentView.addSubview(likeImageButton)
     }
     
     func configure() {
+        backgroundColor = .clear
+        
         cellHStack.translatesAutoresizingMaskIntoConstraints = false
-        likeImageView.translatesAutoresizingMaskIntoConstraints = false
+        likeImageButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func applyLayout() {
@@ -112,8 +123,8 @@ private extension FavoriteNftCollectionViewCell {
             
             nftImageView.heightAnchor.constraint(equalTo: nftImageView.widthAnchor),
             
-            likeImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -6),
-            likeImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 6)
+            likeImageButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -6),
+            likeImageButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 6)
 
         ])
     }

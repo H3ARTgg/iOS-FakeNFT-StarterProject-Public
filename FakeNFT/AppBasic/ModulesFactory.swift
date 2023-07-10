@@ -40,7 +40,7 @@ extension ModulesFactory {
     }
     
     func makeFavoriteNftView(favoriteNfts: [String]) -> (view: Presentable, coordination: FavoriteNftCoordination) {
-        let favoriteNftViewModel = FavoriteNftViewModel(ownedNfts: favoriteNfts)
+        let favoriteNftViewModel = FavoriteNftViewModel(networkManager: networkManager, favoriteNfts: favoriteNfts)
         let favoriteNftViewController = FavoriteNftViewController(viewModel: favoriteNftViewModel)
         return (favoriteNftViewController, favoriteNftViewModel)
     }

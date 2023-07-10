@@ -15,10 +15,12 @@ protocol OwnedNftCoordination {
 protocol OwnedNftViewModelProtocol {
     var nfts: CurrentValueSubject<[NftViewModel], Never> { get }
     var thereIsNfts: PassthroughSubject<Bool, Never> { get }
-        
+    var showLoading: PassthroughSubject<Bool, Never> { get }
+    
     var numberOfSections: Int { get }
-
+    
     func sortButtonTapped()
+    func viewDidLoad()
 }
 
 final class OwnedNftViewModel: OwnedNftCoordination {
@@ -26,12 +28,14 @@ final class OwnedNftViewModel: OwnedNftCoordination {
     
     private(set) var nfts = CurrentValueSubject<[NftViewModel], Never>([])
     private(set) var thereIsNfts = PassthroughSubject<Bool, Never>()
+    private(set) var showLoading = PassthroughSubject<Bool, Never>()
     
     private var cancellables: Set<AnyCancellable> = []
     private var likes: [String] = []
-        
+    private var nftsPublisher: AnyPublisher<[NftViewModel], NetworkError>!
+    
     init(networkManager: NftDataManagerProtocol, ownedNfts: [String]) {
-        networkManager.getNftsPublisher(nftIds: ownedNfts)
+        nftsPublisher = networkManager.getNftsPublisher(nftIds: ownedNfts)
             .flatMap { nftsResponses in
                 nftsResponses.publisher.setFailureType(to: NetworkError.self)
             }
@@ -48,29 +52,37 @@ final class OwnedNftViewModel: OwnedNftCoordination {
                     }
             }
             .collect()
-            .handleEvents(
-                receiveCompletion: { [weak self] _ in
-                    self?.thereIsNfts.send(true)
-                }
-            )
             .eraseToAnyPublisher()
-            .sink(
-                receiveCompletion: { error in
-                    print(error)
-                },
-                receiveValue: { [weak self] nfts in
-                    self?.nfts.send(nfts)
-                }
-            )
-            .store(in: &cancellables)
     }
 }
 
 extension OwnedNftViewModel: OwnedNftViewModelProtocol {
+    func viewDidLoad() {
+        nftsPublisher.handleEvents(receiveRequest: { [weak self] _ in
+            self?.showLoading.send(true)
+        })
+        .receive(on: DispatchQueue.main)
+        .sink(
+            receiveCompletion: { [weak self] error in
+                print(error)
+                self?.showLoading.send(false)
+            },
+            receiveValue: { [weak self] nfts in
+                self?.nfts.send(nfts)
+                if nfts.isEmpty {
+                    self?.thereIsNfts.send(false)
+                } else {
+                    self?.thereIsNfts.send(true)
+                }
+            }
+        )
+        .store(in: &cancellables)
+    }
+    
     var numberOfSections: Int {
         1
     }
-
+    
     func sortButtonTapped() {
         let alertText = Consts.LocalizedStrings.profileSortAlertTitle
         let alertByPriceActionText = Consts.LocalizedStrings.profileSortAlertByPriceText

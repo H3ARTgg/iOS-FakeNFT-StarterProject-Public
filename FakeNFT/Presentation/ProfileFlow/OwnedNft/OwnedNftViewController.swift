@@ -16,6 +16,7 @@ final class OwnedNftViewController: UIViewController {
     
     private lazy var nftsTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .clear
         tableView.delegate = self
         tableView.register(OwnedNftTableViewCell.self, forCellReuseIdentifier: OwnedNftTableViewCell.identifier)
         tableView.separatorStyle = .none
@@ -28,6 +29,7 @@ final class OwnedNftViewController: UIViewController {
         label.font = Consts.Fonts.bold17
         label.text = Consts.LocalizedStrings.profileYouHaveNotAnyNfts
         label.textColor = Asset.Colors.ypBlack.color
+        label.isHidden = true
         return label
     }()
     
@@ -47,19 +49,17 @@ final class OwnedNftViewController: UIViewController {
         super.viewDidLoad()
         nftsTableView.dataSource = nftsDataSource
         setupBindings()
+        viewModel.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        requestNfts()
     }
     
     func setupBindings() {
-        viewModel.nfts.sink(
-            receiveCompletion: { error in
-                print(error)
-            },
-            receiveValue: { [weak self] nfts in
-                self?.nftsDataSource.reload(nfts)
-            })
-        .store(in: &cancellables)
-
         viewModel.thereIsNfts
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 guard let self = self else { return }
                 let rightBarButtonItem = UIBarButtonItem(image: Consts.Images.sortMenu,
@@ -67,17 +67,37 @@ final class OwnedNftViewController: UIViewController {
                                                          target: self,
                                                          action: #selector(self.showSortMenu))
                 rightBarButtonItem.tintColor = Asset.Colors.ypBlack.color
-
-                DispatchQueue.main.async {
+                
+               // DispatchQueue.main.async {
                     if state {
                         self.navigationItem.rightBarButtonItem = rightBarButtonItem
                         self.title = Consts.LocalizedStrings.ownedNfts
                     }
-
+                    
                     self.nftsTableView.isHidden = false
                     self.noNftsLabel.isHidden = true
-                }
+             //   }
             }
+            .store(in: &cancellables)
+        
+        viewModel.showLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isVisible in
+                self?.displayLoading(isVisible)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func requestNfts() {
+        viewModel.nfts
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { error in
+                    print(error)
+                },
+                receiveValue: { [weak self] nfts in
+                    self?.nftsDataSource.reload(nfts)
+                })
             .store(in: &cancellables)
     }
     
@@ -93,9 +113,9 @@ extension OwnedNftViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         140
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        viewModel.numberOfSections
     }
 }
 
@@ -108,6 +128,8 @@ private extension OwnedNftViewController {
     }
     
     func configure() {
+        view.backgroundColor = Asset.Colors.ypWhite.color
+        
         nftsTableView.translatesAutoresizingMaskIntoConstraints = false
         noNftsLabel.translatesAutoresizingMaskIntoConstraints = false
     }

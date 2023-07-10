@@ -439,11 +439,11 @@
 		787AC6692A5059D400DE15E1 /* OwnedNft */ = {
 			isa = PBXGroup;
 			children = (
+				7891545A2A51619C00DC78B6 /* Cells */,
+				789154592A51618F00DC78B6 /* DataSource */,
 				78D479612A59629C0089E861 /* Models */,
 				787AC66A2A5059EE00DE15E1 /* OwnedNftViewController.swift */,
 				787AC66C2A505A0500DE15E1 /* OwnedNftViewModel.swift */,
-				7891545A2A51619C00DC78B6 /* Cells */,
-				789154592A51618F00DC78B6 /* DataSource */,
 			);
 			path = OwnedNft;
 			sourceTree = "<group>";
@@ -472,14 +472,13 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
-		78B553DD2A44B2FF00A21777 /* Table */ = {
+		78B553DD2A44B2FF00A21777 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				78B553DE2A44B33100A21777 /* ProfileTableViewCell.swift */,
-				78B553EB2A45E74B00A21777 /* ProfileDataSource.swift */,
-				78D4795A2A595F360089E861 /* ProfileCellModel.swift */,
+				78BB46002A5C85BC00DF3994 /* Models */,
 			);
-			path = Table;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		78B553EF2A46191E00A21777 /* SubViews */ = {
@@ -501,22 +500,38 @@
 		78B553F52A48254B00A21777 /* ProfileEditModule */ = {
 			isa = PBXGroup;
 			children = (
+				782A11602A4EED82007F33DB /* Cells */,
 				787AC6612A50307500DE15E1 /* Models */,
 				784B95292A4B681A00563B4B /* SubViews */,
-				782A11602A4EED82007F33DB /* Cells */,
 				78B553F62A48256800A21777 /* ProfileEditTableView.swift */,
 				784B952A2A4B688000563B4B /* ProfileEditViewModel.swift */,
 			);
 			path = ProfileEditModule;
 			sourceTree = "<group>";
 		};
+		78BB46002A5C85BC00DF3994 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				78D4795A2A595F360089E861 /* ProfileCellModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		78BB46012A5C85CE00DF3994 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				78B553EB2A45E74B00A21777 /* ProfileDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		78D4794F2A5743720089E861 /* FavouriteNft */ = {
 			isa = PBXGroup;
 			children = (
-				78D479502A5743C30089E861 /* FavoriteNftViewController.swift */,
-				78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */,
 				78D479662A59A6BB0089E861 /* Cells */,
 				78D479672A59A6C50089E861 /* DataSource */,
+				78D479502A5743C30089E861 /* FavoriteNftViewController.swift */,
+				78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */,
 			);
 			path = FavouriteNft;
 			sourceTree = "<group>";
@@ -694,8 +709,9 @@
 		78F308B82A3EF8750036BF33 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
+				78B553DD2A44B2FF00A21777 /* Cells */,
+				78BB46012A5C85CE00DF3994 /* DataSource */,
 				78B553F02A46E4C000A21777 /* Models */,
-				78B553DD2A44B2FF00A21777 /* Table */,
 				78B553EF2A46191E00A21777 /* SubViews */,
 				78F308B92A3EF9A40036BF33 /* ProfileViewController.swift */,
 				78B553ED2A46145000A21777 /* ProfileViewModel.swift */,
