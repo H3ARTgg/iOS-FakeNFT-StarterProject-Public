@@ -17,8 +17,9 @@ final class RatingViewModel {
     var showTableView: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
+    private var sortingStore: SortStatisticStoreProtocol
     
-    private lazy var filter: StatisticFilter = .rating {
+    private lazy var filter: StatisticFilter = sortingStore.getSortFilter {
         didSet {
             showTableView?(false)
             fetchedUsers = sortUsers(users: fetchedUsers)
@@ -31,8 +32,9 @@ final class RatingViewModel {
         }
     }
     
-    init(statisticProvider: StatisticProviderProtocol? = nil) {
+    init(statisticProvider: StatisticProviderProtocol? = nil, sortStore: SortStatisticStoreProtocol) {
         self.statisticProvider = statisticProvider
+        self.sortingStore = sortStore
         getUsers()
     }
     
@@ -98,25 +100,27 @@ extension RatingViewModel: RatingViewModelProtocol {
         let alertSortByRaringActionText = Consts.LocalizedStrings.statisticActionSheepRating
         let alertCancelText = Consts.LocalizedStrings.alertCancelText
         
-        let alertSortBynameAction = AlertAction(
+        let alertSortByNameAction = AlertAction(
             actionText: alertSortByNameActionText,
             actionRole: .regular,
             action: { [weak self] in
                 guard let self else { return }
+                self.sortingStore.setSortFilter(filter: .name)
                 self.filter = .name
             })
         
-        let alertSortBynameRating = AlertAction(
+        let alertSortByNameRating = AlertAction(
             actionText: alertSortByRaringActionText,
             actionRole: .regular,
             action: { [weak self] in
                 guard let self else { return }
+                self.sortingStore.setSortFilter(filter: .rating)
                 self.filter = .rating
             })
         let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
         let alertModel = AlertModel(
             alertText: alertText,
-            alertActions: [alertSortBynameAction, alertSortBynameRating, alertCancelAction]
+            alertActions: [alertSortByNameAction, alertSortByNameRating, alertCancelAction]
         )
         return alertModel
     }

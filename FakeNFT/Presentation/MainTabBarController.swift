@@ -17,7 +17,8 @@ final class MainTabBarController: UITabBarController {
 extension MainTabBarController {
     func creatRatingViewController() -> UINavigationController {
         let statisticProvider = StatisticProvider()
-        let ratingViewModel = RatingViewModel(statisticProvider: statisticProvider)
+        let sortStore = SortingStore()
+        let ratingViewModel = RatingViewModel(statisticProvider: statisticProvider, sortStore: sortStore)
         let viewController = RatingViewController(viewModel: ratingViewModel)
         viewController.tabBarItem = UITabBarItem(
             title: Consts.LocalizedStrings.statistics,
