@@ -13,14 +13,14 @@ protocol UserCollectionViewModelProtocol {
 }
 
 final class UserCollectionViewModel: UserCollectionViewModelProtocol {
-    public var updateViewData: ((Bool) -> Void)?
-    public var hideCollectionView: ((Bool) -> Void)?
-    public var showCollectionView: ((Bool) -> Void)?
-    public var showPlugView: ((String) -> Void)?
+    var updateViewData: ((Bool) -> Void)?
+    var hideCollectionView: ((Bool) -> Void)?
+    var showCollectionView: ((Bool) -> Void)?
+    var showPlugView: ((String) -> Void)?
     
     private var nftsId: [String]?
     
-    private var nfts: [Nft] = [] {
+    private var nfts: [NftNetworkModel] = [] {
         didSet {
             guard let nftsId
             else {
@@ -40,14 +40,20 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
         self.nftsProvider = nftsProvider
         self.nftsId = nftsId
     }
+}
+
+extension UserCollectionViewModel {
+    var countUsers: Int {
+        nfts.count
+    }
     
-    public func nftCellViewModel(at index: Int) -> NftViewCellViewModel {
+    func nftCellViewModel(at index: Int) -> NftViewCellViewModel {
         let nft = nfts[index]
         // TODO: необходимо проверить ставил ли лайк наш профиль этому NFT
         return NftViewCellViewModel(nft: nft, isLiked: false)
     }
     
-    public func fetchNft() {
+    func fetchNft() {
         guard let nftsId else { return }
         guard !nftsId.isEmpty else {
             showPlugView?(Consts.LocalizedStrings.plugLabelText)
@@ -56,27 +62,23 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
         hideCollectionView?(true)
         nftsId.forEach({ [weak self] id in
             guard let self else { return }
-            self.nftsProvider.fetchNft(id: id) { result in
+            self.nftsProvider.fetchNft(id: id) { [weak self] result in
+                guard let self else { return }
                 switch result {
                 case .success(let nft):
                     DispatchQueue.main.async {
                         self.nfts.append(nft)
                     }
                 case .failure(let failure):
-                    print(failure.localizedDescription)
+                    // TODO: show error alert6 or hide collection and show plugView
+                    assertionFailure(failure.localizedDescription)
                 }
             }
         })
     }
     
-    public func refreshNft() {
-        nfts = []
+    func refreshNft() {
+        nfts.removeAll()
         fetchNft()
-    }
-}
-
-extension UserCollectionViewModel {
-    var countUsers: Int {
-        nfts.count
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NftProviderProtocol {
-    func fetchNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
+    func fetchNft(id: String, completion: @escaping (Result<NftNetworkModel, Error>) -> Void)
 }
 
 struct NftProvider {
@@ -9,7 +9,7 @@ struct NftProvider {
 }
 
 extension NftProvider: NftProviderProtocol {
-    func fetchNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void) {
+    func fetchNft(id: String, completion: @escaping (Result<NftNetworkModel, Error>) -> Void) {
         assert(Thread.isMainThread)
         guard let urlString = Consts.Statistic.urlNft?.absoluteString,
               let url = URL(string: urlString + id) else { return }
@@ -17,17 +17,7 @@ extension NftProvider: NftProviderProtocol {
         networkClient.send(request: networkRequest, type: NftNetworkModel.self) { result in
             switch result {
             case .success(let model):
-                let nft = Nft(
-                    createdAt: model.createdAt,
-                    name: model.name,
-                    images: model.images,
-                    rating: model.rating,
-                    description: model.description,
-                    price: model.price,
-                    author: model.author,
-                    id: model.id
-                )
-                completion(.success(nft))
+                completion(.success(model))
             case .failure(let failure):
                 completion(.failure(failure))
             }

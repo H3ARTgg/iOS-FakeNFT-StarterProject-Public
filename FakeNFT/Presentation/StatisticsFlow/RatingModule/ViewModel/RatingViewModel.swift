@@ -13,8 +13,8 @@ protocol RatingViewModelProtocol {
 }
 
 final class RatingViewModel {
-    public var headForAlert: ((AlertModel) -> Void)?
-    public var showTableView: ((Bool) -> Void)?
+    var headForAlert: ((AlertModel) -> Void)?
+    var showTableView: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
     
@@ -25,18 +25,18 @@ final class RatingViewModel {
         }
     }
     
-    private var fetchedUsers: [User] = [] {
+    private var fetchedUsers: [UserNetworkModel] = [] {
         didSet {
             showTableView?(true)
         }
     }
-        
+    
     init(statisticProvider: StatisticProviderProtocol? = nil) {
         self.statisticProvider = statisticProvider
         getUsers()
     }
     
-    private func getUsers() {      
+    private func getUsers() {
         statisticProvider?.fetchUsersNextPage(completion: { [weak self] result in
             guard let self else { return }
             switch result {
@@ -54,40 +54,40 @@ final class RatingViewModel {
 }
 
 extension RatingViewModel: RatingViewModelProtocol {
-    public var countUsers: Int {
+    var countUsers: Int {
         fetchedUsers.count
     }
     
-    public func fetchUsers() {
+    func fetchUsers() {
         getUsers()
     }
     
-    public func viewModelForCell(at index: Int) -> UserTableViewCellViewModel {
+    func viewModelForCell(at index: Int) -> UserTableViewCellViewModel {
         let user = fetchedUsers[index]
         let viewModel = UserTableViewCellViewModel(user: user)
         return viewModel
     }
     
-    public func viewModelForUserCard(at index: Int) -> UserCardViewModel {
+    func viewModelForUserCard(at index: Int) -> UserCardViewModel {
         let user = fetchedUsers[index]
         let viewModel = UserCardViewModel(user: user)
         return viewModel
     }
     
-    public func showActionSheet() {
+    func showActionSheet() {
         let alertModel = createAlertModel()
         headForAlert?(alertModel)
     }
-        
-    func sortUsers(users: [User]) -> [User] {
+    
+    func sortUsers(users: [UserNetworkModel]) -> [UserNetworkModel] {
         switch filter {
         case .name:
-           return users.sorted(by: {
+            return users.sorted(by: {
                 $0 < $1
             })
         case .rating:
             return users.sorted(by: {
-                $0.rating < $1.rating
+                $0.intUserRating < $1.intUserRating
             })
         }
     }

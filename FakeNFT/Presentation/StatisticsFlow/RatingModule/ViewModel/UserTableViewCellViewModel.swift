@@ -2,15 +2,14 @@ import Foundation
 
 protocol UserTableViewCellViewModelProtocol {
     var positionInRating: String { get }
-    var user: User { get }
     func getViewModelForUserView() -> UserViewModel
 }
 
 final class UserTableViewCellViewModel: UserTableViewCellViewModelProtocol {
     private(set) var positionInRating: String
-    let user: User
+    private let user: UserNetworkModel
     
-    init(user: User) {
+    init(user: UserNetworkModel) {
         self.positionInRating = String(user.rating) 
         self.user = user
     }

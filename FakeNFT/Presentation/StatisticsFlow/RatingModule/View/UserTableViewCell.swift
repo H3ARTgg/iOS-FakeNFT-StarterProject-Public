@@ -5,13 +5,7 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
     
     // MARK: Helper
     static var defaultReuseIdentifier: String { "UserCell" }
-    
-    private struct CellConstants {
-        static let positionInRatingLabelHeight: CGFloat = 20
-        static let edgeDistance: CGFloat = 4
-        static let stackViewCornerRadius: CGFloat = 12
-    }
-    
+
     // MARK: Private properties
     private var viewModel: UserTableViewCellViewModelProtocol?
     
@@ -32,7 +26,7 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - public methods
-    public func initialize(viewModel: UserTableViewCellViewModelProtocol?) {
+    func initialize(viewModel: UserTableViewCellViewModelProtocol?) {
         self.viewModel = viewModel
         userView.initialize(viewModel: viewModel?.getViewModelForUserView())
         bind()
@@ -46,6 +40,12 @@ final class UserTableViewCell: UITableViewCell, ReuseIdentifying {
 }
 
 private extension UserTableViewCell {
+    struct CellConstants {
+        static let positionInRatingLabelHeight: CGFloat = 20
+        static let edgeDistance: CGFloat = 4
+        static let stackViewCornerRadius: CGFloat = 12
+    }
+    
     func makePositionInRatingLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

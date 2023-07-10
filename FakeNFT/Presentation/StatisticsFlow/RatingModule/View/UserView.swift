@@ -3,14 +3,7 @@ import Kingfisher
 
 final class UserView: UIView {
     
-    // MARK: Helpers
-    private struct ViewConstants {
-        static let imageViewWidth: CGFloat = 28
-        static let countNFTLabelWidth: CGFloat = 38
-        static let edgeDistance: CGFloat = 8
-        static let cornerRadius: CGFloat = 12
-    }
-    
+    // MARK: - Private properties
     private var viewModel: UserViewModelProtocol? {
         didSet {
             setNeedsLayout()
@@ -21,12 +14,6 @@ final class UserView: UIView {
     private lazy var photoImageView = makePhotoImageView()
     private lazy var userNameLabel = makeUserNameLabel()
     private lazy var countNFTLabel = makeCountNFTLabel()
-    
-    // MARK: - Override
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
-    }
     
     // MARK: - initialization
     override init(frame: CGRect) {
@@ -40,14 +27,27 @@ final class UserView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
+    }
+    
     // MARK: - public methods
-    public func initialize(viewModel: UserViewModelProtocol?) {
+    func initialize(viewModel: UserViewModelProtocol?) {
         self.viewModel = viewModel
         bind()
     }
 }
 
 private extension UserView {
+    private struct ViewConstants {
+        static let imageViewWidth: CGFloat = 28
+        static let countNFTLabelWidth: CGFloat = 38
+        static let edgeDistance: CGFloat = 8
+        static let cornerRadius: CGFloat = 12
+    }
+    
     func makePhotoImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

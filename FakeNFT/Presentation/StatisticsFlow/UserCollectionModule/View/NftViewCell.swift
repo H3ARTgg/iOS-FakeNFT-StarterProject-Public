@@ -40,7 +40,7 @@ final class NftViewCell: UICollectionViewCell, ReuseIdentifying {
     }
         
     // MARK: - public methods
-    public func initialize(viewModel: NftViewCellViewModelProtocol?) {
+    func initialize(viewModel: NftViewCellViewModelProtocol?) {
         self.viewModel = viewModel
         bind()
     }

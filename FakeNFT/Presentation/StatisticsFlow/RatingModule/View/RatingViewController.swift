@@ -98,11 +98,7 @@ private extension RatingViewController {
         }
         
         viewModel.showTableView = { [weak self] check in
-            if check {
-                self?.showTableView()
-            } else {
-                self?.hideTableView()
-            }
+            self?.showTableView(show: check)
             self?.reloadRatingTableView()
         }
     }
@@ -148,18 +144,11 @@ private extension RatingViewController {
         ratingTableView.layoutIfNeeded()
         ratingTableView.setContentOffset(.zero, animated: true)
     }
-    
-    func hideTableView() {
+
+    func showTableView(show: Bool) {
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self else { return }
-            self.ratingTableView.alpha = 0
-        }
-    }
-    
-    func showTableView() {
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self else { return }
-            self.ratingTableView.alpha = 1
+            self.ratingTableView.alpha = show ? 1 : 0
         }
         ProgressHUD.dismiss()
     }

@@ -3,13 +3,7 @@ import Kingfisher
 
 /// Экран отображает информацию о пользователе:
 final class UserCardViewController: UIViewController {
-    
-    // MARK: Helpers
-    private enum TypeViewController {
-        case userSite
-        case userCollection
-    }
-    
+
     // MARK: Private properties
     private var viewModel: UserCardViewModelProtocol
     
@@ -60,6 +54,11 @@ final class UserCardViewController: UIViewController {
 }
 
 private extension UserCardViewController {
+    private enum TypeViewController {
+        case userSite
+        case userCollection
+    }
+    
     func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -158,11 +157,11 @@ private extension UserCardViewController {
     func addViews() {
         view.addSubview(stackView)
         
-        [ userStackView, descriptionLabel, userSiteButton, userCollectionButton ].forEach {
+        [userStackView, descriptionLabel, userSiteButton, userCollectionButton].forEach {
             stackView.addArrangedSubview($0)
         }
         
-        [ avatarImageView, userNameLabel ].forEach {
+        [avatarImageView, userNameLabel].forEach {
             userStackView.addArrangedSubview($0)
         }
         

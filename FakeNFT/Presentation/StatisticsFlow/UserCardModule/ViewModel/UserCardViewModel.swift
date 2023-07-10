@@ -15,7 +15,7 @@ final class UserCardViewModel: UserCardViewModelProtocol {
     let website: URL?
     let nfts: [String]?
     
-    init(user: User) {
+    init(user: UserNetworkModel) {
         avatarURL = URL(string: user.avatar)
         userName = user.name
         description = user.description
