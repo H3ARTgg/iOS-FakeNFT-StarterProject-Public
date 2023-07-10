@@ -11,6 +11,8 @@ protocol CartViewControllerDelegate: AnyObject {
 
 final class CartViewController: UIViewController {
     // MARK: - Properties
+    let customView = CartView()
+
     private var cartViewModel: CartViewModelProtocol
     
     weak var updateDelegate: UpdateCartViewDelegate?
@@ -30,8 +32,6 @@ final class CartViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
-        let customView = CartView()
         customView.configure(delegate: self)
         updateDelegate = customView
         view = customView
@@ -53,9 +53,12 @@ final class CartViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.updateDelegate?.reloadTableView()
                     self.updateDelegate?.refreshPayment()
+                    self.customView.showScenario(from: self.cartViewModel.listProducts.isEmpty)
                     UIProgressHUD.dismiss()
                 }
         })
+        
+        customView.showScenario(from: cartViewModel.listProducts.isEmpty)
     }
     
     override func viewWillAppear(_ animated: Bool) {

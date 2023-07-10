@@ -8,6 +8,14 @@ protocol UpdateCartViewDelegate: AnyObject {
 final class CartView: UIView {
     
     // MARK: - Properties
+    private let isEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Корзина пуста"
+        label.font = Consts.Fonts.bold17
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var paymentView = PaymentView(delegate: CartViewController())
     
     private lazy var cartTableView: UITableView = {
@@ -38,9 +46,22 @@ final class CartView: UIView {
         setupConstraints()
     }
     
+    func showScenario(from state: Bool) {
+        if !state {
+            isEmptyLabel.isHidden = true
+            cartTableView.isHidden = false
+            paymentView.isHidden = false
+        } else {
+            isEmptyLabel.isHidden = false
+            cartTableView.isHidden = true
+            paymentView.isHidden = true
+        }
+    }
+    
     // MARK: - Private methods
     private func addElements() {
         [
+            isEmptyLabel,
             paymentView,
             cartTableView
         ].forEach { addSubview($0) }
@@ -48,6 +69,13 @@ final class CartView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            isEmptyLabel.centerXAnchor.constraint(
+                equalTo: centerXAnchor
+            ),
+            isEmptyLabel.centerYAnchor.constraint(
+                equalTo: centerYAnchor
+            ),
+            
             cartTableView.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor,
                 constant: 20
