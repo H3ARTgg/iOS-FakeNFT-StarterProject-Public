@@ -1,10 +1,3 @@
-//
-//  StatisticsCoordinator.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Velikanov on 09.07.2023.
-//
-
 import Foundation
 
 final class StatisticsCoordinator: BaseCoordinator, Coordinatable {
@@ -19,12 +12,41 @@ final class StatisticsCoordinator: BaseCoordinator, Coordinatable {
     }
     
     func startFlow() {
+        router.addToTabBar(StatisticNavController())
         performFlow()
     }
 }
 
 private extension StatisticsCoordinator {
     func performFlow() {
+        let statisticModule = modulesFactory.makeStatisticView()
+        let statisticView  = statisticModule.view
+        let statisticCoordination = statisticModule.coordination
         
+        statisticCoordination.headForActionSheet = { [weak self] alertModel in
+            guard let self else { return }
+            self.router.presentActionSheet(alertModel: alertModel)
+        }
+        
+        statisticCoordination.headForUserCard = { userCard in
+            let userCardModule = self.modulesFactory.makeUserCardView(userCardData: userCard)
+            let userCardView = userCardModule.view
+            var userCardCoordination = userCardModule.coordination
+            
+            userCardCoordination.headForAbout = { [weak self] userURL in
+                guard let self else { return }
+                let aboutView = self.modulesFactory.makeAboutWebView(url: userURL)
+                self.router.push(aboutView)
+            }
+            
+            userCardCoordination.headForUserCollection = { [weak self] nftId in
+                guard let self else { return }
+                let userCollection = self.modulesFactory.makeUserCollection(nftsId: nftId)
+                self.router.push(userCollection)
+            }
+            self.router.push(userCardView)
+        }
+        
+        self.router.push(statisticView)
     }
 }

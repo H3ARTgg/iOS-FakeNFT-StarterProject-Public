@@ -207,28 +207,11 @@ private extension UserCardViewController {
     
     @objc
     func showUserSiteButtonTapped() {
-        showWebViewController(type: .userSite)
+        viewModel.showUserSiteButtonTapped()
     }
     
     @objc
     func showUserCollectionButtonTapped() {
-        showWebViewController(type: .userCollection)
-    }
-    
-    private func showWebViewController(type: TypeViewController) {
-        let viewController = creatViewController(type: type)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func creatViewController(type: TypeViewController) -> UIViewController {
-        switch type {
-        case .userSite:
-            let viewModel = WebViewViewModel(url: viewModel.website)
-            return  WebViewViewController(viewModel: viewModel)
-        case .userCollection:
-            let nftsProvider = NftProvider()
-            let viewModel = UserCollectionViewModel(nftsId: viewModel.nfts, nftsProvider: nftsProvider)
-            return  UserCollectionViewController(viewModel: viewModel)
-        }
+        viewModel.showUserCollectionButtonTapped()
     }
 }

@@ -28,6 +28,7 @@ final class RatingViewController: UIViewController {
         navigationItemSetup()
         addViews()
         activateConstraints()
+        ProgressHUD.show()
         bind()
     }
     
@@ -58,8 +59,11 @@ private extension RatingViewController {
     
     func makeRefreshControll() -> UIRefreshControl {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .clear
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        refreshControl.addTarget(
+            self,
+            action: #selector(refresh(_:)),
+            for: .valueChanged
+        )
         return refreshControl
     }
     
@@ -92,11 +96,6 @@ private extension RatingViewController {
     }
     
     func bind() {
-        viewModel.headForAlert = { [weak self] alertModel in
-            guard let self else { return }
-            self.presentActionSheet(alertModel: alertModel)
-        }
-        
         viewModel.showTableView = { [weak self] check in
             self?.showTableView(show: check)
             self?.reloadRatingTableView()
@@ -105,40 +104,18 @@ private extension RatingViewController {
     
     @objc
     func sortedButtonTapped() {
-        viewModel.showActionSheet()
+        viewModel.sortedButtonTapped()
     }
     
     @objc
     func refresh(_ sender: UIRefreshControl) {
-        ProgressHUD.show()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
             self.viewModel.fetchUsers()
             sender.endRefreshing()
         }
     }
-    
-    func presentActionSheet(alertModel: AlertModel) {
-        let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
-        alertModel.alertActions.forEach { alertAction in
-            let actionStyle: UIAlertAction.Style
-            switch alertAction.actionRole {
-            case .destructive: actionStyle = .destructive
-            case .regular: actionStyle = .default
-            case .cancel: actionStyle = .cancel
-            }
-            
-            let action = UIAlertAction(
-                title: alertAction.actionText,
-                style: actionStyle,
-                handler: { _ in alertAction.action?() }
-            )
-            alert.addAction(action)
-        }
         
-        present(alert, animated: true)
-    }
-    
     func reloadRatingTableView() {
         ratingTableView.reloadData()
         ratingTableView.layoutIfNeeded()
@@ -146,9 +123,9 @@ private extension RatingViewController {
     }
 
     func showTableView(show: Bool) {
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self else { return }
-            self.ratingTableView.alpha = show ? 1 : 0
+        UIView.animate(withDuration: 0.3) { [weak ratingTableView] in
+            guard let ratingTableView else { return }
+            ratingTableView.alpha = show ? 1 : 0
         }
         ProgressHUD.dismiss()
     }
@@ -156,16 +133,20 @@ private extension RatingViewController {
 
 // MARK: UITableViewDelegate
 extension RatingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let userCardViewModel = viewModel.viewModelForUserCard(at: indexPath.row)
-        let viewController = UserCardViewController(viewModel: userCardViewModel)
-        navigationController?.pushViewController(viewController, animated: true)
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        viewModel.didSelectUser(at: indexPath.row)
     }
 }
 
 // MARK: UITableViewDataSource
 extension RatingViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         viewModel.countUsers
     }
     
@@ -187,7 +168,10 @@ extension RatingViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         Consts.Statistic.heightUserTableViewCell
     }
 }

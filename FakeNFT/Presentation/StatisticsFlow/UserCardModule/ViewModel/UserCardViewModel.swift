@@ -1,14 +1,25 @@
 import Foundation
 
+protocol UserCardCoordination {
+    var headForAbout: ((URL) -> Void)? { get set }
+    var headForUserCollection: (([String]?) -> Void)? { get set }
+}
+
 protocol UserCardViewModelProtocol {
     var avatarURL: URL? { get }
     var userName: String { get }
     var description: String { get }
     var website: URL? { get }
     var nfts: [String]? { get }
+    
+    func showUserSiteButtonTapped()
+    func showUserCollectionButtonTapped()
 }
 
-final class UserCardViewModel: UserCardViewModelProtocol {
+final class UserCardViewModel: UserCardViewModelProtocol, UserCardCoordination {
+    var headForAbout: ((URL) -> Void)?
+    var headForUserCollection: (([String]?) -> Void)?
+    
     let avatarURL: URL?
     let userName: String
     let description: String
@@ -21,5 +32,14 @@ final class UserCardViewModel: UserCardViewModelProtocol {
         description = user.description
         website = URL(string: user.website)
         nfts = user.nfts
+    }
+    
+    func showUserSiteButtonTapped() {
+        guard let website else { return }
+        headForAbout?(website)
+    }
+    
+    func showUserCollectionButtonTapped() {
+        headForUserCollection?(nfts)
     }
 }

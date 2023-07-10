@@ -1,10 +1,3 @@
-//
-//  Router.swift
-//  Tracker
-//
-//  Created by Aleksandr Velikanov on 01.04.2023.
-//
-
 import UIKit
 
 protocol Routable {
@@ -16,13 +9,19 @@ protocol Routable {
     func present(_ module: Presentable?, presentationStyle: UIModalPresentationStyle)
     func present(_ module: Presentable?, animated: Bool, presentationStyle: UIModalPresentationStyle, dismissCompletion: (() -> Void)?)
     
+    func push(_ module: Presentable?)
+    func push(_ module: Presentable?, animated: Bool)
+    
+    func pop()
+    func pop(animated: Bool)
+    
     func dismissModule(_ module: Presentable?)
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
     
     func presentAlert(message: String)
     func presentActionSheet(alertModel: AlertModel)
-    
+ 
     func addToTabBar(_ module: Presentable?)
 }
 
@@ -38,6 +37,39 @@ final class Router: NSObject {
 }
 
 extension Router: Routable {
+    func push(_ module: Presentable?) {
+        push(module, animated: true)
+    }
+    
+    func push(_ module: Presentable?, animated: Bool) {
+        guard let controller = module?.toPresent() else { return }
+        guard let selectedController = presentingViewController as? UITabBarController else {
+            return
+        }
+        
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+
+        rootViewController.pushViewController(controller, animated: animated)
+    }
+    
+    func pop() {
+        pop(animated: true)
+    }
+    
+    func pop(animated: Bool) {
+        guard let selectedController = presentingViewController as? UITabBarController else {
+            return
+        }
+        
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+
+        rootViewController.popViewController(animated: animated)
+    }
+    
     func setRootViewController(viewController: Presentable) {
         presentingViewController = viewController
         delegate?.setRootViewController(presentingViewController)
@@ -96,6 +128,7 @@ extension Router: Routable {
     
     func presentAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        present(alert, animated: true)
         presentingViewController?.toPresent()?.present(alert, animated: true)
     }
     

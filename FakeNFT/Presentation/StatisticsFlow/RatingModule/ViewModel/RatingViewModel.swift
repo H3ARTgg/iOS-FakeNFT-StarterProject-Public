@@ -1,19 +1,26 @@
 import Foundation
 
+protocol StatisticCoordination: AnyObject {
+    var headForUserCard: ((UserNetworkModel) -> Void)? { get set }
+    var headForActionSheet: ((AlertModel) -> Void)? { get set }
+}
+
 protocol RatingViewModelProtocol {
-    var headForAlert: ((AlertModel) -> Void)? { get set }
     var showTableView: ((Bool) -> Void)? { get set }
-    
     var countUsers: Int { get }
+    
+    func didSelectUser(at index: Int)
+    func sortedButtonTapped()
     
     func fetchUsers()
     func viewModelForCell(at index: Int) -> UserTableViewCellViewModel
-    func viewModelForUserCard(at index: Int) -> UserCardViewModel
-    func showActionSheet()
+    func viewModelForUserCard(at index: Int) -> UserNetworkModel
 }
 
-final class RatingViewModel {
-    var headForAlert: ((AlertModel) -> Void)?
+final class RatingViewModel: StatisticCoordination {
+    var headForUserCard: ((UserNetworkModel) -> Void)?
+    var headForActionSheet: ((AlertModel) -> Void)? 
+
     var showTableView: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
@@ -60,6 +67,11 @@ extension RatingViewModel: RatingViewModelProtocol {
         fetchedUsers.count
     }
     
+    func didSelectUser(at index: Int) {
+        let userCard = viewModelForUserCard(at: index)
+        headForUserCard?(userCard)
+    }
+    
     func fetchUsers() {
         getUsers()
     }
@@ -70,15 +82,14 @@ extension RatingViewModel: RatingViewModelProtocol {
         return viewModel
     }
     
-    func viewModelForUserCard(at index: Int) -> UserCardViewModel {
+    func viewModelForUserCard(at index: Int) -> UserNetworkModel {
         let user = fetchedUsers[index]
-        let viewModel = UserCardViewModel(user: user)
-        return viewModel
+        return user
     }
     
-    func showActionSheet() {
+    func sortedButtonTapped() {
         let alertModel = createAlertModel()
-        headForAlert?(alertModel)
+        headForActionSheet?(alertModel)
     }
     
     func sortUsers(users: [UserNetworkModel]) -> [UserNetworkModel] {
