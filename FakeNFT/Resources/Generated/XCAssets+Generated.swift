@@ -37,7 +37,10 @@ internal enum Asset {
     internal static let sortIcon = ImageAsset(name: "Sort_icon")
     internal static let cartIcon = ImageAsset(name: "cart_icon")
     internal static let chevronBackward = ImageAsset(name: "chevronBackward")
+<<<<<<< HEAD
     internal static let chevronForward = ImageAsset(name: "chevronForward")
+=======
+>>>>>>> develop
     internal static let fillStar = ImageAsset(name: "fillStar")
     internal static let star = ImageAsset(name: "star")
   }
