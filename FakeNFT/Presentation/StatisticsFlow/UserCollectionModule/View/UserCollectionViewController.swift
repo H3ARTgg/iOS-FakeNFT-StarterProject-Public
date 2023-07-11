@@ -30,6 +30,11 @@ final class UserCollectionViewController: UIViewController {
         bind()
         viewModel.fetchNft()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIBlockingProgressHUD.dismiss()
+    }
 }
 
 private extension UserCollectionViewController {
@@ -58,6 +63,12 @@ private extension UserCollectionViewController {
         return label
     }
     
+    func makeRefreshControll() -> UIRefreshControl {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        return refreshControl
+    }
+    
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
         title = Consts.LocalizedStrings.userCollectionViewControllerTitle
@@ -81,44 +92,32 @@ private extension UserCollectionViewController {
     }
     
     func bind() {
-        viewModel.updateViewData = { [weak self] _ in
+        viewModel.showCollectionView = { [weak self] isHidden in
             guard let self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.collectionView.reloadData()
-            }
+            self.showCollectionView(show: isHidden)
+            self.collectionView.reloadData()
         }
         
-        viewModel.hideCollectionView = { [weak self] _ in
-            ProgressHUD.show()
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                guard let self else { return }
-                self.collectionView.alpha = 0
-            }
-        }
-        
-        viewModel.showCollectionView = { [weak self] _ in
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    self.collectionView.alpha = 1
-                }
-            }
-            ProgressHUD.dismiss()
-        }
-        
-        viewModel.showPlugView = { [weak self] text in
+        viewModel.showPlugView = { [weak self] (isHidden, text) in
             guard let self else { return }
+            self.plugLabel.isHidden = !isHidden
             self.plugLabel.text = text
-            self.plugLabel.isHidden = false
+        }
+        
+        viewModel.showProgressHUD = { check in
+            check ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
+        }
+        
+        viewModel.blockUI = { isBlock in
+            isBlock ? UIBlockingProgressHUD.unBlockUI() : UIBlockingProgressHUD.blockUI()
         }
     }
     
-    func makeRefreshControll() -> UIRefreshControl {
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .clear
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        return refreshControl
+    func showCollectionView(show: Bool) {
+        UIView.animate(withDuration: 0.3) { [weak collectionView] in
+            guard let collectionView else { return }
+            collectionView.alpha = show ? 1 : 0
+        }
     }
     
     @objc
@@ -166,10 +165,10 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        5
+        Consts.Statistic.minimumSpacingForSectionAt
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        5
+        Consts.Statistic.minimumSpacingForSectionAt
     }
 }

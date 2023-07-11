@@ -25,7 +25,12 @@ private extension StatisticsCoordinator {
         
         statisticCoordination.headForActionSheet = { [weak self] alertModel in
             guard let self else { return }
-            self.router.presentActionSheet(alertModel: alertModel)
+            self.router.presentAlertController(alertModel: alertModel, preferredStyle: .actionSheet)
+        }
+        
+        statisticCoordination.headForAlert = { [weak self] alertModel in
+            guard let self else { return }
+            self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
         }
         
         statisticCoordination.headForUserCard = { userCard in
@@ -41,8 +46,16 @@ private extension StatisticsCoordinator {
             
             userCardCoordination.headForUserCollection = { [weak self] nftId in
                 guard let self else { return }
-                let userCollection = self.modulesFactory.makeUserCollection(nftsId: nftId)
-                self.router.push(userCollection)
+                let userCollectionModule = self.modulesFactory.makeUserCollection(nftsId: nftId)
+                let userCollectionView = userCollectionModule.view
+                let userCollectionCoordination = userCollectionModule.coordination
+                
+                userCollectionCoordination.headForActionSheet = { [weak self] alertModel in
+                    guard let self else { return }
+                    self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
+                }
+                
+                self.router.push(userCollectionView)
             }
             self.router.push(userCardView)
         }

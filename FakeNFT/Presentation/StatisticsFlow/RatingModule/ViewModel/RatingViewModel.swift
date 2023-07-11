@@ -3,6 +3,7 @@ import Foundation
 protocol StatisticCoordination: AnyObject {
     var headForUserCard: ((UserNetworkModel) -> Void)? { get set }
     var headForActionSheet: ((AlertModel) -> Void)? { get set }
+    var headForAlert: ((AlertModel) -> Void)? { get set }
 }
 
 protocol RatingViewModelProtocol {
@@ -19,8 +20,9 @@ protocol RatingViewModelProtocol {
 
 final class RatingViewModel: StatisticCoordination {
     var headForUserCard: ((UserNetworkModel) -> Void)?
-    var headForActionSheet: ((AlertModel) -> Void)? 
-
+    var headForActionSheet: ((AlertModel) -> Void)?
+    var headForAlert: ((AlertModel) -> Void)?
+    
     var showTableView: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
@@ -48,15 +50,13 @@ final class RatingViewModel: StatisticCoordination {
     private func getUsers() {
         statisticProvider?.fetchUsersNextPage(completion: { [weak self] result in
             guard let self else { return }
-            switch result {
-            case .success(let users):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let users):
                     self.fetchedUsers = self.sortUsers(users: users)
+                case .failure(let failure):
+                    self.showErrorAlert(message: failure.localizedDescription)
                 }
-            case .failure(let failure):
-                // TODO: show error alert
-                print("not internet \(failure.localizedDescription)")
             }
         })
     }
@@ -88,7 +88,7 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func sortedButtonTapped() {
-        let alertModel = createAlertModel()
+        let alertModel = createSortAlertModel()
         headForActionSheet?(alertModel)
     }
     
@@ -105,7 +105,7 @@ extension RatingViewModel: RatingViewModelProtocol {
         }
     }
     
-    private func createAlertModel() -> AlertModel {
+    func createSortAlertModel() -> AlertModel {
         let alertText = Consts.LocalizedStrings.statisticAlertTitle
         let alertSortByNameActionText = Consts.LocalizedStrings.statisticActionSheepName
         let alertSortByRaringActionText = Consts.LocalizedStrings.statisticActionSheepRating
@@ -131,7 +131,36 @@ extension RatingViewModel: RatingViewModelProtocol {
         let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
         let alertModel = AlertModel(
             alertText: alertText,
+            message: nil,
             alertActions: [alertSortByNameAction, alertSortByNameRating, alertCancelAction]
+        )
+        return alertModel
+    }
+    
+    func showErrorAlert(message: String) {
+        let alertModel = createErrorAlertModel(message: message)
+        headForAlert?(alertModel)
+    }
+    
+    func createErrorAlertModel(message: String) -> AlertModel {
+        let alertText = Consts.LocalizedStrings.statisticErrorAlertTitle
+        let alertRepeatActionText = Consts.LocalizedStrings.statisticErrorActionSheepNameRepeat
+        let alertCancelText = Consts.LocalizedStrings.alertCancelText
+        
+        let alertRepeatAction = AlertAction(
+            actionText: alertRepeatActionText,
+            actionRole: .regular,
+            action: { [weak self] in
+                guard let self else { return }
+                // self.refreshNft()
+            })
+        
+        let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
+        
+        let alertModel = AlertModel(
+            alertText: alertText,
+            message: message,
+            alertActions: [alertCancelAction, alertRepeatAction]
         )
         return alertModel
     }

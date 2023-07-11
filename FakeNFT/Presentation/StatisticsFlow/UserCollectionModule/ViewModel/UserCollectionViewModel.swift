@@ -1,22 +1,29 @@
 import Foundation
 
-protocol UserCollectionViewModelProtocol {
-    var updateViewData: ((Bool) -> Void)? { get set }
-    var hideCollectionView: ((Bool) -> Void)? { get set }
-    var showCollectionView: ((Bool) -> Void)? { get set }
-    var showPlugView: ((String) -> Void)? { get set }
-    
-    var countUsers: Int { get }
-    func nftCellViewModel(at index: Int) -> NftViewCellViewModel
-    func fetchNft()
-    func refreshNft()
+protocol UserCollectionCoordination: AnyObject {
+    var headForActionSheet: ((AlertModel) -> Void)? { get set }
 }
 
-final class UserCollectionViewModel: UserCollectionViewModelProtocol {
-    var updateViewData: ((Bool) -> Void)?
-    var hideCollectionView: ((Bool) -> Void)?
+protocol UserCollectionViewModelProtocol {
+    var showCollectionView: ((Bool) -> Void)? { get set }
+    var showPlugView: ((Bool, String?) -> Void)? { get set }
+    var showProgressHUD: ((Bool) -> Void)? { get set }
+    var blockUI: ((Bool) -> Void)? { get set }
+    
+    var countUsers: Int { get }
+    
+    func fetchNft()
+    func refreshNft()
+    func nftCellViewModel(at index: Int) -> NftViewCellViewModel
+}
+
+final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollectionCoordination {
+    var headForActionSheet: ((AlertModel) -> Void)?
+    
     var showCollectionView: ((Bool) -> Void)?
-    var showPlugView: ((String) -> Void)?
+    var showPlugView: ((Bool, String?) -> Void)?
+    var showProgressHUD: ((Bool) -> Void)?
+    var blockUI: ((Bool) -> Void)?
     
     private var nftsId: [String]?
     
@@ -28,7 +35,6 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol {
                 return
             }
             if nfts.count == nftsId.count {
-                updateViewData?(true)
                 showCollectionView?(true)
             }
         }
@@ -54,31 +60,62 @@ extension UserCollectionViewModel {
     }
     
     func fetchNft() {
+        showProgressHUD?(true)
         guard let nftsId else { return }
         guard !nftsId.isEmpty else {
-            showPlugView?(Consts.LocalizedStrings.plugLabelText)
+            showProgressHUD?(false)
+            showPlugView?(true, Consts.LocalizedStrings.plugLabelText)
             return
         }
-        hideCollectionView?(true)
-        nftsId.forEach({ [weak self] id in
-            guard let self else { return }
-            self.nftsProvider.fetchNft(id: id) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let nft):
-                    DispatchQueue.main.async {
-                        self.nfts.append(nft)
-                    }
-                case .failure(let failure):
-                    // TODO: show error alert6 or hide collection and show plugView
-                    assertionFailure(failure.localizedDescription)
+        showCollectionView?(false)
+        nftsProvider.fetchNfts(nftsId: nftsId) { result in
+            switch result {
+            case .success(let model):
+                DispatchQueue.main.async {
+                    self.nfts = model
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    self.showPlugView?(true, Consts.LocalizedStrings.statisticErrorPlugView)
+                    self.showErrorAlert(message: failure.localizedDescription)
                 }
             }
-        })
+            self.showProgressHUD?(false)
+            self.blockUI?(false)
+        }
     }
     
     func refreshNft() {
+        blockUI?(true)
         nfts.removeAll()
         fetchNft()
+    }
+    
+    func showErrorAlert(message: String) {
+        let alertModel = createErrorAlertModel(message: message)
+        headForActionSheet?(alertModel)
+    }
+    
+    func createErrorAlertModel(message: String) -> AlertModel {
+        let alertText = Consts.LocalizedStrings.statisticErrorAlertTitle
+        let alertRepeatActionText = Consts.LocalizedStrings.statisticErrorActionSheepNameRepeat
+        let alertCancelText = Consts.LocalizedStrings.alertCancelText
+        
+        let alertRepeatAction = AlertAction(
+            actionText: alertRepeatActionText,
+            actionRole: .regular,
+            action: { [weak self] in
+                guard let self else { return }
+                self.refreshNft()
+            })
+        
+        let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
+        
+        let alertModel = AlertModel(
+            alertText: alertText,
+            message: message,
+            alertActions: [alertCancelAction, alertRepeatAction]
+        )
+        return alertModel
     }
 }

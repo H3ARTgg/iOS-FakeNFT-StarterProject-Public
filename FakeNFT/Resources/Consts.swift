@@ -17,6 +17,11 @@ struct Consts {
         static let userCollectionButtonTitle = NSLocalizedString("userCollectionButton.title", value: "Collection NFT (%d)", comment: "Text for userCollectionButtonTitle")
         static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewController.Title", value: "Collection NFT", comment: "Title for UserCollectionViewController")
         static let plugLabelText = NSLocalizedString("plugLabel.Text", value: "No NFT", comment: "text for plug label in UserCollectionViewController")
+        
+        static let statisticErrorAlertTitle = NSLocalizedString("statisticErrorAlert.title", value: "Error", comment: "text for statistic's error title alert")
+        static let statisticErrorActionSheepNameRepeat = NSLocalizedString("statisticErrorActionSheep.repeat", value: "Repeat", comment: "text for statistic's error title alert repeat")
+        
+        static let statisticErrorPlugView = NSLocalizedString("statisticErrorPlugView.text", value: "Oops, something went wrong(", comment: "text for statistic's error title alert repeat")
     }
     
     struct Images {
@@ -44,6 +49,7 @@ struct Consts {
         static let topConstant: CGFloat = 20
         static let sideConstant: CGFloat = 16
         static let heightUserTableViewCell: CGFloat = 88
+        static let minimumSpacingForSectionAt: CGFloat = 5
         
         // UserCardViewController
         static let userCollectionButtonHeight: CGFloat = 54

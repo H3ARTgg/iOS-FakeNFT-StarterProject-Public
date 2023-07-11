@@ -188,12 +188,17 @@ private extension NftViewCell {
     }
     
     func bind() {
-        guard let viewModel else { return }
+        guard var viewModel else { return }
         nftNameLabel.text = viewModel.nftName
         nftPriceLabel.text = viewModel.nftPrice
         ratingStackView.setupRating(viewModel.rating)
-        setLikeImage(isLiked: viewModel.isLiked)
+        setLikeImage(isLiked: viewModel.like)
         loadImage()
+        
+        viewModel.setLike = { [weak self] isLike in
+            guard let self else { return }
+            self.setLikeImage(isLiked: isLike)
+        }
     }
     
     func setLikeImage(isLiked: Bool) {
@@ -214,6 +219,6 @@ private extension NftViewCell {
     
     @objc
     func likeButtonTapped() {
-        print("Like")
+        viewModel?.likeButtonTapped()
     }
 }

@@ -28,7 +28,7 @@ final class RatingViewController: UIViewController {
         navigationItemSetup()
         addViews()
         activateConstraints()
-        ProgressHUD.show()
+        UIBlockingProgressHUD.show()
         bind()
     }
     
@@ -39,7 +39,7 @@ final class RatingViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        ProgressHUD.dismiss()
+        UIBlockingProgressHUD.dismiss()
     }
 }
 
@@ -97,8 +97,9 @@ private extension RatingViewController {
     
     func bind() {
         viewModel.showTableView = { [weak self] check in
-            self?.showTableView(show: check)
-            self?.reloadRatingTableView()
+            guard let self else { return }
+            self.showTableView(show: check)
+            self.reloadRatingTableView()
         }
     }
     
@@ -127,7 +128,7 @@ private extension RatingViewController {
             guard let ratingTableView else { return }
             ratingTableView.alpha = show ? 1 : 0
         }
-        ProgressHUD.dismiss()
+        UIBlockingProgressHUD.dismiss()
     }
 }
 

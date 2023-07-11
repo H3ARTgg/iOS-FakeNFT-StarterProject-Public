@@ -19,9 +19,8 @@ protocol Routable {
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
     
-    func presentAlert(message: String)
-    func presentActionSheet(alertModel: AlertModel)
- 
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style)
+    
     func addToTabBar(_ module: Presentable?)
 }
 
@@ -50,7 +49,7 @@ extension Router: Routable {
         guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
             return
         }
-
+        
         rootViewController.pushViewController(controller, animated: animated)
     }
     
@@ -66,7 +65,7 @@ extension Router: Routable {
         guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
             return
         }
-
+        
         rootViewController.popViewController(animated: animated)
     }
     
@@ -126,14 +125,8 @@ extension Router: Routable {
         rootViewController.setViewControllers(viewControllers, animated: false)
     }
     
-    func presentAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        present(alert, animated: true)
-        presentingViewController?.toPresent()?.present(alert, animated: true)
-    }
-    
-    func presentActionSheet(alertModel: AlertModel) {
-        let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style) {
+        let alert = UIAlertController(title: alertModel.alertText, message: alertModel.message, preferredStyle: preferredStyle)
         alertModel.alertActions.forEach { alertAction in
             let actionStyle: UIAlertAction.Style
             switch alertAction.actionRole {
@@ -145,7 +138,6 @@ extension Router: Routable {
             let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
             alert.addAction(action)
         }
-        
         presentingViewController?.toPresent()?.present(alert, animated: true)
     }
 }

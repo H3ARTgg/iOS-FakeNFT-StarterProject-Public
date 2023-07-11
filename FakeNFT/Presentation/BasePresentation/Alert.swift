@@ -9,6 +9,7 @@ import UIKit
 
 struct AlertModel {
     let alertText: String
+    let message: String?
     let alertActions: [AlertAction]
 }
 

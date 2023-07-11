@@ -3,7 +3,7 @@ import Foundation
 protocol ModulesFactoryProtocol {
     func makeStatisticView() -> (view: Presentable, coordination: StatisticCoordination)
     func makeUserCardView(userCardData: UserNetworkModel) -> (view: Presentable, coordination: UserCardCoordination)
-    func makeUserCollection(nftsId: [String]?) -> Presentable
+    func makeUserCollection(nftsId: [String]?) -> (view: Presentable, coordination: UserCollectionCoordination)
     func makeAboutWebView(url: URL) -> Presentable
 }
 
@@ -30,10 +30,10 @@ extension ModulesFactory: ModulesFactoryProtocol {
         return webViewController
     }
     
-    func makeUserCollection(nftsId: [String]?) -> Presentable {
+    func makeUserCollection(nftsId: [String]?) -> (view: Presentable, coordination: UserCollectionCoordination) {
         let nftsProvider = NftProvider()
         let userCollectionViewModel = UserCollectionViewModel(nftsId: nftsId, nftsProvider: nftsProvider)
         let userCollectionViewController = UserCollectionViewController(viewModel: userCollectionViewModel)
-        return userCollectionViewController
+        return (userCollectionViewController, userCollectionViewModel)
     }
 }
