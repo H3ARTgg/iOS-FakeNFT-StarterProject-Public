@@ -9,7 +9,7 @@ final class UserCollectionViewController: UIViewController {
     
     // MARK: UI
     private lazy var collectionView = makeCollectionView()
-    private lazy var plugLabel = makePlugLabel()
+    private lazy var plugLabel = PlugLabel()
     
     // MARK: Initialization
     init(viewModel: UserCollectionViewModelProtocol) {
@@ -51,16 +51,6 @@ private extension UserCollectionViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.refreshControl = refreshControl
         return collectionView
-    }
-    
-    func makePlugLabel() -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Asset.Colors.ypBlack.color
-        label.textAlignment = .center
-        label.font = Consts.Fonts.bold22
-        label.isHidden = true
-        return label
     }
     
     func makeRefreshControll() -> UIRefreshControl {

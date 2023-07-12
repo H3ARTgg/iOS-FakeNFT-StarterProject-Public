@@ -8,6 +8,8 @@ protocol StatisticCoordination: AnyObject {
 
 protocol RatingViewModelProtocol {
     var showTableView: ((Bool) -> Void)? { get set }
+    var showPlugView: ((Bool, String?) -> Void)? { get set }
+    
     var countUsers: Int { get }
     
     func didSelectUser(at index: Int)
@@ -24,6 +26,7 @@ final class RatingViewModel: StatisticCoordination {
     var headForAlert: ((AlertModel) -> Void)?
     
     var showTableView: ((Bool) -> Void)?
+    var showPlugView: ((Bool, String?) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
     private var sortingStore: SortStatisticStoreProtocol
@@ -53,8 +56,10 @@ final class RatingViewModel: StatisticCoordination {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let users):
+                    self.showPlugView?(false, nil)
                     self.fetchedUsers = self.sortUsers(users: users)
                 case .failure(let failure):
+                    self.showPlugView?(true, Consts.LocalizedStrings.statisticErrorPlugView)
                     self.showErrorAlert(message: failure.localizedDescription)
                 }
             }
@@ -73,6 +78,7 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func fetchUsers() {
+        fetchedUsers = []
         getUsers()
     }
     
@@ -152,7 +158,7 @@ extension RatingViewModel: RatingViewModelProtocol {
             actionRole: .regular,
             action: { [weak self] in
                 guard let self else { return }
-                // self.refreshNft()
+                self.fetchUsers()
             })
         
         let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)

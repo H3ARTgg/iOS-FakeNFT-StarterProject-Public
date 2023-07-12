@@ -36,6 +36,7 @@
 		5B473B222A423025005E78DD /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B212A423025005E78DD /* UserViewModel.swift */; };
 		5B473B242A437F71005E78DD /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B232A437F71005E78DD /* AlertModel.swift */; };
 		5B572E6B2A5DD93500A1CB14 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B572E6A2A5DD93500A1CB14 /* UIBlockingProgressHUD.swift */; };
+		5B572E6D2A5DDD1600A1CB14 /* PlugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B572E6C2A5DDD1600A1CB14 /* PlugView.swift */; };
 		5B5E8DD62A4D719C00D42DD5 /*  Decomposition_Motorin(Statistic) .md in Resources */ = {isa = PBXBuildFile; fileRef = 5B5E8DD52A4D719C00D42DD5 /*  Decomposition_Motorin(Statistic) .md */; };
 		5B6D50012A5BE56000008227 /* SortingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D50002A5BE56000008227 /* SortingStore.swift */; };
 		5B6D500D2A5C184100008227 /* StatisticNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D500C2A5C184100008227 /* StatisticNavController.swift */; };
@@ -125,6 +126,7 @@
 		5B473B212A423025005E78DD /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		5B473B232A437F71005E78DD /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		5B572E6A2A5DD93500A1CB14 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		5B572E6C2A5DDD1600A1CB14 /* PlugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlugView.swift; sourceTree = "<group>"; };
 		5B5E8DD52A4D719C00D42DD5 /*  Decomposition_Motorin(Statistic) .md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = " Decomposition_Motorin(Statistic) .md"; sourceTree = "<group>"; };
 		5B6D50002A5BE56000008227 /* SortingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingStore.swift; sourceTree = "<group>"; };
 		5B6D500C2A5C184100008227 /* StatisticNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticNavController.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 			children = (
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				78D479742A5A81EE0089E861 /* UIViewController+Ext.swift */,
+				5B572E6C2A5DDD1600A1CB14 /* PlugView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				5B572E6D2A5DDD1600A1CB14 /* PlugView.swift in Sources */,
 				5B473B1A2A419EA1005E78DD /* RatingViewModel.swift in Sources */,
 				5B79406B2A4B7C1300E19BCB /* RatingViewController.swift in Sources */,
 				78D479702A5A808C0089E861 /* CoordinatorFactory.swift in Sources */,

@@ -10,6 +10,7 @@ final class RatingViewController: UIViewController {
     
     // MARK: UI
     private lazy var ratingTableView = makeRatingTableView()
+    private lazy var plugLabel = PlugLabel()
     
     // MARK: Initialization
     init(viewModel: RatingViewModelProtocol) {
@@ -83,7 +84,9 @@ private extension RatingViewController {
     }
     
     func addViews() {
-        view.addSubview(ratingTableView)
+        [ratingTableView, plugLabel].forEach {
+            view.addSubview($0)
+        }
     }
     
     func activateConstraints() {
@@ -91,7 +94,11 @@ private extension RatingViewController {
             ratingTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Consts.Statistic.topConstant),
             ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Consts.Statistic.sideConstant),
             ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Consts.Statistic.sideConstant),
-            ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            plugLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            plugLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            plugLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
     }
     
@@ -100,6 +107,12 @@ private extension RatingViewController {
             guard let self else { return }
             self.showTableView(show: check)
             self.reloadRatingTableView()
+        }
+        
+        viewModel.showPlugView = { [weak self] (isHidden, text) in
+            guard let self else { return }
+            self.plugLabel.isHidden = !isHidden
+            self.plugLabel.text = text
         }
     }
     
