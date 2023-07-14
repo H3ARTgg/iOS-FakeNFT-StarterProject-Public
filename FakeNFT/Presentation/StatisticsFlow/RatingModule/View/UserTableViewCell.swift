@@ -73,8 +73,8 @@ private extension UserTableViewCell {
     func activateConstraints() {
         NSLayoutConstraint.activate([
             positionInRatingLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            positionInRatingLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            positionInRatingLabel.rightAnchor.constraint(equalTo: userView.leftAnchor),
+            positionInRatingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            positionInRatingLabel.trailingAnchor.constraint(equalTo: userView.leadingAnchor),
             positionInRatingLabel.heightAnchor.constraint(equalToConstant: CellConstants.positionInRatingLabelHeight),
             
             userView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),

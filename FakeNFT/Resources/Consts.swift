@@ -11,7 +11,7 @@ struct Consts {
         // Statistic epic
         static let statisticAlertTitle = NSLocalizedString("statisticAlert.title", value: "Sorting", comment: "text for statistic's title alert")
         static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", value: "By name", comment: "text for statistic's title alert")
-        static let statisticActionSheepRating = NSLocalizedString("statisticActionSheep.sortByRating", value: "By rating", comment: "text for statistic's action sheep sort by rating")
+        static let statisticActionSheepRating = NSLocalizedString("sort.rating", value: "By rating", comment: "text for statistic's action sheep sort by rating")
         static let alertCancelText = NSLocalizedString("cancelAction.Text", value: "Cancel", comment: "Text for alert cancel button")
         static let userSiteButtonTitle = NSLocalizedString("userSiteButton.Title", value: "Go to site", comment: "Text for userSiteButton")
         static let userCollectionButtonTitle = NSLocalizedString("userCollectionButton.title", value: "Collection NFT (%d)", comment: "Text for userCollectionButtonTitle")

@@ -91,7 +91,6 @@ private extension UserCardViewController {
     func makeUserNameLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.headline3
-        label.textAlignment = .left
         label.numberOfLines = 0
         label.backgroundColor = .clear
         return label
@@ -100,7 +99,6 @@ private extension UserCardViewController {
     func makeDescriptionLabel() -> UILabel {
         let label = makeLabel()
         label.font = UIFont.caption2
-        label.textAlignment = .left
         label.numberOfLines = 0
         label.backgroundColor = .clear
         return label
@@ -111,6 +109,7 @@ private extension UserCardViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Asset.Colors.ypBlack.color
         label.font = UIFont.caption2
+        label.textAlignment = .natural
         return label
     }
     
@@ -134,8 +133,9 @@ private extension UserCardViewController {
         button.addTarget(self, action: #selector(showUserCollectionButtonTapped), for: .touchUpInside)
         button.backgroundColor = .clear
         button.titleLabel?.font = UIFont.bodyBold
+        button.titleLabel?.textAlignment = .natural
         button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
-        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
+        button.contentHorizontalAlignment = .leading
         return button
     }
     
@@ -181,7 +181,7 @@ private extension UserCardViewController {
             userSiteButton.heightAnchor.constraint(equalToConstant: Consts.Statistic.userSiteButtonHeight),
             
             chevronForwardImageView.centerYAnchor.constraint(equalTo: userCollectionButton.centerYAnchor),
-            chevronForwardImageView.rightAnchor.constraint(equalTo: userCollectionButton.rightAnchor)
+            chevronForwardImageView.trailingAnchor.constraint(equalTo: userCollectionButton.trailingAnchor)
         ])
     }
     
