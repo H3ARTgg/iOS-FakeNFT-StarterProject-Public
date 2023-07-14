@@ -39,19 +39,20 @@ final class OwnedNftViewModel: OwnedNftCoordination {
             .flatMap { nftsResponses in
                 nftsResponses.publisher.setFailureType(to: NetworkError.self)
             }
+            .delay(for: 5, scheduler: RunLoop.main)
             .flatMap { [weak self] nftsResponse in
                 networkManager.getUserNamePublisher(id: nftsResponse.author)
                     .compactMap { author in
                         self?.convert(nftsResponse, author: author)
                     }
             }
-            .flatMap { [weak self] viewModel in
+            .collect()
+            .flatMap { [weak self] viewModels in
                 networkManager.getSetProfilePublisher(nil)
                     .compactMap { response in
-                        self?.convert(viewModel, likes: response.likes)
+                        self?.convert(viewModels, likes: response.likes)
                     }
             }
-            .collect()
             .eraseToAnyPublisher()
     }
 }
@@ -156,13 +157,15 @@ private extension OwnedNftViewModel {
                      isLiked: false)
     }
     
-    func convert(_ viewModel: NftViewModel, likes: [String]) -> NftViewModel {
-        NftViewModel(id: viewModel.id,
-                     image: viewModel.image,
-                     name: viewModel.name,
-                     rating: viewModel.rating,
-                     author: viewModel.author,
-                     price: viewModel.price,
-                     isLiked: likes.contains(viewModel.id))
+    func convert(_ viewModels: [NftViewModel], likes: [String]) -> [NftViewModel] {
+        viewModels.map { viewModel in
+            NftViewModel(id: viewModel.id,
+                         image: viewModel.image,
+                         name: viewModel.name,
+                         rating: viewModel.rating,
+                         author: viewModel.author,
+                         price: viewModel.price,
+                         isLiked: likes.contains(viewModel.id))
+        }
     }
 }
