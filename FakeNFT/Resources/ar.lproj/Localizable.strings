@@ -1,0 +1,23 @@
+
+// MARK: - Main
+
+profile.icon = "حساب تعريفي";
+catalogue.icon = "فهرس";
+cart.icon = "سلة";
+statistics.icon = "إحصائيات";
+profile.owned = "الخاصة بي";
+profile.favorite = "مميزة";
+profile.developer = "عن المطور";
+profileEdit.changePhoto = "غير الصوره";
+profile.sort = "فرز";
+profile.byPrice = "حسب السعر";
+profile.byRating = "حسب التصنيف";
+profile.byTitle = "بالاسم";
+profile.close = "يغلق";
+profile.noNfts = "ليس لديك NFTs حتى الآن";
+profile.noFavoriteNfts = "ليس لديك أي NFTs مفضلة حتى الآن";
+profile.from = "من";
+profile.price = "سعر";
+profile.name = "اسم";
+profile.about = "وصف";
+profile.site = "موقع إلكتروني";

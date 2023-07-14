@@ -1,12 +1,23 @@
-/* Cart tabbar icon title */
-"cart.icon" = "Cart";
 
-/* Catalogue tabbar icon title */
-"catalogue.icon" = "Catalogue";
+// MARK: - Main
 
-/* Profile tabbar icon title */
-"profile.icon" = "Profile";
-
-/* Statistics tabbar icon title */
-"statistics.icon" = "Statistics";
-
+profile.icon = "Profile";
+catalogue.icon = "Catalogue";
+cart.icon = "Cart";
+statistics.icon = "Statistics";
+profile.owned = "My";
+profile.favorite = "Favorite";
+profile.developer = "About developer";
+profileEdit.changePhoto = "Change photo";
+profile.sort = "Sorting";
+profile.byPrice = "By price";
+profile.byRating = "By rating";
+profile.byTitle = "By title";
+profile.close = "Close";
+profile.noNfts = "You don't have NFTs yet";
+profile.noFavoriteNfts = "You don't have any favorite NFTs yet";
+profile.from = "from";
+profile.price = "Price";
+profile.name = "Name";
+profile.about = "Description";
+profile.site = "Website";

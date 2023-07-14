@@ -1,12 +1,23 @@
-/* Cart tabbar icon title */
-"cart.icon" = "Корзина";
 
-/* Catalogue tabbar icon title */
-"catalogue.icon" = "Каталог";
+// MARK: - Main
 
-/* Profile tabbar icon title */
-"profile.icon" = "Профиль";
-
-/* Statistics tabbar icon title */
-"statistics.icon" = "Статистика";
-
+profile.icon = "Профиль";
+catalogue.icon = "Каталог";
+cart.icon = "Корзина";
+statistics.icon = "Статистика";
+profile.owned = "Мои";
+profile.favorite = "Избранные";
+profile.developer = "О разработчике";
+profileEdit.changePhoto = "Сменить фото";
+profile.sort = "Сортировка";
+profile.byPrice = "По цене";
+profile.byRating = "По рейтингу";
+profile.byTitle = "По названию";
+profile.close = "Закрыть";
+profile.noNfts = "У Вас еще нет NFT";
+profile.noFavoriteNfts = "У Вас еще нет избранных NFT";
+profile.from = "от";
+profile.price = "Цена";
+profile.name = "Имя";
+profile.about = "Описание";
+profile.site = "Сайт";

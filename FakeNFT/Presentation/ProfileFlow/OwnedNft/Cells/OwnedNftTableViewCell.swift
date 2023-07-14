@@ -82,7 +82,7 @@ final class OwnedNftTableViewCell: UITableViewCell {
     private lazy var fromLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.regular15
-        label.text = "от"
+        label.text = Consts.LocalizedStrings.from
         return label
     }()
     
@@ -104,7 +104,7 @@ final class OwnedNftTableViewCell: UITableViewCell {
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.regular13
-        label.text = "Цена"
+        label.text = Consts.LocalizedStrings.price
         return label
     }()
     

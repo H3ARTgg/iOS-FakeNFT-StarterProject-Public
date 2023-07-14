@@ -12,16 +12,19 @@ final class ProfileTableViewCell: UITableViewCell {
     
     var cellModel: ProfileCellModel? {
         didSet {
-            guard let cellModel
+            guard let cellModel, let amount = cellModel.amount
             else {
-                cellText.text = ""
+                cellText.text = cellModel?.text
                 return
             }
             
-            cellText.text = cellModel.text + (cellModel.amount != nil ? " (\(cellModel.amount!))" : "")
+            cellText.text = cellModel.text + " " + String.localizedStringWithFormat(
+                NSLocalizedString("profileNfts", comment: ""),
+                amount
+            )
         }
     }
-
+    
     private lazy var cellText: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold17
@@ -32,7 +35,7 @@ final class ProfileTableViewCell: UITableViewCell {
     
     private lazy var indicator: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Consts.Images.chevron
+        imageView.image = Consts.Images.chevron?.imageFlippedForRightToLeftLayoutDirection()
         imageView.tintColor = Asset.Colors.ypBlack.color
         return imageView
     }()
@@ -52,8 +55,8 @@ final class ProfileTableViewCell: UITableViewCell {
 // MARK: - Subviews configure + layout
 private extension ProfileTableViewCell {
     func addSubviews() {
-        addSubview(cellText)
-        addSubview(indicator)
+        contentView.addSubview(cellText)
+        contentView.addSubview(indicator)
     }
     
     func configure() {
@@ -64,12 +67,12 @@ private extension ProfileTableViewCell {
     
     func applyLayout() {
         NSLayoutConstraint.activate([
-            cellText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cellText.centerYAnchor.constraint(equalTo: centerYAnchor),
-            cellText.trailingAnchor.constraint(equalTo: indicator.leadingAnchor),
+            cellText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellText.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            //cellText.trailingAnchor.constraint(equalTo: indicator.leadingAnchor),
             
-            indicator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            indicator.centerYAnchor.constraint(equalTo: centerYAnchor)
+            indicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }

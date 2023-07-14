@@ -9,6 +9,7 @@ struct Consts {
         static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
         static let ownedNfts = NSLocalizedString("profile.owned", value: "Мои NFT", comment: "Personal owned NFTs")
         static let favoriteNfts = NSLocalizedString("profile.favorite", value: "Избранные NFT", comment: "Personal favorite NFTs")
+        static let numberOfNfts = NSLocalizedString("profile.nfts", value: "%d", comment: "Number of Nfts")
         static let aboutDeveloper = NSLocalizedString("profile.developer", value: "О разработчике", comment: "About developer")
         static let changePhoto = NSLocalizedString("profileEdit.changePhoto", value: "Сменить фото", comment: "Change photo")
         static let profileSortAlertTitle = NSLocalizedString("profile.sort", value: "Сортировка", comment: "Text for sort action sheet title")
