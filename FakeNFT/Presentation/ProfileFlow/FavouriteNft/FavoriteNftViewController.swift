@@ -26,7 +26,7 @@ final class FavoriteNftViewController: UIViewController {
     private lazy var noNftsLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold17
-        label.text = Consts.LocalizedStrings.profileYouHaveNotAnyFavoriteNfts
+        label.text = L10n.Profile.noFavoriteNfts
         label.textColor = Asset.Colors.ypBlack.color
         label.isHidden = true
         return label
@@ -89,7 +89,7 @@ private extension FavoriteNftViewController {
                 }
                 
                 if state {
-                    self.title = Consts.LocalizedStrings.favoriteNfts
+                    self.title = L10n.Profile.favorite
                 }
                 
                 self.nftsCollectionView.isHidden = false

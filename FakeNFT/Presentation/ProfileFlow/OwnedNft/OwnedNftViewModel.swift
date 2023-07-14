@@ -84,11 +84,11 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
     }
     
     func sortButtonTapped() {
-        let alertText = Consts.LocalizedStrings.profileSortAlertTitle
-        let alertByPriceActionText = Consts.LocalizedStrings.profileSortAlertByPriceText
-        let alertByRatingActionText = Consts.LocalizedStrings.profileSortAlertByRatingText
-        let alertByNameActionText = Consts.LocalizedStrings.profileSortAlertByNameText
-        let alertCloseText = Consts.LocalizedStrings.profileSortAlertCloseText
+        let alertText = L10n.Profile.sort
+        let alertByPriceActionText = L10n.Profile.byPrice
+        let alertByRatingActionText = L10n.Profile.byRating
+        let alertByNameActionText = L10n.Profile.byTitle
+        let alertCloseText = L10n.Profile.close
         
         let alertSortByPriceAction = AlertAction(
             actionText: alertByPriceActionText,

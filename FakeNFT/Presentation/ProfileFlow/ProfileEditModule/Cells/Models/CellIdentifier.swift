@@ -14,9 +14,9 @@ enum CellIdentifier: String, Hashable {
     
     var localizedString: String {
         switch self {
-        case .name: return Consts.LocalizedStrings.name
-        case .description: return Consts.LocalizedStrings.description
-        case .website: return Consts.LocalizedStrings.website
+        case .name: return L10n.Profile.name
+        case .description: return L10n.Profile.about
+        case .website: return L10n.Profile.site
         }
     }
 }

@@ -27,7 +27,7 @@ final class OwnedNftViewController: UIViewController {
     private lazy var noNftsLabel: UILabel = {
         let label = UILabel()
         label.font = Consts.Fonts.bold17
-        label.text = Consts.LocalizedStrings.profileYouHaveNotAnyNfts
+        label.text = L10n.Profile.noNfts
         label.textColor = Asset.Colors.ypBlack.color
         label.isHidden = true
         return label
@@ -71,7 +71,7 @@ final class OwnedNftViewController: UIViewController {
                // DispatchQueue.main.async {
                     if state {
                         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-                        self.title = Consts.LocalizedStrings.ownedNfts
+                        self.title = L10n.Profile.owned
                     }
                     
                     self.nftsTableView.isHidden = false

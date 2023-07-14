@@ -18,10 +18,7 @@ final class ProfileTableViewCell: UITableViewCell {
                 return
             }
             
-            cellText.text = cellModel.text + " " + String.localizedStringWithFormat(
-                NSLocalizedString("profileNfts", comment: ""),
-                amount
-            )
+            cellText.text = cellModel.text + " " + L10n.profileNfts(amount)
         }
     }
     

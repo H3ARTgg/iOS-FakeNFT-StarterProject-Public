@@ -55,6 +55,7 @@
 		78B553FD2A48330200A21777 /* ProfileEditSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FC2A48330200A21777 /* ProfileEditSectionHeaderView.swift */; };
 		78B553FF2A48B20500A21777 /* ProfileEditTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FE2A48B20500A21777 /* ProfileEditTableHeaderView.swift */; };
 		78BB462D2A614DF000DF3994 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 78BB462F2A614DF000DF3994 /* Localizable.stringsdict */; };
+		78BB46332A6156CD00DF3994 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BB46322A6156CC00DF3994 /* Strings.swift */; };
 		78D479512A5743C30089E861 /* FavoriteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479502A5743C30089E861 /* FavoriteNftViewController.swift */; };
 		78D479532A5743DB0089E861 /* FavoriteNftViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */; };
 		78D479552A5743EA0089E861 /* FavoriteNftDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479542A5743EA0089E861 /* FavoriteNftDataSource.swift */; };
@@ -158,6 +159,7 @@
 		78BB462E2A614DF000DF3994 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		78BB46302A614DFB00DF3994 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		78BB46312A614DFF00DF3994 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		78BB46322A6156CC00DF3994 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		78D479502A5743C30089E861 /* FavoriteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftViewController.swift; sourceTree = "<group>"; };
 		78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftViewModel.swift; sourceTree = "<group>"; };
 		78D479542A5743EA0089E861 /* FavoriteNftDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftDataSource.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 		786545192A40CB0800C1961B /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				78BB46322A6156CC00DF3994 /* Strings.swift */,
 				7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */,
 			);
 			path = Generated;
@@ -1028,6 +1031,7 @@
 				78D479802A5A846C0089E861 /* StatisticsCoordinator.swift in Sources */,
 				78D479752A5A81EE0089E861 /* UIViewController+Ext.swift in Sources */,
 				5BD984682A49828F00CF45DE /* WebViewViewController.swift in Sources */,
+				78BB46332A6156CD00DF3994 /* Strings.swift in Sources */,
 				78D479532A5743DB0089E861 /* FavoriteNftViewModel.swift in Sources */,
 				787AC6712A505A2900DE15E1 /* OwnedNftTableViewCell.swift in Sources */,
 				787AC66B2A5059EE00DE15E1 /* OwnedNftViewController.swift in Sources */,

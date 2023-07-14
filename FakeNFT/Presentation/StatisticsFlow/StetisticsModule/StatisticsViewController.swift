@@ -4,7 +4,7 @@ final class StatisticsViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.statistics,
+        self.tabBarItem = UITabBarItem(title: L10n.Statistics.icon,
                                        image: Consts.Images.statistics,
                                        tag: 3)
     }

@@ -4,7 +4,7 @@ final class CartViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
+        self.tabBarItem = UITabBarItem(title: L10n.Cart.icon,
                                        image: Consts.Images.cart,
                                        tag: 2)
     }

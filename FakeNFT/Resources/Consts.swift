@@ -2,31 +2,6 @@ import Foundation
 import UIKit
 
 struct Consts {
-    struct LocalizedStrings {
-        static let profile = NSLocalizedString("profile.icon", comment: "Profile tabbar icon title")
-        static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
-        static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
-        static let ownedNfts = NSLocalizedString("profile.owned", value: "Мои NFT", comment: "Personal owned NFTs")
-        static let favoriteNfts = NSLocalizedString("profile.favorite", value: "Избранные NFT", comment: "Personal favorite NFTs")
-        static let numberOfNfts = NSLocalizedString("profile.nfts", value: "%d", comment: "Number of Nfts")
-        static let aboutDeveloper = NSLocalizedString("profile.developer", value: "О разработчике", comment: "About developer")
-        static let changePhoto = NSLocalizedString("profileEdit.changePhoto", value: "Сменить фото", comment: "Change photo")
-        static let profileSortAlertTitle = NSLocalizedString("profile.sort", value: "Сортировка", comment: "Text for sort action sheet title")
-        static let profileSortAlertByPriceText = NSLocalizedString("profile.byPrice", value: "По цене", comment: "Text for sort action sheet price button")
-        static let profileSortAlertByRatingText = NSLocalizedString("profile.byRating", value: "По рейтингу", comment: "Text for sort action sheet rating button")
-        static let profileSortAlertByNameText = NSLocalizedString("profile.byTitle", value: "По названию", comment: "Text for sort action sheet title button")
-        static let profileSortAlertCloseText = NSLocalizedString("profile.close", value: "Закрыть", comment: "Text for sort action sheet close button")
-        static let profileYouHaveNotAnyNfts = NSLocalizedString("profile.noNfts", value: "У Вас еще нет NFT", comment: "Text for no nfts")
-        static let profileYouHaveNotAnyFavoriteNfts = NSLocalizedString("profile.noFavoriteNfts", value: "У Вас еще нет избранных NFT", comment: "Text for no favorite nfts")
-        static let from = NSLocalizedString("profile.from", value: "от", comment: "from")
-        static let price = NSLocalizedString("profile.price", value: "Цена", comment: "Price")
-        static let name = NSLocalizedString("profile.name", value: "Имя", comment: "Name")
-        static let description = NSLocalizedString("profile.about", value: "Описание", comment: "About")
-        static let website = NSLocalizedString("profile.site", value: "Сайт", comment: "Site")
-
-    }
-    
     struct Images {
         static let profile = UIImage(systemName: "person.crop.circle.fill")
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")

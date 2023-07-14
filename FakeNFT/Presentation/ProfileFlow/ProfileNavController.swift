@@ -12,7 +12,7 @@ final class ProfileNavController: UINavigationController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.profile,
+        tabBarItem = UITabBarItem(title: L10n.Profile.icon,
                                        image: Consts.Images.profile,
                                        tag: 0)
         

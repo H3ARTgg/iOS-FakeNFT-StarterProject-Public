@@ -87,15 +87,15 @@ private extension ProfileViewController {
                 
                 self?.dataSource.reload([
                     ProfileCellModel(
-                        text: Consts.LocalizedStrings.ownedNfts,
+                        text: L10n.Profile.owned,
                         amount: profileData.ownedNft.count
                     ),
                     ProfileCellModel(
-                        text: Consts.LocalizedStrings.favoriteNfts,
+                        text: L10n.Profile.favorite,
                         amount: profileData.favoriteNft.count
                     ),
                     ProfileCellModel(
-                        text: Consts.LocalizedStrings.aboutDeveloper,
+                        text: L10n.Profile.developer,
                         amount: nil
                     )
                 ])

@@ -28,7 +28,7 @@ final class ProfileEditTableHeaderView: UIView {
     
     private lazy var changePhoto: UIButton = {
         let button = UIButton()
-        button.setTitle(Consts.LocalizedStrings.changePhoto, for: .normal)
+        button.setTitle(L10n.Profile.changePhoto, for: .normal)
         button.tintColor = Asset.Colors.ypWhiteUniversal.color
         button.titleLabel?.font = Consts.Fonts.medium10
         button.titleLabel?.numberOfLines = 2
