@@ -117,7 +117,7 @@ private extension UserCardViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showUserSiteButtonTapped), for: .touchUpInside)
-        button.setTitle(Consts.LocalizedStrings.userSiteButtonTitle, for: .normal)
+        button.setTitle(L10n.Statistic.UserSiteButton.title, for: .normal)
         button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
         button.backgroundColor = .clear
         button.titleLabel?.font = UIFont.caption1
@@ -191,10 +191,8 @@ private extension UserCardViewController {
         userNameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.description
         let numberOfSubscribers = viewModel.nfts?.count ?? 0
-        let userCollectionButtonTitle = String(
-            format: Consts.LocalizedStrings.userCollectionButtonTitle,
-            numberOfSubscribers
-        )
+        let userCollectionButtonTitle = L10n.Statistic.UserCollectionButton.title(numberOfSubscribers)
+        
         userCollectionButton.setTitle(
             userCollectionButtonTitle,
             for: .normal

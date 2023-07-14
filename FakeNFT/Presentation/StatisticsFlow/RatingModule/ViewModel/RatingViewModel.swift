@@ -59,7 +59,7 @@ final class RatingViewModel: StatisticCoordination {
                     self.showPlugView?(false, nil)
                     self.fetchedUsers = self.sortUsers(users: users)
                 case .failure(let failure):
-                    self.showPlugView?(true, Consts.LocalizedStrings.statisticErrorPlugView)
+                    self.showPlugView?(true, L10n.Statistic.ErrorPlugView.text)
                     self.showErrorAlert(message: failure.localizedDescription)
                 }
             }
@@ -112,10 +112,10 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func createSortAlertModel() -> AlertModel {
-        let alertText = Consts.LocalizedStrings.statisticAlertTitle
-        let alertSortByNameActionText = Consts.LocalizedStrings.statisticActionSheepName
-        let alertSortByRaringActionText = Consts.LocalizedStrings.statisticActionSheepRating
-        let alertCancelText = Consts.LocalizedStrings.alertCancelText
+        let alertText = L10n.Statistic.FilterAlert.title
+        let alertSortByNameActionText = L10n.Statistic.AlertAction.SortByName.title
+        let alertSortByRaringActionText = L10n.Statistic.AlertAction.SortByRating.title
+        let alertCancelText = L10n.Statistic.AlertAction.Cancel.title
         
         let alertSortByNameAction = AlertAction(
             actionText: alertSortByNameActionText,
@@ -149,9 +149,9 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func createErrorAlertModel(message: String) -> AlertModel {
-        let alertText = Consts.LocalizedStrings.statisticErrorAlertTitle
-        let alertRepeatActionText = Consts.LocalizedStrings.statisticErrorActionSheepNameRepeat
-        let alertCancelText = Consts.LocalizedStrings.alertCancelText
+        let alertText = L10n.Statistic.ErrorAlert.title
+        let alertRepeatActionText = L10n.Statistic.AlertAction.Repeat.title
+        let alertCancelText = L10n.Statistic.AlertAction.Cancel.title
         
         let alertRepeatAction = AlertAction(
             actionText: alertRepeatActionText,

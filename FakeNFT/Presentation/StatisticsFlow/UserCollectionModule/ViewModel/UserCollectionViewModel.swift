@@ -64,7 +64,7 @@ extension UserCollectionViewModel {
         guard let nftsId else { return }
         guard !nftsId.isEmpty else {
             showProgressHUD?(false)
-            showPlugView?(true, Consts.LocalizedStrings.plugLabelText)
+            showPlugView?(true, L10n.Statistic.PlugLabel.text)
             return
         }
         showCollectionView?(false)
@@ -76,7 +76,7 @@ extension UserCollectionViewModel {
                 }
             case .failure(let failure):
                 DispatchQueue.main.async {
-                    self.showPlugView?(true, Consts.LocalizedStrings.statisticErrorPlugView)
+                    self.showPlugView?(true, L10n.Statistic.ErrorPlugView.text)
                     self.showErrorAlert(message: failure.localizedDescription)
                 }
             }
@@ -97,9 +97,9 @@ extension UserCollectionViewModel {
     }
     
     func createErrorAlertModel(message: String) -> AlertModel {
-        let alertText = Consts.LocalizedStrings.statisticErrorAlertTitle
-        let alertRepeatActionText = Consts.LocalizedStrings.statisticErrorActionSheepNameRepeat
-        let alertCancelText = Consts.LocalizedStrings.alertCancelText
+        let alertText = L10n.Statistic.ErrorAlert.title
+        let alertRepeatActionText = L10n.Statistic.AlertAction.Repeat.title
+        let alertCancelText = L10n.Statistic.AlertAction.Cancel.title
         
         let alertRepeatAction = AlertAction(
             actionText: alertRepeatActionText,

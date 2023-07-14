@@ -61,7 +61,7 @@ private extension UserCollectionViewController {
     
     func viewSetup() {
         view.backgroundColor = Asset.Colors.ypWhite.color
-        title = Consts.LocalizedStrings.userCollectionViewControllerTitle
+        title = L10n.Statistic.UserCollectionViewController.title
     }
     
     func addViews() {

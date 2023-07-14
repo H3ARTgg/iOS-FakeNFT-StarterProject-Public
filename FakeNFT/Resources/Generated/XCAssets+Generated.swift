@@ -38,6 +38,7 @@ internal enum Asset {
     internal static let cartIcon = ImageAsset(name: "cart_icon")
     internal static let chevronBackward = ImageAsset(name: "chevronBackward")
     internal static let chevronForward = ImageAsset(name: "chevronForward")
+    internal static let flag2CrossedFill = ImageAsset(name: "flag.2.crossed.fill")
     internal static let fillStar = ImageAsset(name: "fillStar")
     internal static let star = ImageAsset(name: "star")
   }

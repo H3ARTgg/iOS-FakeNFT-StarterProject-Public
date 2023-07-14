@@ -6,8 +6,8 @@ final class StatisticNavController: UINavigationController {
         super.init(nibName: nil, bundle: nil)
         
         self.tabBarItem = UITabBarItem(
-            title: Consts.LocalizedStrings.statistics,
-            image: Consts.Images.statistics,
+            title: L10n.Statistics.icon,
+            image: Asset.Assets.flag2CrossedFill.image,
             tag: 3)
     }
     

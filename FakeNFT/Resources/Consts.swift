@@ -4,34 +4,14 @@ import UIKit
 struct Consts {
     struct LocalizedStrings {
         static let profile = NSLocalizedString("profile.icon", comment: "Profile tabbar icon title")
-        static let catalogue = NSLocalizedString("catalogue.icon", comment: "Catalogue tabbar icon title")
+        static let catalogue = NSLocalizedString("tatistic.FilterAlert.ActionSheep.SortByName.Title", comment: "Catalogue tabbar icon title")
         static let cart = NSLocalizedString("cart.icon", comment: "Cart tabbar icon title")
-        static let statistics = NSLocalizedString("statistics.icon", comment: "Statistics tabbar icon title")
-        
-        // Statistic epic
-        static let statisticAlertTitle = NSLocalizedString("statisticAlert.title", value: "Sorting", comment: "text for statistic's title alert")
-        static let statisticActionSheepName = NSLocalizedString("statisticActionSheep.sortByName", value: "By name", comment: "text for statistic's title alert")
-        static let statisticActionSheepRating = NSLocalizedString("sort.rating", value: "By rating", comment: "text for statistic's action sheep sort by rating")
-        static let alertCancelText = NSLocalizedString("cancelAction.Text", value: "Cancel", comment: "Text for alert cancel button")
-        static let userSiteButtonTitle = NSLocalizedString("userSiteButton.Title", value: "Go to site", comment: "Text for userSiteButton")
-        static let userCollectionButtonTitle = NSLocalizedString("userCollectionButton.title", value: "Collection NFT (%d)", comment: "Text for userCollectionButtonTitle")
-        static let userCollectionViewControllerTitle = NSLocalizedString("userCollectionViewController.Title", value: "Collection NFT", comment: "Title for UserCollectionViewController")
-        static let plugLabelText = NSLocalizedString("plugLabel.Text", value: "No NFT", comment: "text for plug label in UserCollectionViewController")
-        
-        static let statisticErrorAlertTitle = NSLocalizedString("statisticErrorAlert.title", value: "Error", comment: "text for statistic's error title alert")
-        static let statisticErrorActionSheepNameRepeat = NSLocalizedString("statisticErrorActionSheep.repeat", value: "Repeat", comment: "text for statistic's error title alert repeat")
-        
-        static let statisticErrorPlugView = NSLocalizedString("statisticErrorPlugView.text", value: "Oops, something went wrong(", comment: "text for statistic's error title alert repeat")
     }
     
     struct Images {
         static let profile = UIImage(systemName: "person.crop.circle.fill")
         static let catalogue = UIImage(systemName: "rectangle.stack.fill")
         static let cart = Asset.Assets.cartIcon.image
-        static let statistics = UIImage(systemName: "flag.2.crossed.fill")
-        
-        static let sortIcon = Asset.Assets.sortIcon.image
-        static let backButton = Asset.Assets.chevronBackward.image
     }
     
     struct Fonts {

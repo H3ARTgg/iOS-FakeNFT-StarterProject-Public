@@ -75,8 +75,9 @@ private extension RatingViewController {
     }
     
     func navigationItemSetup() {
+        let sortIcon = Asset.Assets.sortIcon.image.withTintColor(Asset.Colors.ypBlack.color, renderingMode: .alwaysTemplate)
         let filterButton = UIBarButtonItem(
-            image: Consts.Images.sortIcon.withTintColor(Asset.Colors.ypBlack.color, renderingMode: .alwaysTemplate),
+            image: sortIcon,
             style: .done,
             target: self,
             action: #selector(sortedButtonTapped))
