@@ -2,14 +2,14 @@ import Foundation
 
 struct ProfileRequestGet: NetworkRequest {
     var endpoint: URL? {
-        URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/profile/1")
+        URL(string: basicEndpoint + "/profile/1")
     }
 }
 
 struct ProfileRequestPut: NetworkRequest {
     var httpMethod: HttpMethod = .put
     var endpoint: URL? {
-        URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/profile/1")
+        URL(string: basicEndpoint + "/profile/1")
     }
     var dto: Encodable?
 }
@@ -17,13 +17,13 @@ struct ProfileRequestPut: NetworkRequest {
 struct NftGetRequest: NetworkRequest {
     var id: String
     var endpoint: URL? {
-        URL(string: "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/nft/" + id)
+        URL(string: basicEndpoint + "/nft/" + id)
     }
 }
 
 struct UserNameRequest: NetworkRequest {
     var id: String
     var endpoint: URL? {
-        URL(string: "https://64858e8ba795d24810b71189.mockapi.io/api/v1/users/" + id)
+        URL(string: basicEndpoint + "/users/" + id)
     }
 }

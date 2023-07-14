@@ -15,6 +15,7 @@ protocol NetworkRequest {
 
 // default values
 extension NetworkRequest {
+    var basicEndpoint: String { "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1" }
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
 }

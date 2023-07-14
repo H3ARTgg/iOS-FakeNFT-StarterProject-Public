@@ -14,7 +14,7 @@ protocol ModulesFactoryProtocol {
     func makeAboutWebView(urlString: String) -> Presentable
 }
 
-struct ModulesFactory: ModulesFactoryProtocol {
+class ModulesFactory: ModulesFactoryProtocol {
     let networkManager: NftDataManagerProtocol = NftDataManager(networkService: DefaultNetworkClient())
 }
 
