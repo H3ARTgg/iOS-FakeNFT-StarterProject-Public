@@ -89,7 +89,7 @@ private extension FavoriteNftViewController {
                 }
                 
                 if state {
-                    self.title = L10n.Profile.favorite
+                    self.title = L10n.Profile.favoriteScreen
                 }
                 
                 self.nftsCollectionView.isHidden = false

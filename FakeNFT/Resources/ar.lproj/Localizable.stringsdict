@@ -13,7 +13,7 @@
             <key>NSStringFormatValueTypeKey</key>
             <string>d</string>
             <key>other</key>
-            <string>NFT (%d)</string>
+            <string>NFTs (%d)</string>
         </dict>
     </dict>
 </dict>

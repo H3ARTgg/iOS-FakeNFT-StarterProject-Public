@@ -39,6 +39,8 @@ internal enum L10n {
     internal static let developer = L10n.tr("Localizable", "profile.developer", fallback: "About developer")
     /// Favorite
     internal static let favorite = L10n.tr("Localizable", "profile.favorite", fallback: "Favorite")
+    /// Favorite NFTs
+    internal static let favoriteScreen = L10n.tr("Localizable", "profile.favoriteScreen", fallback: "Favorite NFTs")
     /// from
     internal static let from = L10n.tr("Localizable", "profile.from", fallback: "from")
     /// Profile
@@ -51,6 +53,8 @@ internal enum L10n {
     internal static let noNfts = L10n.tr("Localizable", "profile.noNfts", fallback: "You don't have NFTs yet")
     /// My
     internal static let owned = L10n.tr("Localizable", "profile.owned", fallback: "My")
+    /// My NFTs
+    internal static let ownedScreen = L10n.tr("Localizable", "profile.ownedScreen", fallback: "My NFTs")
     /// Price
     internal static let price = L10n.tr("Localizable", "profile.price", fallback: "Price")
     /// Website

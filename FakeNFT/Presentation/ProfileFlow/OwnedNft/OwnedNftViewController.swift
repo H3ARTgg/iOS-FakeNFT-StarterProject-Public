@@ -68,15 +68,13 @@ final class OwnedNftViewController: UIViewController {
                                                          action: #selector(self.showSortMenu))
                 rightBarButtonItem.tintColor = Asset.Colors.ypBlack.color
                 
-               // DispatchQueue.main.async {
                     if state {
                         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-                        self.title = L10n.Profile.owned
+                        self.title = L10n.Profile.ownedScreen
                     }
                     
                     self.nftsTableView.isHidden = false
                     self.noNftsLabel.isHidden = true
-             //   }
             }
             .store(in: &cancellables)
         
