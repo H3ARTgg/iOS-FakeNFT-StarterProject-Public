@@ -50,6 +50,11 @@ struct Consts {
         static let sideConstant: CGFloat = 16
         static let heightUserTableViewCell: CGFloat = 88
         static let minimumSpacingForSectionAt: CGFloat = 5
+        static let ratingTableViewAccessibilityIdentifier = "Image list"
+        static let userSiteButtonAccessibilityIdentifier = "User site"
+        static let collectionButtonAccessibilityIdentifier = "User collection"
+        static let filterButtonAccessibilityIdentifier = "Filter button"
+        static let webViewAccessibilityIdentifier = "NftWebView"
         
         // UserCardViewController
         static let userCollectionButtonHeight: CGFloat = 54

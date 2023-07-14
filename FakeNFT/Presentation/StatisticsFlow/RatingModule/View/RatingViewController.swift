@@ -55,6 +55,7 @@ private extension RatingViewController {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.refreshControl = refreshControl
+        tableView.accessibilityIdentifier = Consts.Statistic.ratingTableViewAccessibilityIdentifier
         return tableView
     }
     
@@ -79,6 +80,7 @@ private extension RatingViewController {
             style: .done,
             target: self,
             action: #selector(sortedButtonTapped))
+        filterButton.accessibilityIdentifier = Consts.Statistic.filterButtonAccessibilityIdentifier
         navigationItem.rightBarButtonItem = filterButton
         navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
     }

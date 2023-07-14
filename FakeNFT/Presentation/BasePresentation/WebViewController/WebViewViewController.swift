@@ -12,6 +12,7 @@ class WebViewViewController: UIViewController {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.backgroundColor = .clear
+        webView.accessibilityIdentifier = Consts.Statistic.webViewAccessibilityIdentifier
         return webView
     }()
     

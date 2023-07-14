@@ -29,6 +29,10 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		5B061BAC2A48B08D009274D5 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B061BAB2A48B08D009274D5 /* UserCollectionViewController.swift */; };
 		5B061BAE2A48B0A9009274D5 /* UserCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B061BAD2A48B0A9009274D5 /* UserCollectionViewModel.swift */; };
+		5B1899762A613DA100484753 /* RatingViewModelUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1899752A613DA100484753 /* RatingViewModelUnitTests.swift */; };
+		5B1899782A613DEE00484753 /* StatisticProviderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1899772A613DEE00484753 /* StatisticProviderSpy.swift */; };
+		5B18997A2A613F8D00484753 /* RatingViewModelSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1899792A613F8D00484753 /* RatingViewModelSpy.swift */; };
+		5B18997C2A61425800484753 /* SortStatisticStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B18997B2A61425800484753 /* SortStatisticStoreSpy.swift */; };
 		5B473B1A2A419EA1005E78DD /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B192A419EA1005E78DD /* RatingViewModel.swift */; };
 		5B473B1C2A41B4F7005E78DD /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B1B2A41B4F7005E78DD /* UserTableViewCell.swift */; };
 		5B473B1E2A41B9B8005E78DD /* UserTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B473B1D2A41B9B8005E78DD /* UserTableViewCellViewModel.swift */; };
@@ -119,6 +123,10 @@
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		5B061BAB2A48B08D009274D5 /* UserCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewController.swift; sourceTree = "<group>"; };
 		5B061BAD2A48B0A9009274D5 /* UserCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewModel.swift; sourceTree = "<group>"; };
+		5B1899752A613DA100484753 /* RatingViewModelUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModelUnitTests.swift; sourceTree = "<group>"; };
+		5B1899772A613DEE00484753 /* StatisticProviderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticProviderSpy.swift; sourceTree = "<group>"; };
+		5B1899792A613F8D00484753 /* RatingViewModelSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModelSpy.swift; sourceTree = "<group>"; };
+		5B18997B2A61425800484753 /* SortStatisticStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStatisticStoreSpy.swift; sourceTree = "<group>"; };
 		5B473B192A419EA1005E78DD /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		5B473B1B2A41B4F7005E78DD /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		5B473B1D2A41B9B8005E78DD /* UserTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -269,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806AD29CBBAF200B4F915 /* ExampleUnitTests.swift */,
+				5B1899732A613CD400484753 /* StatisticsTests */,
 			);
 			path = FakeNFTTests;
 			sourceTree = "<group>";
@@ -368,6 +377,25 @@
 				5B74A4EA2A49A2D0008A5E32 /* NftViewCellViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B1899732A613CD400484753 /* StatisticsTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1899742A613CEE00484753 /* RatingTests */,
+			);
+			path = StatisticsTests;
+			sourceTree = "<group>";
+		};
+		5B1899742A613CEE00484753 /* RatingTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1899752A613DA100484753 /* RatingViewModelUnitTests.swift */,
+				5B1899792A613F8D00484753 /* RatingViewModelSpy.swift */,
+				5B1899772A613DEE00484753 /* StatisticProviderSpy.swift */,
+				5B18997B2A61425800484753 /* SortStatisticStoreSpy.swift */,
+			);
+			path = RatingTests;
 			sourceTree = "<group>";
 		};
 		5B473B142A417F5A005E78DD /* RatingModule */ = {
@@ -975,7 +1003,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B18997A2A613F8D00484753 /* RatingViewModelSpy.swift in Sources */,
+				5B18997C2A61425800484753 /* SortStatisticStoreSpy.swift in Sources */,
+				5B1899782A613DEE00484753 /* StatisticProviderSpy.swift in Sources */,
 				3F6806AE29CBBAF200B4F915 /* ExampleUnitTests.swift in Sources */,
+				5B1899762A613DA100484753 /* RatingViewModelUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1215,7 +1247,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFTTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1235,7 +1267,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFTTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

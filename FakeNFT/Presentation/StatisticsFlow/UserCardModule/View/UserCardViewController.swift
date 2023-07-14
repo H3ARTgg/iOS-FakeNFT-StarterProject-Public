@@ -124,6 +124,7 @@ private extension UserCardViewController {
         button.layer.cornerRadius = 12
         button.layer.borderWidth = 1
         button.layer.borderColor = Asset.Colors.ypBlack.color.cgColor
+        button.accessibilityIdentifier = Consts.Statistic.userSiteButtonAccessibilityIdentifier
         return button
     }
     
@@ -136,6 +137,7 @@ private extension UserCardViewController {
         button.titleLabel?.textAlignment = .natural
         button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
         button.contentHorizontalAlignment = .leading
+        button.accessibilityIdentifier = Consts.Statistic.collectionButtonAccessibilityIdentifier
         return button
     }
     
