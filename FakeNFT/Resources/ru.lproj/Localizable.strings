@@ -1,14 +1,52 @@
-/* Cart tabbar icon title */
-"cart.icon" = "Корзина";
 
-/* Catalogue tabbar icon title */
-"catalogue.icon" = "Каталог";
+// MARK: - Main
 
-/* Profile tabbar icon title */
-"profile.icon" = "Профиль";
-
-/* Statistics tabbar icon title */
-"statistics.icon" = "Статистика";
-
-/* UserCardViewController */
-"userCollectionButton.title" = "Коллекция NFT (%d)";
+profile.icon = "Профиль";
+catalogue.icon = "Каталог";
+cart.icon = "Корзина";
+statistics.icon = "Статистика";
+profile.owned = "Мои NFT";
+profile.favorite = "Избранные NFT";
+profile.developer = "О разработчике";
+profileEdit.changePhoto = "Сменить фото";
+profile.sort = "Сортировка";
+profile.byPrice = "По цене";
+profile.byRating = "По рейтингу";
+profile.byTitle = "По названию";
+profile.close = "Закрыть";
+profile.noNfts = "У Вас еще нет NFT";
+profile.noFavoriteNfts = "У Вас еще нет избранных NFT";
+profile.from = "от";
+profile.price = "Цена";
+profile.name = "Имя";
+profile.about = "Описание";
+profile.site = "Сайт";
+statisticAlert.title = "Сортировка";
+statisticActionSheep.sortByName = "По рейтингу";
+cancelAction.Text = "Отмена";
+userSiteButton.Title = "Перейти на сайт";
+userCollectionButton.title = "Коллекция NFT (%d)";
+userCollectionViewController.Title = "Коллекция NFT";
+plugLabel.Text = "Нет NFT";
+statisticErrorAlert.title = "Ошибка";
+statisticErrorActionSheep.repeat = "Повторить";
+statisticErrorPlugView.text = "Ой, что-то пошло не так(";
+button.to.pay = "К оплате";
+label.amount.nft = "NFT";
+label.currency.eth = "ETH";
+label.delete.nft = "Вы уверены, что хотите удалить объект из корзины?";
+button.delete.nft = "Удалить";
+label.cancel = "Вернуться";
+alert.sort = "Сортировка";
+sort.price = "По цене";
+sort.rating = "По рейтингу";
+sort.title = "По названию";
+alert.close = "Закрыть";
+image.load.failure = "Попробовать снова";
+sort.catalogue = "Сортировка";
+by.name = "По названию";
+by.nft.count = "По количеству NFT";
+close = "Закрыть";
+error.try.again = "Попробовать снова";
+error.connection.message = "Что-то пошло не так(";
+collection.author = "Автор коллекции";
