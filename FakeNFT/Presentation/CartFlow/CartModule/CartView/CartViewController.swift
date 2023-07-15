@@ -49,7 +49,7 @@ final class CartViewController: UIViewController {
         }
         
         cartViewModel.bind(updateViewController: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 DispatchQueue.main.async {
                     self.updateDelegate?.reloadTableView()
                     self.updateDelegate?.refreshPayment()

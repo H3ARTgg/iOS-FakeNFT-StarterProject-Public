@@ -42,11 +42,12 @@ final class PaymentViewModel: ObservableObject, PaymentCoordination {
     
     private func fetchCurrencies() {
         paymentNetworkService.fetchProducts { [weak self] result in
+            guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let currencies):
-                    self?.currencies = currencies
-                    self?.isInitialLoadCompleted = true
+                    self.currencies = currencies
+                    self.isInitialLoadCompleted = true
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

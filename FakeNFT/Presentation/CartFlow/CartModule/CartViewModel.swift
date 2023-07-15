@@ -45,7 +45,7 @@ final class CartViewModel: ObservableObject, CartCoordination {
     
     private func fetchProducts() {
         cartNetworkService.fetchProducts { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let products):
@@ -83,12 +83,13 @@ final class CartViewModel: ObservableObject, CartCoordination {
     // Временный метод для проверки, если на сервере нет данных о заказе
     private func putProducts() {
         cartNetworkService.putNewProducts { [weak self] result in
+            guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case true:
-                    self?.fetchProducts()
+                    self.fetchProducts()
                 case false:
-                    self?.isInitialLoadCompleted = false
+                    self.isInitialLoadCompleted = false
                 }
             }
         }

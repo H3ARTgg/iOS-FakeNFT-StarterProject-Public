@@ -51,12 +51,13 @@ extension CartNetworkService: CartNetworkServiceProtocol {
         let request = OrderRequest()
         
         networkClient.send(request: request) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let data):
                 do {
                     let order = try JSONDecoder().decode(OrderResult.self, from: data)
-                    self?.idProducts = order.nfts
-                    self?.fetchNfts(completion)
+                    self.idProducts = order.nfts
+                    self.fetchNfts(completion)
                 } catch {
                     completion(.failure(error))
                 }
@@ -71,10 +72,11 @@ extension CartNetworkService: CartNetworkServiceProtocol {
         request.dto = OrderResult(nfts: productIds)
         
         networkClient.send(request: request, onResponse: { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success:
                 DispatchQueue.main.async {
-                    self?.idProducts = []
+                    self.idProducts = []
                 }
             case .failure(let error):
                 print("failed to put order: \(error)")
