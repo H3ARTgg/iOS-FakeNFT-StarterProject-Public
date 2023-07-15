@@ -6,7 +6,7 @@ protocol PaymentNetworkServiceProtocol {
 }
 
 final class PaymentNetworkService {
-    private let baseURL = Consts.Cart.Url.baseURL
+    private let baseURL = Consts.Cart.Url.baseUrl
     private let networkClient: DefaultNetworkClient
     
     init(networkClient: DefaultNetworkClient) {

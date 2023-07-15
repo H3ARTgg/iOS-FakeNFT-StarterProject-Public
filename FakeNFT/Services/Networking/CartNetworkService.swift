@@ -7,7 +7,7 @@ protocol CartNetworkServiceProtocol {
 }
 
 final class CartNetworkService {
-    private let baseURL = Consts.Cart.Url.baseURL
+    private let baseURL = Consts.Cart.Url.baseUrl
     private let session = URLSession.shared
     private let networkClient: DefaultNetworkClient
     

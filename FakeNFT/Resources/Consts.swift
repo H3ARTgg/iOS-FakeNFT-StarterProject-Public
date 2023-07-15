@@ -36,7 +36,7 @@ struct Consts {
         static let regular15 = UIFont.systemFont(ofSize: 15, weight: .regular)
         static let regular17 = UIFont.systemFont(ofSize: 16, weight: .regular)
         static let medium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
-        static let bold17 = UIFont.systemFont(ofSize: 10, weight: .bold)
+        static let bold17 = UIFont.systemFont(ofSize: 17, weight: .bold)
         static let bold22 = UIFont.systemFont(ofSize: 22, weight: .bold)
         static let bold32 = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let bold34 = UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -66,7 +66,7 @@ struct Consts {
         }
         
         struct Url {
-            static let baseURL = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/"
+            static let baseUrl = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/"
             static let termsUrl = "https://yandex.ru/legal/practicum_termsofuse/"
         }
         
