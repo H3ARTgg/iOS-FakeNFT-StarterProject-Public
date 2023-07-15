@@ -41,7 +41,7 @@ private extension CartCoordinator {
             let deleteNftModule = self.modulesFactory.makeDeleteNftView(nft: nft, cartViewModel: cartViewModel)
             let deleteNftView = deleteNftModule.view
             let deleteNftCoordinator = deleteNftModule.coordination
-            self.router.present(deleteNftView, presentationStyle: .fullScreen)
+            self.router.present(deleteNftView, presentationStyle: .custom)
             
             deleteNftCoordinator.handleNftDeletion = {
                 self.router.dismissModule(deleteNftView)
