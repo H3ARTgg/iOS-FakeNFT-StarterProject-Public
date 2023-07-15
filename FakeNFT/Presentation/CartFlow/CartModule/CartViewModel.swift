@@ -5,6 +5,7 @@ protocol CartCoordination: AnyObject {
     var handlePaymentScreenOpening: ((CartViewModel) -> Void)? { get set }
     var handleNftDeletion: (() -> Void)? { get set }
     var handleCartScreenReturn: (() -> Void)? { get set }
+    var handleForActionSheet: ((AlertModel) -> Void)? { get set }
 }
 
 protocol CartViewModelProtocol {
@@ -16,6 +17,7 @@ protocol CartViewModelProtocol {
     func delete(from id: Int)
     func updateCart()
     func bind(updateViewController: @escaping ([Nft]) -> Void)
+    func showSortAlert()
     func openDeleteNft(nft: Nft)
     func openPaymnetView()
     func closeDeleteNftViewController()
@@ -28,6 +30,7 @@ final class CartViewModel: ObservableObject, CartCoordination {
     var handlePaymentScreenOpening: ((CartViewModel) -> Void)?
     var handleNftDeletion: (() -> Void)?
     var handleCartScreenReturn: (() -> Void)?
+    var handleForActionSheet: ((AlertModel) -> Void)?
     
     private var cartNetworkService: CartNetworkServiceProtocol
     
@@ -114,6 +117,11 @@ extension CartViewModel: CartViewModelProtocol {
         $products.bind(action: updateViewController)
     }
     
+    func showSortAlert() {
+        let alert = createSortAlertModel()
+        handleForActionSheet?(alert)
+    }
+    
     func openDeleteNft(nft: Nft) {
         handleNftSelection?(nft, self)
     }
@@ -124,5 +132,56 @@ extension CartViewModel: CartViewModelProtocol {
     
     func closeDeleteNftViewController() {
         handleNftDeletion?()
+    }
+}
+
+// MARK: - Extension for create alerts
+extension CartViewModel {
+    private func createSortAlertModel() -> AlertModel {
+        let alertTitle = Consts.LocalizedStrings.cartAlertTitle
+        let sortPriceActionTitle = Consts.LocalizedStrings.cartSortFromPrice
+        let sortRatingActionTitle = Consts.LocalizedStrings.cartSortFromRating
+        let sortTitleActionTitle = Consts.LocalizedStrings.cartSortFromTitle
+        let cancelActionTitle = Consts.LocalizedStrings.cartCloseAlert
+        
+        let sortPriceAction = AlertAction(
+            actionText: sortPriceActionTitle,
+            actionRole: .regular
+        ) { [weak self] in
+            self?.sortFromPrice()
+        }
+        
+        let sortRatingAction = AlertAction(
+            actionText: sortRatingActionTitle,
+            actionRole: .regular
+        ) { [weak self] in
+            self?.sortFromRating()
+        }
+        
+        let sortTitleAction = AlertAction(
+            actionText: sortTitleActionTitle,
+            actionRole: .regular
+        ) { [weak self] in
+            self?.sortFromTitle()
+        }
+        
+        let cancelAction = AlertAction(
+            actionText: cancelActionTitle,
+            actionRole: .cancel,
+            action: nil
+        )
+        
+        let alertModel = AlertModel(
+            alertText: alertTitle,
+            message: nil,
+            alertActions: [
+                sortPriceAction,
+                sortRatingAction,
+                sortTitleAction,
+                cancelAction
+            ]
+        )
+        
+        return alertModel
     }
 }

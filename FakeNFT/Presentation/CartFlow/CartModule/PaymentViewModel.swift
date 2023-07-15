@@ -10,6 +10,7 @@ protocol PaymentCoordination: AnyObject {
     var handleTermsScreenOpening: ((URL) -> Void)? { get set }
     var handlePaymentResultScreenPresentation: ((ViewState) -> Void)? { get set }
     var handleCartScreenReturn: (() -> Void)? { get set }
+    var handleForAlert: ((AlertModel) -> Void)? { get set }
 }
 
 protocol PaymentViewModelProtocol {
@@ -19,6 +20,7 @@ protocol PaymentViewModelProtocol {
     func bind(updateViewController: @escaping ([Currency]) -> Void)
     func showTerms()
     func closePaymentViewController()
+    func showErrorAlert()
 }
 
 final class PaymentViewModel: ObservableObject, PaymentCoordination {
@@ -31,6 +33,7 @@ final class PaymentViewModel: ObservableObject, PaymentCoordination {
     var handleTermsScreenOpening: ((URL) -> Void)?
     var handlePaymentResultScreenPresentation: ((ViewState) -> Void)?
     var handleCartScreenReturn: (() -> Void)?
+    var handleForAlert: ((AlertModel) -> Void)?
     
     init(paymentNetworkService: PaymentNetworkServiceProtocol) {
         self.paymentNetworkService = paymentNetworkService
@@ -90,5 +93,32 @@ extension PaymentViewModel: PaymentViewModelProtocol {
     
     func closePaymentViewController() {
         handleCartScreenReturn?()
+    }
+    
+    func showErrorAlert() {
+        let errorAlert = createErrorAlertModel()
+        handleForAlert?(errorAlert)
+    }
+}
+
+extension PaymentViewModel {
+    private func createErrorAlertModel() -> AlertModel {
+        let alertTitle = "Ошибка"
+        let alertMessage = "Выберете валюту"
+        let confirmationActionTitle = "ОК"
+        
+        let confirmationAction = AlertAction(
+            actionText: confirmationActionTitle,
+            actionRole: .regular,
+            action: nil
+        )
+        
+        let alertModel = AlertModel(
+            alertText: alertTitle,
+            message: alertMessage,
+            alertActions: [confirmationAction]
+        )
+        
+        return alertModel
     }
 }

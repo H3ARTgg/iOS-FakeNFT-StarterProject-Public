@@ -67,7 +67,7 @@ final class CartViewController: UIViewController {
     
     // MARK: - Actions
     @objc func openSortAlert() {
-        showAlert()
+        cartViewModel.showSortAlert()
     }
 }
 
@@ -80,50 +80,6 @@ extension CartViewController {
             target: self,
             action: #selector(openSortAlert)
         )
-    }
-    
-    private func showAlert() {
-        let alertTitle = Consts.LocalizedStrings.cartAlertTitle
-        let actionSortFromPrice = Consts.LocalizedStrings.cartSortFromPrice
-        let actionSortFromRating = Consts.LocalizedStrings.cartSortFromRating
-        let actionSortFromTitle = Consts.LocalizedStrings.cartSortFromTitle
-        let actionClose = Consts.LocalizedStrings.cartCloseAlert
-        
-        let alert = UIAlertController(
-            title: alertTitle, message: nil, preferredStyle: .actionSheet
-        )
-        
-        let priceFilter = UIAlertAction(
-            title: actionSortFromPrice, style: .default
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            self.cartViewModel.sortFromPrice()
-        }
-        
-        let ratingFilter = UIAlertAction(
-            title: actionSortFromRating, style: .default
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            self.cartViewModel.sortFromRating()
-        }
-        
-        let titleFilter = UIAlertAction(
-            title: actionSortFromTitle, style: .default
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            self.cartViewModel.sortFromTitle()
-        }
-        
-        let closeAction = UIAlertAction(
-            title: actionClose, style: .cancel
-        )
-        
-        alert.addAction(priceFilter)
-        alert.addAction(ratingFilter)
-        alert.addAction(titleFilter)
-        alert.addAction(closeAction)
-        
-        present(alert, animated: true)
     }
 }
 

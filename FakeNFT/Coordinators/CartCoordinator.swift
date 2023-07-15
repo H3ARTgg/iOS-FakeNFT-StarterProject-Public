@@ -29,6 +29,11 @@ private extension CartCoordinator {
         let cartModule = modulesFactory.makeCartView()
         let cartModuleView = cartModule.view
         let cartCoordinator = cartModule.coordination
+        
+        cartCoordinator.handleForActionSheet = { [weak self] alertModel in
+            guard let self else { return }
+            self.router.presentAlertController(alertModel: alertModel, preferredStyle: .actionSheet)
+        }
                 
         cartCoordinator.handleNftSelection = { [weak self] nft, cartViewModel in
             guard let self else { return }
@@ -49,6 +54,11 @@ private extension CartCoordinator {
             let paymentView = paymentModule.view
             let paymentCoordinator = paymentModule.coordination
             self.router.push(paymentView, animated: true)
+            
+            paymentCoordinator.handleForAlert = { [weak self] alertModel in
+                guard let self else { return }
+                self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
+            }
             
             paymentCoordinator.handleTermsScreenOpening = { [weak self] userURL in
                 guard let self else { return }

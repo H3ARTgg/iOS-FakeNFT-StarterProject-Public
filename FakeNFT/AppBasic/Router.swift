@@ -20,7 +20,7 @@ protocol Routable {
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
     
-//    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style)
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style)
     
     func addToTabBar(_ module: Presentable?)
 }
@@ -138,21 +138,21 @@ extension Router: Routable {
         rootViewController.setViewControllers(viewControllers, animated: false)
     }
     
-//    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style) {
-//        let alert = UIAlertController(title: alertModel.alertText, message: alertModel.message, preferredStyle: preferredStyle)
-//        alertModel.alertActions.forEach { alertAction in
-//            let actionStyle: UIAlertAction.Style
-//            switch alertAction.actionRole {
-//            case .destructive: actionStyle = .destructive
-//            case .regular: actionStyle = .default
-//            case .cancel: actionStyle = .cancel
-//            }
-//
-//            let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
-//            alert.addAction(action)
-//        }
-//        presentingViewController?.toPresent()?.present(alert, animated: true)
-//    }
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style) {
+        let alert = UIAlertController(title: alertModel.alertText, message: alertModel.message, preferredStyle: preferredStyle)
+        alertModel.alertActions.forEach { alertAction in
+            let actionStyle: UIAlertAction.Style
+            switch alertAction.actionRole {
+            case .destructive: actionStyle = .destructive
+            case .regular: actionStyle = .default
+            case .cancel: actionStyle = .cancel
+            }
+
+            let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
+            alert.addAction(action)
+        }
+        presentingViewController?.toPresent()?.present(alert, animated: true)
+    }
 }
 
 extension Router: UIAdaptivePresentationControllerDelegate {

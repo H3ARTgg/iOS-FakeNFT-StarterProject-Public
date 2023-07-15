@@ -136,7 +136,7 @@ extension PaymentViewController: PaymentViewControllerDelegate {
             guard let currencyId else { return }
             paymentViewModel.fetchPaymentResult(currencyId)
         } else {
-            // alert
+            paymentViewModel.showErrorAlert()
         }
     }
 }
