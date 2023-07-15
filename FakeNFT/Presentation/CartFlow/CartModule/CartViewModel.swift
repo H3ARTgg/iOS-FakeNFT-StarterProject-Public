@@ -11,9 +11,6 @@ protocol CartCoordination: AnyObject {
 protocol CartViewModelProtocol {
     var listProducts: [Nft] { get }
     var isLoadCompleted: Bool { get }
-    func sortFromPrice()
-    func sortFromRating()
-    func sortFromTitle()
     func delete(from id: Int)
     func updateCart()
     func bind(updateViewController: @escaping ([Nft]) -> Void)
@@ -32,11 +29,16 @@ final class CartViewModel: ObservableObject, CartCoordination {
     var handleCartScreenReturn: (() -> Void)?
     var handleForActionSheet: ((AlertModel) -> Void)?
     
+    private let storageManager: StorageManager
     private var cartNetworkService: CartNetworkServiceProtocol
     
     private var isInitialLoadCompleted = false
     
-    init(cartNetworkService: CartNetworkServiceProtocol) {
+    init(
+        storageManager: StorageManager = StorageManager.shared,
+        cartNetworkService: CartNetworkServiceProtocol
+    ) {
+        self.storageManager = storageManager
         self.cartNetworkService = cartNetworkService
         fetchProducts()
     }
@@ -48,6 +50,22 @@ final class CartViewModel: ObservableObject, CartCoordination {
                 switch result {
                 case .success(let products):
                     self.products = products
+                    
+                    if products.isEmpty {
+                        self.storageManager.sortOption = .none
+                    }
+                    
+                    if self.storageManager.sortOption != .none {
+                        switch self.storageManager.sortOption {
+                        case .sortPrice:
+                            self.sortFromPrice()
+                        case .sortRating:
+                            self.sortFromRating()
+                        case .sortTitle:
+                            self.sortFromTitle()
+                        default: break
+                        }
+                    }
                     
                     // Временный метод для проверки, если на сервере нет данных о заказе
                     if products.isEmpty {
@@ -84,18 +102,6 @@ extension CartViewModel: CartViewModelProtocol {
 
     var isLoadCompleted: Bool {
         return isInitialLoadCompleted
-    }
-
-    func sortFromPrice() {
-        products.sort { $0.price < $1.price }
-    }
-
-    func sortFromRating() {
-        products.sort { $0.rating > $1.rating }
-    }
-
-    func sortFromTitle() {
-        products.sort { $0.name < $1.name }
     }
 
     func delete(from id: Int) {
@@ -135,8 +141,25 @@ extension CartViewModel: CartViewModelProtocol {
     }
 }
 
-// MARK: - Extension for create alerts
+// MARK: - Private methods
 extension CartViewModel {
+    private func sortWith(_ comparator: (Nft, Nft) -> Bool, option: SortOption) {
+        products.sort(by: comparator)
+        storageManager.sortOption = option
+    }
+    
+    private func sortFromPrice() {
+        sortWith({ $0.price < $1.price }, option: .sortPrice)
+    }
+
+    private func sortFromRating() {
+        sortWith({ $0.rating > $1.rating }, option: .sortRating)
+    }
+
+    private func sortFromTitle() {
+        sortWith({ $0.name < $1.name }, option: .sortTitle)
+    }
+    
     private func createSortAlertModel() -> AlertModel {
         let alertTitle = Consts.LocalizedStrings.cartAlertTitle
         let sortPriceActionTitle = Consts.LocalizedStrings.cartSortFromPrice

@@ -34,6 +34,7 @@
 		253B673F2A59D09500D0F205 /* CartTasks.md in Resources */ = {isa = PBXBuildFile; fileRef = 253B673E2A59D09500D0F205 /* CartTasks.md */; };
 		25751B812A5C18AF0022230D /* OrderRequestPut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B802A5C18AF0022230D /* OrderRequestPut.swift */; };
 		25751B992A5F44750022230D /* CartNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B982A5F44750022230D /* CartNavController.swift */; };
+		25751BAF2A63014E0022230D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BAE2A63014E0022230D /* StorageManager.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
 		25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA732A48C816000B1F89 /* PaymentViewController.swift */; };
 		25B4DA762A48CE8F000B1F89 /* UIProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */; };
@@ -133,6 +134,7 @@
 		253B673E2A59D09500D0F205 /* CartTasks.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CartTasks.md; sourceTree = "<group>"; };
 		25751B802A5C18AF0022230D /* OrderRequestPut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestPut.swift; sourceTree = "<group>"; };
 		25751B982A5F44750022230D /* CartNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavController.swift; sourceTree = "<group>"; };
+		25751BAE2A63014E0022230D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		25B4DA732A48C816000B1F89 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProgressHUD.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				25751BAE2A63014E0022230D /* StorageManager.swift */,
 				78F308A52A3EF3EA0036BF33 /* Networking */,
 			);
 			path = Services;
@@ -966,6 +969,7 @@
 				253A20892A5B4C7E0031C9CE /* PaymentResultRequest.swift in Sources */,
 				250DF0F42A47453900AC2E4E /* CartTableViewCell.swift in Sources */,
 				78D479702A5A808C0089E861 /* CoordinatorFactory.swift in Sources */,
+				25751BAF2A63014E0022230D /* StorageManager.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				253A20832A5B36770031C9CE /* PaymentResultView.swift in Sources */,
 				78D4796F2A5A808C0089E861 /* BaseCoordinator.swift in Sources */,
