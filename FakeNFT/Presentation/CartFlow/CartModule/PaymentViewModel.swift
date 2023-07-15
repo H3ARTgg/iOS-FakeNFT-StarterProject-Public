@@ -1,19 +1,38 @@
 import Foundation
 
+enum ViewState {
+    case loading
+    case success
+    case failure
+}
+
+protocol PaymentCoordination: AnyObject {
+    var handleTermsScreenOpening: ((URL) -> Void)? { get set }
+    var handlePaymentResultScreenPresentation: ((ViewState) -> Void)? { get set }
+    var handleCartScreenReturn: (() -> Void)? { get set }
+}
+
 protocol PaymentViewModelProtocol {
     var currenciesList: [Currency] { get }
     var isLoadCompleted: Bool { get }
+    func fetchPaymentResult(_ currencyId: String)
     func bind(updateViewController: @escaping ([Currency]) -> Void)
+    func showTerms()
+    func closePaymentViewController()
 }
 
-final class PaymentViewModel: ObservableObject {
+final class PaymentViewModel: ObservableObject, PaymentCoordination {
     @Observable var currencies: [Currency] = []
     
     private var paymentNetworkService: PaymentNetworkServiceProtocol
     
     private var isInitialLoadCompleted = false
+        
+    var handleTermsScreenOpening: ((URL) -> Void)?
+    var handlePaymentResultScreenPresentation: ((ViewState) -> Void)?
+    var handleCartScreenReturn: (() -> Void)?
     
-    init(paymentNetworkService: PaymentNetworkServiceProtocol = PaymentNetworkService()) {
+    init(paymentNetworkService: PaymentNetworkServiceProtocol) {
         self.paymentNetworkService = paymentNetworkService
         fetchCurrencies()
     }
@@ -42,7 +61,34 @@ extension PaymentViewModel: PaymentViewModelProtocol {
         isInitialLoadCompleted
     }
     
+    func fetchPaymentResult(_ currencyId: String) {
+        paymentNetworkService.fetchPaymentResult(currencyId) { [weak self] result in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let paymentResult):
+                    if paymentResult.success {
+                        self.handlePaymentResultScreenPresentation?(.success)
+                    } else {
+                        self.handlePaymentResultScreenPresentation?(.failure)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     func bind(updateViewController: @escaping ([Currency]) -> Void) {
         $currencies.bind(action: updateViewController)
+    }
+    
+    func showTerms() {
+        guard let url = URL(string: Consts.Cart.Url.termsUrl) else { return }
+        handleTermsScreenOpening?(url)
+    }
+    
+    func closePaymentViewController() {
+        handleCartScreenReturn?()
     }
 }

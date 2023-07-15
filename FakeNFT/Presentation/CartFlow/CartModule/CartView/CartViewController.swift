@@ -18,8 +18,8 @@ final class CartViewController: UIViewController {
     weak var updateDelegate: UpdateCartViewDelegate?
     
     // MARK: - Lifecycle
-    init(viewModel: CartViewModelProtocol = CartViewModel()) {
-        self.cartViewModel = viewModel
+    init(cartViewModel: CartViewModelProtocol) {
+        self.cartViewModel = cartViewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
                                        image: Consts.Images.cart,
@@ -167,15 +167,12 @@ extension CartViewController: CartViewControllerDelegate {
     }
     
     func openDeleteNftViewController(_ nft: Nft?) {
-        let deleteNftVC = DeleteNftViewController(viewModel: cartViewModel)
-        deleteNftVC.nft = nft
-        deleteNftVC.modalPresentationStyle = .overFullScreen
-        present(deleteNftVC, animated: true)
+        guard let nft else { return }
+        cartViewModel.openDeleteNft(nft: nft)
     }
     
     func openPaymentViewController() {
-        let paymentVC = PaymentViewController(cartViewModel: cartViewModel)
-        navigationController?.pushViewController(paymentVC, animated: true)
+        cartViewModel.openPaymnetView()
     }
     
     func reloadTableView() {

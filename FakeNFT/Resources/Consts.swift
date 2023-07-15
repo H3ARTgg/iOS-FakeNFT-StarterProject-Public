@@ -67,6 +67,7 @@ struct Consts {
         
         struct Url {
             static let baseURL = "https://648cbbde8620b8bae7ed50c4.mockapi.io/api/v1/"
+            static let termsUrl = "https://yandex.ru/legal/practicum_termsofuse/"
         }
         
         static let heightButton: CGFloat = 44

@@ -16,7 +16,7 @@ final class CartView: UIView {
         return label
     }()
     
-    private lazy var paymentView = PaymentView(delegate: CartViewController())
+    private lazy var paymentView = PaymentView()
     
     private lazy var cartTableView: UITableView = {
         let table = UITableView()

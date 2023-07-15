@@ -7,20 +7,19 @@ protocol PaymentResultViewControllerDelegate: AnyObject {
 final class PaymentResultViewController: UIViewController {
     
     private var cartViewModel: CartViewModelProtocol
-    private var paymentResultViewModel: PaymentResultViewModelProtocol
     
     private var image: UIImage?
     private var textLabel: String?
     private var textButton: String?
     
+    var state: ViewState = .loading
+    
     weak var updateDelegate: PaymentResultViewDelegate?
     
     init(
-        cartViewModel: CartViewModelProtocol,
-        paymentResultViewModel: PaymentResultViewModelProtocol
+        cartViewModel: CartViewModelProtocol
     ) {
         self.cartViewModel = cartViewModel
-        self.paymentResultViewModel = paymentResultViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,38 +42,35 @@ final class PaymentResultViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         UIProgressHUD.show()
-
-        paymentResultViewModel.bind { [weak self] state in
-            DispatchQueue.main.async {
-                switch state {
-                case .success:
-                    self?.image = Asset.Assets.successResult.image
-                    self?.textLabel =
+        
+        switch state {
+        case .success:
+            image = Asset.Assets.successResult.image
+            textLabel =
                             """
                             Успех! Оплата прошла,
                             поздравляем с покупкой!
                             """
-                    self?.textButton = "Вернуться в каталог"
-                case .failure:
-                    self?.image = Asset.Assets.failResult.image
-                    self?.textLabel =
+            textButton = "Вернуться в каталог"
+            UIProgressHUD.dismiss()
+        case .failure:
+            image = Asset.Assets.failResult.image
+            textLabel =
                             """
                             Упс! Что-то пошло не так :(
                             Попробуйте ещё раз!
                             """
-                    self?.textButton = "Попробовать еще раз"
-                default:
-                    break
-                }
-                
-                self?.updateDelegate?.updateUi(
-                    self?.image ?? UIImage(),
-                    self?.textLabel ?? "",
-                    self?.textButton ?? ""
-                )
-                UIProgressHUD.dismiss()
-            }
+            textButton = "Попробовать еще раз"
+            UIProgressHUD.dismiss()
+        default:
+            break
         }
+        
+        updateDelegate?.updateUi(
+            image ?? UIImage(),
+            textLabel ?? "",
+            textButton ?? ""
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +81,5 @@ final class PaymentResultViewController: UIViewController {
 extension PaymentResultViewController: PaymentResultViewControllerDelegate {
     func closePaymentResultViewController() {
         cartViewModel.updateCart()
-        navigationController?.popToRootViewController(animated: true)
     }
 }

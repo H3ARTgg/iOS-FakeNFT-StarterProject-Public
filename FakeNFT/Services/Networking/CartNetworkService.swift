@@ -13,7 +13,7 @@ final class CartNetworkService {
     
     private var idProducts = [String]()
     
-    init(networkClient: DefaultNetworkClient = DefaultNetworkClient()) {
+    init(networkClient: DefaultNetworkClient) {
         self.networkClient = networkClient
     }
     

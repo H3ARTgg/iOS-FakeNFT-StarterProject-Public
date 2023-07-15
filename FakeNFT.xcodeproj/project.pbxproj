@@ -28,12 +28,12 @@
 		253A20812A5B366A0031C9CE /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A20802A5B366A0031C9CE /* PaymentResultViewController.swift */; };
 		253A20832A5B36770031C9CE /* PaymentResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A20822A5B36770031C9CE /* PaymentResultView.swift */; };
 		253A20852A5B378B0031C9CE /* PaymentResultStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A20842A5B378B0031C9CE /* PaymentResultStackView.swift */; };
-		253A20872A5B4B630031C9CE /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A20862A5B4B630031C9CE /* PaymentResultViewModel.swift */; };
 		253A20892A5B4C7E0031C9CE /* PaymentResultRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A20882A5B4C7E0031C9CE /* PaymentResultRequest.swift */; };
 		253A208B2A5B4DC40031C9CE /* PaymentResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A208A2A5B4DC40031C9CE /* PaymentResponseResult.swift */; };
 		253A208D2A5B4E2D0031C9CE /* PaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A208C2A5B4E2D0031C9CE /* PaymentResponse.swift */; };
 		253B673F2A59D09500D0F205 /* CartTasks.md in Resources */ = {isa = PBXBuildFile; fileRef = 253B673E2A59D09500D0F205 /* CartTasks.md */; };
 		25751B812A5C18AF0022230D /* OrderRequestPut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B802A5C18AF0022230D /* OrderRequestPut.swift */; };
+		25751B992A5F44750022230D /* CartNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B982A5F44750022230D /* CartNavController.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
 		25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA732A48C816000B1F89 /* PaymentViewController.swift */; };
 		25B4DA762A48CE8F000B1F89 /* UIProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */; };
@@ -127,12 +127,12 @@
 		253A20802A5B366A0031C9CE /* PaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
 		253A20822A5B36770031C9CE /* PaymentResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultView.swift; sourceTree = "<group>"; };
 		253A20842A5B378B0031C9CE /* PaymentResultStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultStackView.swift; sourceTree = "<group>"; };
-		253A20862A5B4B630031C9CE /* PaymentResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModel.swift; sourceTree = "<group>"; };
 		253A20882A5B4C7E0031C9CE /* PaymentResultRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultRequest.swift; sourceTree = "<group>"; };
 		253A208A2A5B4DC40031C9CE /* PaymentResponseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponseResult.swift; sourceTree = "<group>"; };
 		253A208C2A5B4E2D0031C9CE /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
 		253B673E2A59D09500D0F205 /* CartTasks.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CartTasks.md; sourceTree = "<group>"; };
 		25751B802A5C18AF0022230D /* OrderRequestPut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestPut.swift; sourceTree = "<group>"; };
+		25751B982A5F44750022230D /* CartNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavController.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		25B4DA732A48C816000B1F89 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProgressHUD.swift; sourceTree = "<group>"; };
@@ -557,6 +557,7 @@
 		78F308B02A3EF5F10036BF33 /* CartFlow */ = {
 			isa = PBXGroup;
 			children = (
+				25751B982A5F44750022230D /* CartNavController.swift */,
 				250DF0F52A474C6000AC2E4E /* Views */,
 				78F308B72A3EF86C0036BF33 /* CartModule */,
 				250DF10E2A47895A00AC2E4E /* Observable.swift */,
@@ -602,7 +603,6 @@
 			children = (
 				250DF10C2A47892100AC2E4E /* CartViewModel.swift */,
 				25FB791C2A5A0A6000D9377B /* PaymentViewModel.swift */,
-				253A20862A5B4B630031C9CE /* PaymentResultViewModel.swift */,
 				252B3F642A4AF065006356D4 /* CartView */,
 				252B3F672A4AF2B7006356D4 /* DeleteNftView */,
 				252B3F682A4AF2D7006356D4 /* PaymentView */,
@@ -928,6 +928,7 @@
 				78D479732A5A808C0089E861 /* AppCoordinator.swift in Sources */,
 				250DF1172A47A99400AC2E4E /* CartNetworkService.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				25751B992A5F44750022230D /* CartNavController.swift in Sources */,
 				78D4797C2A5A844E0089E861 /* CatalogueCoordinator.swift in Sources */,
 				25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */,
 				25751B812A5C18AF0022230D /* OrderRequestPut.swift in Sources */,
@@ -954,7 +955,6 @@
 				250DF1092A47868100AC2E4E /* NftResult.swift in Sources */,
 				7865451B2A40CB3100C1961B /* XCAssets+Generated.swift in Sources */,
 				25FB79192A59F48700D9377B /* Currency.swift in Sources */,
-				253A20872A5B4B630031C9CE /* PaymentResultViewModel.swift in Sources */,
 				78D479722A5A808C0089E861 /* Router.swift in Sources */,
 				78D479712A5A808C0089E861 /* ModulesFactory.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,

@@ -47,9 +47,8 @@ final class PaymentView: CustomView {
     weak var delegate: CartViewControllerDelegate?
     
     // MARK: - Lifecycle
-    init(delegate: CartViewControllerDelegate) {
+    override init() {
         super.init()
-        self.delegate = delegate
         
         addElements()
         setupConstraints()

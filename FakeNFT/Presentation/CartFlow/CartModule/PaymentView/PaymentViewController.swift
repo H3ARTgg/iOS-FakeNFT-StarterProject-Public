@@ -9,7 +9,6 @@ final class PaymentViewController: UIViewController {
     
     private var cartViewModel: CartViewModelProtocol
     private var paymentViewModel: PaymentViewModelProtocol
-    private var paymentResultViewModel: PaymentResultViewModelProtocol
     
     private var selectedIndexPath: IndexPath?
     private var currencyId: String?
@@ -18,12 +17,10 @@ final class PaymentViewController: UIViewController {
     
     init(
         cartViewModel: CartViewModelProtocol,
-        paymentViewModel: PaymentViewModelProtocol = PaymentViewModel(),
-        paymentResultViewModel: PaymentResultViewModelProtocol = PaymentResultViewModel()
+        paymentViewModel: PaymentViewModelProtocol
     ) {
         self.cartViewModel = cartViewModel
         self.paymentViewModel = paymentViewModel
-        self.paymentResultViewModel = paymentResultViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -71,7 +68,7 @@ final class PaymentViewController: UIViewController {
     }
     
     @objc private func close() {
-        navigationController?.popViewController(animated: true)
+        paymentViewModel.closePaymentViewController()
     }
 }
 
@@ -131,26 +128,13 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
 
 extension PaymentViewController: PaymentViewControllerDelegate {
     func openWebViewController() {
-        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
-        let webViewModel = WebViewViewModel(url: url)
-        let webView = WebViewViewController(viewModel: webViewModel)
-        webView.tabBarController?.tabBar.isHidden = false
-        navigationController?.pushViewController(webView, animated: true)
+        paymentViewModel.showTerms()
     }
     
     func openPaymentResult() {
         if currencyId != nil {
             guard let currencyId else { return }
-            
-            let paymentResultViewController = PaymentResultViewController(
-                cartViewModel: cartViewModel,
-                paymentResultViewModel: paymentResultViewModel
-            )
-            paymentResultViewController.modalPresentationStyle = .fullScreen
-                    
-            navigationController?.pushViewController(paymentResultViewController, animated: true)
-            
-            paymentResultViewModel.fetchPaymentResult(currencyId)
+            paymentViewModel.fetchPaymentResult(currencyId)
         } else {
             // alert
         }

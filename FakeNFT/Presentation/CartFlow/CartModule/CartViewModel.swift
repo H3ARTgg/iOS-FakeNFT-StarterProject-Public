@@ -1,5 +1,12 @@
 import Foundation
 
+protocol CartCoordination: AnyObject {
+    var handleNftSelection: ((Nft, CartViewModel) -> Void)? { get set }
+    var handlePaymentScreenOpening: ((CartViewModel) -> Void)? { get set }
+    var handleNftDeletion: (() -> Void)? { get set }
+    var handleCartScreenReturn: (() -> Void)? { get set }
+}
+
 protocol CartViewModelProtocol {
     var listProducts: [Nft] { get }
     var isLoadCompleted: Bool { get }
@@ -9,16 +16,24 @@ protocol CartViewModelProtocol {
     func delete(from id: Int)
     func updateCart()
     func bind(updateViewController: @escaping ([Nft]) -> Void)
+    func openDeleteNft(nft: Nft)
+    func openPaymnetView()
+    func closeDeleteNftViewController()
 }
 
-final class CartViewModel: ObservableObject {
+final class CartViewModel: ObservableObject, CartCoordination {    
     @Observable var products: [Nft] = []
+    
+    var handleNftSelection: ((Nft, CartViewModel) -> Void)?
+    var handlePaymentScreenOpening: ((CartViewModel) -> Void)?
+    var handleNftDeletion: (() -> Void)?
+    var handleCartScreenReturn: (() -> Void)?
     
     private var cartNetworkService: CartNetworkServiceProtocol
     
     private var isInitialLoadCompleted = false
     
-    init(cartNetworkService: CartNetworkServiceProtocol = CartNetworkService()) {
+    init(cartNetworkService: CartNetworkServiceProtocol) {
         self.cartNetworkService = cartNetworkService
         fetchProducts()
     }
@@ -85,15 +100,29 @@ extension CartViewModel: CartViewModelProtocol {
             products.remove(at: index)
             let ids = products.map { String($0.id) }
             cartNetworkService.putProducts(productIds: ids)
+            handleNftDeletion?()
         }
     }
     
     func updateCart() {
         products.removeAll()
         cartNetworkService.putProducts(productIds: [])
+        handleCartScreenReturn?()
     }
 
     func bind(updateViewController: @escaping ([Nft]) -> Void) {
         $products.bind(action: updateViewController)
+    }
+    
+    func openDeleteNft(nft: Nft) {
+        handleNftSelection?(nft, self)
+    }
+    
+    func openPaymnetView() {
+        handlePaymentScreenOpening?(self)
+    }
+    
+    func closeDeleteNftViewController() {
+        handleNftDeletion?()
     }
 }

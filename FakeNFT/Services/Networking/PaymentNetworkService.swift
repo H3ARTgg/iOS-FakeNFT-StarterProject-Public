@@ -9,7 +9,7 @@ final class PaymentNetworkService {
     private let baseURL = Consts.Cart.Url.baseURL
     private let networkClient: DefaultNetworkClient
     
-    init(networkClient: DefaultNetworkClient = DefaultNetworkClient()) {
+    init(networkClient: DefaultNetworkClient) {
         self.networkClient = networkClient
     }
 }
@@ -43,7 +43,6 @@ extension PaymentNetworkService: PaymentNetworkServiceProtocol {
                 do {
                     let paymentResponseResult = try JSONDecoder().decode(PaymentResponseResult.self, from: data)
                     let paymentResult = paymentResponseResult.convert()
-                    print(paymentResult)
                     completion(.success(paymentResult))
                 } catch {
                     completion(.failure(error))

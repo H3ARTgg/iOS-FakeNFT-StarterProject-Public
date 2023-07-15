@@ -8,12 +8,12 @@ protocol DeleteNftViewControllerDelegate: AnyObject {
 final class DeleteNftViewController: UIViewController {
 
     // MARK: - Properties
-    private var viewModel: CartViewModelProtocol
+    private var cartViewModel: CartViewModelProtocol
     var nft: Nft?
 
     // MARK: - Lifecycle
-    init(viewModel: CartViewModelProtocol) {
-        self.viewModel = viewModel
+    init(cartViewModel: CartViewModelProtocol) {
+        self.cartViewModel = cartViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,11 +32,10 @@ final class DeleteNftViewController: UIViewController {
 // MARK: - DeleteNftViewControllerDelegate
 extension DeleteNftViewController: DeleteNftViewControllerDelegate {
     func deleteNft() {
-        viewModel.delete(from: nft?.id ?? 0)
-        dismiss(animated: true)
+        cartViewModel.delete(from: nft?.id ?? 0)
     }
     
     func closeViewController() {
-        dismiss(animated: true)
+        cartViewModel.closeDeleteNftViewController()
     }
 }
