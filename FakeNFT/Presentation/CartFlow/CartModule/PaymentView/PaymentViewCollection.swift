@@ -47,8 +47,8 @@ final class PaymentViewCollection: UIView {
             collectionView.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor, constant: 20
             ),
-            collectionView.leftAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leftAnchor
+            collectionView.leadingAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.leadingAnchor
             ),
             collectionView.trailingAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.trailingAnchor

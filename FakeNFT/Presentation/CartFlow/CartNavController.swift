@@ -5,7 +5,7 @@ final class CartNavController: UINavigationController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.cart,
+        tabBarItem = UITabBarItem(title: L10n.Cart.icon,
                                        image: Consts.Images.cart,
                                        tag: 2)
         
