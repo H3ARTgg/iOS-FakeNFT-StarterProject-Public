@@ -1,12 +1,65 @@
-/* Cart tabbar icon title */
-"cart.icon" = "Cart";
+// MARK: - Main
 
-/* Catalogue tabbar icon title */
-"catalogue.icon" = "Catalogue";
-
-/* Profile tabbar icon title */
-"profile.icon" = "Profile";
-
-/* Statistics tabbar icon title */
-"statistics.icon" = "Statistics";
-
+profile.icon = "Profile";
+catalogue.icon = "Catalogue";
+cart.icon = "Cart";
+statistics.icon = "Statistics";
+profile.owned = "My NFTs";
+profile.favorite = "Favorite NFTs";
+profile.developer = "About developer";
+profileEdit.changePhoto = "Change photo";
+profile.sort = "Sorting";
+profile.byPrice = "By price";
+profile.byRating = "By rating";
+profile.byTitle = "By title";
+profile.close = "Close";
+profile.noNfts = "You don't have NFTs yet";
+profile.noFavoriteNfts = "You don't have any favorite NFTs yet";
+profile.from = "from";
+profile.price = "Price";
+profile.name = "Name";
+profile.about = "Description";
+profile.site = "Website";
+statisticAlert.title = "Sorting";
+statisticActionSheep.sortByName = "By rating";
+cancelAction.Text = "Cancel";
+userSiteButton.Title = "Go to site";
+userCollectionButton.title = "Collection NFT (%d)";
+userCollectionViewController.Title = "Collection NFT";
+plugLabel.Text = "No NFT";
+statisticErrorAlert.title = "Error";
+statisticErrorActionSheep.repeat = "Repeat";
+statisticErrorPlugView.text = "Oops, something went wrong(";
+button.to.pay = "To pay";
+label.amount.nft = "NFT";
+label.currency.eth = "ETH";
+label.delete.nft = "Do you want to remove an item?";
+button.delete.nft = "Delete";
+label.cancel = "Return";
+alert.sort = "Sorting";
+sort.price = "By price";
+sort.rating = "By rating";
+sort.title = "By title";
+alert.close = "Close";
+image.load.failure = "Try again";
+sort.catalogue = "Sorting";
+by.name = "By title";
+by.nft.count = "By number of NFTs";
+close = "Close";
+error.try.again = "Try again";
+error.connection.message = "Something went wrong(";
+collection.author = "Collection author";
+cart.cartIsEmpty = "Cart is empty";
+cart.payment.method = "Select a Payment Method";
+cart.label.terms = "By making a purchase, you agree to the terms";
+cart.button.terms = "User Agreement";
+cart.button.payment = "Pay";
+cart.alert.payment.title = "Error";
+cart.alert.payment.message = "Choose a currency";
+cart.alert.payment.action = "OK";
+cart.resultPayment.failureTitle = "Oops! Something went wrong :(";
+cart.resultPayment.failureTryTitle = "Try again!";
+cart.resultPayment.failureButton = "To try one more time";
+cart.resultPayment.successTitle = "Success! Payment went through";
+cart.resultPayment.successCongratulationTitle = "congratulations on your purchase!";
+cart.resultPayment.successButton = "Back to catalog";

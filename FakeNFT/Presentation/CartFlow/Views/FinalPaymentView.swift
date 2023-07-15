@@ -23,20 +23,20 @@ final class FinalPaymentView: CustomView {
         let label = UILabel()
         label.font = Consts.Fonts.regular13
         label.textColor = Asset.Colors.ypBlack.color
-        label.text = "Совершая покупку, вы соглашаетесь с условиями"
+        label.text = L10n.Cart.Label.terms
         return label
     }()
     
     private lazy var termsButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Пользовательского соглашения", for: .normal)
+        button.setTitle(L10n.Cart.Button.terms, for: .normal)
         button.setTitleColor(Asset.Colors.ypBlueUniversal.color, for: .normal)
         button.addTarget(self, action: #selector(openTerms), for: .touchUpInside)
         return button
     }()
     
     private lazy var paymentButton: CustomButton = {
-        let button = CustomButton(text: "Оплатить", height: 60)
+        let button = CustomButton(text: L10n.Cart.Button.payment, height: 60)
         button.addTarget(
             self,
             action: #selector(paymentTapped),

@@ -103,9 +103,9 @@ extension PaymentViewModel: PaymentViewModelProtocol {
 
 extension PaymentViewModel {
     private func createErrorAlertModel() -> AlertModel {
-        let alertTitle = "Ошибка"
-        let alertMessage = "Выберете валюту"
-        let confirmationActionTitle = "ОК"
+        let alertTitle = L10n.Cart.Alert.Payment.title
+        let alertMessage = L10n.Cart.Alert.Payment.message
+        let confirmationActionTitle = L10n.Cart.Alert.Payment.action
         
         let confirmationAction = AlertAction(
             actionText: confirmationActionTitle,

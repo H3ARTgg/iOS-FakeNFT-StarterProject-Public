@@ -10,7 +10,7 @@ final class CartView: UIView {
     // MARK: - Properties
     private let isEmptyLabel: UILabel = {
         let label = UILabel()
-        label.text = "Корзина пуста"
+        label.text = L10n.Cart.cartIsEmpty
         label.font = Consts.Fonts.bold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

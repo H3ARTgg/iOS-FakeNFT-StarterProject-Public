@@ -23,19 +23,19 @@ final class PaymentView: CustomView {
     private let numbersProducts: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption1
-        label.text = "0 \(Consts.LocalizedStrings.cartLabelAmountNft)"
+        label.text = "0 \(L10n.Label.Amount.nft)"
         label.textColor = Asset.Colors.ypBlack.color
         return label
     }()
     
     private let totalSumProducts: CustomLabel = {
-        let label = CustomLabel(text: "00,00 \(Consts.LocalizedStrings.cartLabelEth)")
+        let label = CustomLabel(text: "00,00 \(L10n.Label.Currency.eth)")
         label.textColor = Asset.Colors.ypGreenUniversal.color
         return label
     }()
     
     private lazy var paymentButton: CustomButton = {
-        let button = CustomButton(text: "\(Consts.LocalizedStrings.cartButtonToPay)")
+        let button = CustomButton(text: L10n.Button.To.pay)
         button.addTarget(
             self,
             action: #selector(paymentTapped),
@@ -115,6 +115,6 @@ extension PaymentView {
     
     private func setupTotalPrice() {
         let totalPrice = delegate?.getTotalPrice() ?? 0
-        totalSumProducts.text = (String(format: "%.2f", totalPrice) + " ETH").replacingOccurrences(of: ".", with: ",")
+        totalSumProducts.text = (String(format: "%.2f", totalPrice) + " \(L10n.Label.Currency.eth)").replacingOccurrences(of: ".", with: ",")
     }
 }

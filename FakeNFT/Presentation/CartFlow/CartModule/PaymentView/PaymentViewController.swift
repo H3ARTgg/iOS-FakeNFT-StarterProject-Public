@@ -54,7 +54,7 @@ final class PaymentViewController: UIViewController {
     }
     
     private func configureNavBar() {
-        title = Consts.LocalizedStrings.paymentTitleNavBar
+        title = L10n.Cart.Payment.method
         
         let backButton = UIBarButtonItem(
             image: Asset.Assets.chevronBackward.image,
@@ -74,7 +74,7 @@ final class PaymentViewController: UIViewController {
 
 extension PaymentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        paymentViewModel.currenciesList.count
+        return paymentViewModel.currenciesList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

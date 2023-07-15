@@ -35,6 +35,7 @@
 		25751B812A5C18AF0022230D /* OrderRequestPut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B802A5C18AF0022230D /* OrderRequestPut.swift */; };
 		25751B992A5F44750022230D /* CartNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B982A5F44750022230D /* CartNavController.swift */; };
 		25751BAF2A63014E0022230D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BAE2A63014E0022230D /* StorageManager.swift */; };
+		25751BB52A630EBD0022230D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BB42A630EBD0022230D /* Strings.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
 		25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA732A48C816000B1F89 /* PaymentViewController.swift */; };
 		25B4DA762A48CE8F000B1F89 /* UIProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */; };
@@ -135,6 +136,9 @@
 		25751B802A5C18AF0022230D /* OrderRequestPut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestPut.swift; sourceTree = "<group>"; };
 		25751B982A5F44750022230D /* CartNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavController.swift; sourceTree = "<group>"; };
 		25751BAE2A63014E0022230D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		25751BB22A630B520022230D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		25751BB32A630B530022230D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		25751BB42A630EBD0022230D /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		25B4DA732A48C816000B1F89 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProgressHUD.swift; sourceTree = "<group>"; };
@@ -469,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */,
+				25751BB42A630EBD0022230D /* Strings.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -758,6 +763,7 @@
 				en,
 				Base,
 				ru,
+				ar,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -940,6 +946,7 @@
 				250DF10D2A47892100AC2E4E /* CartViewModel.swift in Sources */,
 				25FB791B2A59F4E000D9377B /* CurrencyResult.swift in Sources */,
 				250DF0FB2A47540700AC2E4E /* PaymentView.swift in Sources */,
+				25751BB52A630EBD0022230D /* Strings.swift in Sources */,
 				78F308BA2A3EF9A40036BF33 /* ProfileViewController.swift in Sources */,
 				253A208D2A5B4E2D0031C9CE /* PaymentResponse.swift in Sources */,
 				25FB79152A59EFC700D9377B /* FinalPaymentView.swift in Sources */,
@@ -1026,6 +1033,7 @@
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
 				78F308CE2A3F02620036BF33 /* ru */,
+				25751BB22A630B520022230D /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1035,6 +1043,7 @@
 			children = (
 				78F308CC2A3F02550036BF33 /* en */,
 				78F308CF2A3F02620036BF33 /* ru */,
+				25751BB32A630B530022230D /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -24,7 +24,7 @@ final class CartTableViewCell: UITableViewCell {
     
     private let productPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "Цена"
+        label.text = L10n.Profile.price
         label.font = UIFont.caption2
         label.textColor = Asset.Colors.ypBlack.color
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +58,7 @@ final class CartTableViewCell: UITableViewCell {
         
         productTitleLabel.text = nft.name
         productImageView.kf.setImage(with: URL(string: nft.image))
-        productTotalPriceLabel.text = (String(format: "%.2f", nft.price) + " ETH").replacingOccurrences(of: ".", with: ",")
+        productTotalPriceLabel.text = (String(format: "%.2f", nft.price) + " \(L10n.Label.Currency.eth)").replacingOccurrences(of: ".", with: ",")
         setupRating(nft)
     }
     

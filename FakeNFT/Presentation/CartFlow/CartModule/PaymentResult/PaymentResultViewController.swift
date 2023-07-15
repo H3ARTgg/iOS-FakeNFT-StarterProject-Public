@@ -48,19 +48,19 @@ final class PaymentResultViewController: UIViewController {
             image = Asset.Assets.successResult.image
             textLabel =
                             """
-                            Успех! Оплата прошла,
-                            поздравляем с покупкой!
+                            \(L10n.Cart.ResultPayment.successTitle)
+                            \(L10n.Cart.ResultPayment.successCongratulationTitle)
                             """
-            textButton = "Вернуться в каталог"
+            textButton = L10n.Cart.ResultPayment.successButton
             UIProgressHUD.dismiss()
         case .failure:
             image = Asset.Assets.failResult.image
             textLabel =
                             """
-                            Упс! Что-то пошло не так :(
-                            Попробуйте ещё раз!
+                            \(L10n.Cart.ResultPayment.failureTitle)
+                            \(L10n.Cart.ResultPayment.failureTryTitle)
                             """
-            textButton = "Попробовать еще раз"
+            textButton = L10n.Cart.ResultPayment.failureButton
             UIProgressHUD.dismiss()
         default:
             break
