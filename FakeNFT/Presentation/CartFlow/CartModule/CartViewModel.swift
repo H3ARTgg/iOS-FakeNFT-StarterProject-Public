@@ -67,7 +67,7 @@ final class CartViewModel: ObservableObject, CartCoordination {
                         }
                     }
                     
-                    // Временный метод для проверки, если на сервере нет данных о заказе
+                    // Временный метод для проверки, если на сервере нет товаров в заказе
                     if products.isEmpty {
                         self.putProducts()
                     } else {
@@ -80,7 +80,7 @@ final class CartViewModel: ObservableObject, CartCoordination {
         }
     }
     
-    // Временный метод для проверки, если на сервере нет данных о заказе
+    // Временный метод для проверки, если на сервере нет товаров в заказе
     private func putProducts() {
         cartNetworkService.putNewProducts { [weak self] result in
             guard let self else { return }

@@ -84,11 +84,11 @@ extension CartNetworkService: CartNetworkServiceProtocol {
         })
     }
     
-    // Временный метод для проверки, если на сервере нет данных о заказе
+    // Временный метод для проверки, если на сервере нет товаров в заказе
     func putNewProducts(_ completion: @escaping (Bool) -> Void) {
         var request = OrderRequestPut()
         request.dto = OrderResult(nfts: [
-            "68", "69", "71"
+            "93", "94", "95"
         ])
         
         networkClient.send(request: request, onResponse: { result in
