@@ -16,7 +16,7 @@ protocol RatingViewModelProtocol {
     func sortedButtonTapped()
     
     func fetchUsers()
-    func viewModelForCell(at index: Int) -> UserTableViewCellViewModel
+    func viewModelForCell(at index: Int) -> UserTableViewCellViewModel?
     func viewModelForUserCard(at index: Int) -> UserNetworkModel
 }
 
@@ -30,6 +30,7 @@ final class RatingViewModel: StatisticCoordination {
     
     private var statisticProvider: StatisticProviderProtocol?
     private var sortingStore: SortStatisticStoreProtocol
+    private let errorHandler: ErrorHandlerProtocol
     
     private lazy var filter: StatisticFilter = sortingStore.getSortFilter {
         didSet {
@@ -44,9 +45,10 @@ final class RatingViewModel: StatisticCoordination {
         }
     }
     
-    init(statisticProvider: StatisticProviderProtocol? = nil, sortStore: SortStatisticStoreProtocol) {
+    init(statisticProvider: StatisticProviderProtocol? = nil, sortStore: SortStatisticStoreProtocol, errorHandler: ErrorHandlerProtocol) {
         self.statisticProvider = statisticProvider
         self.sortingStore = sortStore
+        self.errorHandler = errorHandler
         getUsers()
     }
     
@@ -78,11 +80,12 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func fetchUsers() {
-        fetchedUsers = []
+        fetchedUsers.removeAll()
         getUsers()
     }
     
-    func viewModelForCell(at index: Int) -> UserTableViewCellViewModel {
+    func viewModelForCell(at index: Int) -> UserTableViewCellViewModel? {
+        guard !fetchedUsers.isEmpty else { return nil }
         let user = fetchedUsers[index]
         let viewModel = UserTableViewCellViewModel(user: user)
         return viewModel
@@ -101,9 +104,7 @@ extension RatingViewModel: RatingViewModelProtocol {
     func sortUsers(users: [UserNetworkModel]) -> [UserNetworkModel] {
         switch filter {
         case .name:
-            return users.sorted(by: {
-                $0 < $1
-            })
+            return users.sorted(by: < )
         case .rating:
             return users.sorted(by: {
                 $0.intUserRating < $1.intUserRating
@@ -144,30 +145,10 @@ extension RatingViewModel: RatingViewModelProtocol {
     }
     
     func showErrorAlert(message: String) {
-        let alertModel = createErrorAlertModel(message: message)
+        let alertModel = errorHandler.createErrorAlertModel(message: message) { [weak self] in
+            guard let self else { return }
+            self.fetchUsers()
+        }
         headForAlert?(alertModel)
-    }
-    
-    func createErrorAlertModel(message: String) -> AlertModel {
-        let alertText = L10n.Statistic.ErrorAlert.title
-        let alertRepeatActionText = L10n.Statistic.AlertAction.Repeat.title
-        let alertCancelText = L10n.Statistic.AlertAction.Cancel.title
-        
-        let alertRepeatAction = AlertAction(
-            actionText: alertRepeatActionText,
-            actionRole: .regular,
-            action: { [weak self] in
-                guard let self else { return }
-                self.fetchUsers()
-            })
-        
-        let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
-        
-        let alertModel = AlertModel(
-            alertText: alertText,
-            message: message,
-            alertActions: [alertCancelAction, alertRepeatAction]
-        )
-        return alertModel
     }
 }

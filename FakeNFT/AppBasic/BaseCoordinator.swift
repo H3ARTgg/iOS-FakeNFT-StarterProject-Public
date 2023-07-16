@@ -14,13 +14,10 @@ class BaseCoordinator {
     private var childCoordinators: [Coordinatable] = []
     
     func addDependency(_ coordinator: Coordinatable) {
-        for childCoordinator in childCoordinators {
-            if childCoordinator === coordinator {
-                return
-            }
-            
-            childCoordinators.append(coordinator)
+        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
         }
+        childCoordinators.append(coordinator)
     }
     
     func removeDependency(_ coordinator: Coordinatable?) {

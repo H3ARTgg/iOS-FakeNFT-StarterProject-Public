@@ -10,7 +10,7 @@ final class SortingStore {
     
     private var sortFilter: StatisticFilter? {
         get {
-            guard let filter = userDefault.value(forKey: CodingKeys.sort.rawValue) as? String else { return nil }
+            guard let filter = userDefault.string(forKey: CodingKeys.sort.rawValue) else { return nil }
             return StatisticFilter(rawValue: filter)
         }
         set(filter) {

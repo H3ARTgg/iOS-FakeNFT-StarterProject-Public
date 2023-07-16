@@ -51,6 +51,7 @@
 		5B74A4FD2A4B665F008A5E32 /* NftProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B74A4FC2A4B665F008A5E32 /* NftProvider.swift */; };
 		5B74A4FF2A4B668F008A5E32 /* NftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B74A4FE2A4B668F008A5E32 /* NftRequest.swift */; };
 		5B79406B2A4B7C1300E19BCB /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79406A2A4B7C1300E19BCB /* RatingViewController.swift */; };
+		5B848F3F2A644A6A00B20971 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B848F3E2A644A6A00B20971 /* ErrorHandler.swift */; };
 		5BCFCF732A48526E0097AE09 /* StatisticProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */; };
 		5BCFCF752A4852AF0097AE09 /* StatiscticRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */; };
 		5BCFCF772A4852D00097AE09 /* UserNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */; };
@@ -146,6 +147,7 @@
 		5B74A4FC2A4B665F008A5E32 /* NftProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftProvider.swift; sourceTree = "<group>"; };
 		5B74A4FE2A4B668F008A5E32 /* NftRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftRequest.swift; sourceTree = "<group>"; };
 		5B79406A2A4B7C1300E19BCB /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		5B848F3E2A644A6A00B20971 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		5BCFCF722A48526E0097AE09 /* StatisticProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticProvider.swift; sourceTree = "<group>"; };
 		5BCFCF742A4852AF0097AE09 /* StatiscticRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatiscticRequest.swift; sourceTree = "<group>"; };
 		5BCFCF762A4852D00097AE09 /* UserNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkModel.swift; sourceTree = "<group>"; };
@@ -439,6 +441,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5B848F3D2A6449FB00B20971 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5B848F3E2A644A6A00B20971 /* ErrorHandler.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5BCFCF792A4853B80097AE09 /* UserCardModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +630,7 @@
 				5B473B142A417F5A005E78DD /* RatingModule */,
 				5BCFCF792A4853B80097AE09 /* UserCardModule */,
 				5B061BA82A48AFBC009274D5 /* UserCollectionModule */,
+				5B848F3D2A6449FB00B20971 /* Helpers */,
 			);
 			path = StatisticsFlow;
 			sourceTree = "<group>";
@@ -955,6 +966,7 @@
 				78D479802A5A846C0089E861 /* StatisticsCoordinator.swift in Sources */,
 				78D479752A5A81EE0089E861 /* UIViewController+Ext.swift in Sources */,
 				5BD984682A49828F00CF45DE /* WebViewViewController.swift in Sources */,
+				5B848F3F2A644A6A00B20971 /* ErrorHandler.swift in Sources */,
 				78F308AE2A3EF5880036BF33 /* MainTabBarController.swift in Sources */,
 				5B473B202A422DFB005E78DD /* UserView.swift in Sources */,
 				78F308BC2A3EFA230036BF33 /* CatalogueViewController.swift in Sources */,

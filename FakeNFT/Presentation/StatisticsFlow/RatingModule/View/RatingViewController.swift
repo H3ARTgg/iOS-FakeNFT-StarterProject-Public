@@ -116,6 +116,7 @@ private extension RatingViewController {
             guard let self else { return }
             self.plugLabel.isHidden = !isHidden
             self.plugLabel.text = text
+            UIBlockingProgressHUD.dismiss()
         }
     }
     

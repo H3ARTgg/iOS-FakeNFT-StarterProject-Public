@@ -14,7 +14,7 @@ protocol UserCollectionViewModelProtocol {
     
     func fetchNft()
     func refreshNft()
-    func nftCellViewModel(at index: Int) -> NftViewCellViewModel
+    func nftCellViewModel(at index: Int) -> NftViewCellViewModel?
 }
 
 final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollectionCoordination {
@@ -41,11 +41,16 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollec
     }
     
     private let nftsProvider: NftProviderProtocol
+    private let errorHandler: ErrorHandlerProtocol
     
-    init(nftsId: [String]?, nftsProvider: NftProviderProtocol) {
-        self.nftsProvider = nftsProvider
-        self.nftsId = nftsId
-    }
+    init(
+        nftsId: [String]?,
+        nftsProvider: NftProviderProtocol,
+        errorHandler: ErrorHandlerProtocol ) {
+            self.nftsProvider = nftsProvider
+            self.nftsId = nftsId
+            self.errorHandler = errorHandler
+        }
 }
 
 extension UserCollectionViewModel {
@@ -53,7 +58,8 @@ extension UserCollectionViewModel {
         nfts.count
     }
     
-    func nftCellViewModel(at index: Int) -> NftViewCellViewModel {
+    func nftCellViewModel(at index: Int) -> NftViewCellViewModel? {
+        guard !nfts.isEmpty else { return nil }
         let nft = nfts[index]
         // TODO: необходимо проверить ставил ли лайк наш профиль этому NFT
         return NftViewCellViewModel(nft: nft, isLiked: false)
@@ -68,7 +74,8 @@ extension UserCollectionViewModel {
             return
         }
         showCollectionView?(false)
-        nftsProvider.fetchNfts(nftsId: nftsId) { result in
+        nftsProvider.fetchNfts(nftsId: nftsId) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let model):
                 DispatchQueue.main.async {
@@ -92,30 +99,11 @@ extension UserCollectionViewModel {
     }
     
     func showErrorAlert(message: String) {
-        let alertModel = createErrorAlertModel(message: message)
-        headForActionSheet?(alertModel)
-    }
-    
-    func createErrorAlertModel(message: String) -> AlertModel {
-        let alertText = L10n.Statistic.ErrorAlert.title
-        let alertRepeatActionText = L10n.Statistic.AlertAction.Repeat.title
-        let alertCancelText = L10n.Statistic.AlertAction.Cancel.title
-        
-        let alertRepeatAction = AlertAction(
-            actionText: alertRepeatActionText,
-            actionRole: .regular,
-            action: { [weak self] in
+        let alertModel = errorHandler.createErrorAlertModel(
+            message: message) { [ weak self] in
                 guard let self else { return }
                 self.refreshNft()
-            })
-        
-        let alertCancelAction = AlertAction(actionText: alertCancelText, actionRole: .cancel, action: nil)
-        
-        let alertModel = AlertModel(
-            alertText: alertText,
-            message: message,
-            alertActions: [alertCancelAction, alertRepeatAction]
-        )
-        return alertModel
+            }
+        headForActionSheet?(alertModel)
     }
 }

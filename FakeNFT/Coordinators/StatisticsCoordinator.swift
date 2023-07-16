@@ -33,7 +33,8 @@ private extension StatisticsCoordinator {
             self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
         }
         
-        statisticCoordination.headForUserCard = { userCard in
+        statisticCoordination.headForUserCard = { [weak self] userCard in
+            guard let self else { return }
             let userCardModule = self.modulesFactory.makeUserCardView(userCardData: userCard)
             let userCardView = userCardModule.view
             var userCardCoordination = userCardModule.coordination

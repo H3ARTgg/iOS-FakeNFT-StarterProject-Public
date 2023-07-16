@@ -39,6 +39,6 @@ final class NftViewCellViewModel: NftViewCellViewModelProtocol {
     }
     
     func likeButtonTapped() {
-        isLike = !isLike
+        isLike.toggle()
     }
 }
