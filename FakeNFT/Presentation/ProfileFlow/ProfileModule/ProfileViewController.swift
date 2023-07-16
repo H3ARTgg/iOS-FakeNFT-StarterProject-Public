@@ -76,8 +76,10 @@ private extension ProfileViewController {
     func setupBindings() {
         guard let profileDataPublisher = viewModel.profileDataPublisher else { return }
         profileDataPublisher.sink(
-            receiveCompletion: { error in
-                print(error)
+            receiveCompletion: { [weak self] completion in
+                if case .failure = completion {
+                    self?.setupBindings()
+                }
             },
             
             receiveValue: { [weak self] profileData in

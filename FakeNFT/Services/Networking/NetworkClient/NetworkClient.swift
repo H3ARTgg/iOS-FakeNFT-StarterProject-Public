@@ -29,10 +29,11 @@ struct DefaultNetworkClient: NetworkClient {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
+    init(decoder: JSONDecoder = JSONDecoder(),
          encoder: JSONEncoder = JSONEncoder()) {
-        self.session = session
+        let sessionConfiguration = URLSessionConfiguration.default
+        sessionConfiguration.timeoutIntervalForRequest = 10
+        self.session = URLSession(configuration: sessionConfiguration)
         self.decoder = decoder
         self.encoder = encoder
     }

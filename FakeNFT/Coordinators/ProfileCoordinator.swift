@@ -79,7 +79,7 @@ private extension ProfileCoordinator {
             var favoriteNftsCoordination = favoriteNftsModule.coordination
             
             favoriteNftsCoordination.finish = { [weak profileCoordination] favoriteNfts in
-                profileCoordination?.onReturnFromFavorites(favoriteNfts)
+                profileCoordination?.onReturnFromFavorites()
             }
             
             favoriteNftsCoordination.headForError = { errorMessage in
@@ -101,10 +101,10 @@ private extension ProfileCoordinator {
             router.push(aboutView, to: navController)
         }
         
-        profileCoordination.headForError = { errorMessage in
+        profileCoordination.headForError = { errorMessage, completion in
             self.router.presentErrorAlert(
                 message: errorMessage,
-                dismissCompletion: self.router.pop
+                dismissCompletion: completion
             )
         }
         
