@@ -56,6 +56,8 @@ final class CartView: UIView {
             cartTableView.isHidden = true
             paymentView.isHidden = true
         }
+        
+        UIProgressHUD.dismiss()
     }
     
     // MARK: - Private methods
