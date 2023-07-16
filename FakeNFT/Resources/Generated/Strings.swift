@@ -17,6 +17,79 @@ internal enum L10n {
   internal enum Cart {
     /// Cart
     internal static let icon = L10n.tr("Localizable", "cart.icon", fallback: "Cart")
+  /// Close
+  internal static let close = L10n.tr("Localizable", "close", fallback: "Close")
+  internal enum Alert {
+    /// Close
+    internal static let close = L10n.tr("Localizable", "alert.close", fallback: "Close")
+    /// Sorting
+    internal static let sort = L10n.tr("Localizable", "alert.sort", fallback: "Sorting")
+  }
+  internal enum Button {
+    internal enum Delete {
+      /// Delete
+      internal static let nft = L10n.tr("Localizable", "button.delete.nft", fallback: "Delete")
+    }
+    internal enum To {
+      /// To pay
+      internal static let pay = L10n.tr("Localizable", "button.to.pay", fallback: "To pay")
+    }
+  }
+  internal enum By {
+    /// By title
+    internal static let name = L10n.tr("Localizable", "by.name", fallback: "By title")
+    internal enum Nft {
+      /// By number of NFTs
+      internal static let count = L10n.tr("Localizable", "by.nft.count", fallback: "By number of NFTs")
+    }
+  }
+  internal enum CancelAction {
+    /// Cancel
+    internal static let text = L10n.tr("Localizable", "cancelAction.Text", fallback: "Cancel")
+  }
+  internal enum Cart {
+    /// Cart is empty
+    internal static let cartIsEmpty = L10n.tr("Localizable", "cart.cartIsEmpty", fallback: "Cart is empty")
+    /// Cart
+    internal static let icon = L10n.tr("Localizable", "cart.icon", fallback: "Cart")
+    internal enum Alert {
+      internal enum Payment {
+        /// OK
+        internal static let action = L10n.tr("Localizable", "cart.alert.payment.action", fallback: "OK")
+        /// Choose a currency
+        internal static let message = L10n.tr("Localizable", "cart.alert.payment.message", fallback: "Choose a currency")
+        /// Error
+        internal static let title = L10n.tr("Localizable", "cart.alert.payment.title", fallback: "Error")
+      }
+    }
+    internal enum Button {
+      /// Pay
+      internal static let payment = L10n.tr("Localizable", "cart.button.payment", fallback: "Pay")
+      /// User Agreement
+      internal static let terms = L10n.tr("Localizable", "cart.button.terms", fallback: "User Agreement")
+    }
+    internal enum Label {
+      /// By making a purchase, you agree to the terms
+      internal static let terms = L10n.tr("Localizable", "cart.label.terms", fallback: "By making a purchase, you agree to the terms")
+    }
+    internal enum Payment {
+      /// Select a Payment Method
+      internal static let method = L10n.tr("Localizable", "cart.payment.method", fallback: "Select a Payment Method")
+    }
+    internal enum ResultPayment {
+      /// To try one more time
+      internal static let failureButton = L10n.tr("Localizable", "cart.resultPayment.failureButton", fallback: "To try one more time")
+      /// Oops! Something went wrong :(
+      internal static let failureTitle = L10n.tr("Localizable", "cart.resultPayment.failureTitle", fallback: "Oops! Something went wrong :(")
+      /// Try again!
+      internal static let failureTryTitle = L10n.tr("Localizable", "cart.resultPayment.failureTryTitle", fallback: "Try again!")
+      /// Back to catalog
+      internal static let successButton = L10n.tr("Localizable", "cart.resultPayment.successButton", fallback: "Back to catalog")
+      /// congratulations on your purchase!
+      internal static let successCongratulationTitle = L10n.tr("Localizable", "cart.resultPayment.successCongratulationTitle", fallback: "congratulations on your purchase!")
+      /// Success! Payment went through
+      internal static let successTitle = L10n.tr("Localizable", "cart.resultPayment.successTitle", fallback: "Success! Payment went through")
+    }
   }
   internal enum Catalogue {
     /// Catalogue

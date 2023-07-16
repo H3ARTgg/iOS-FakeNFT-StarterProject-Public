@@ -18,17 +18,19 @@ protocol Routable {
     
     func push(_ module: Presentable?)
     func push(_ module: Presentable?, animated: Bool)
-    
+
     func pop()
     func pop(animated: Bool)
-    
+    func popToRoot(animated: Bool)
+
     func dismissModule(_ module: Presentable?)
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
     
     func presentAlert(message: String, dismissCompletion: (() -> Void)?)
     func presentActionSheet(alertModel: AlertModel)
- 
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style)
+
     func addToTabBar(_ module: Presentable?)
 }
 
@@ -47,36 +49,48 @@ extension Router: Routable {
     func push(_ module: Presentable?) {
         push(module, animated: true)
     }
-    
+
     func push(_ module: Presentable?, animated: Bool) {
         guard let controller = module?.toPresent() else { return }
         guard let selectedController = presentingViewController as? UITabBarController else {
             return
         }
-        
+
         guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
             return
         }
 
         rootViewController.pushViewController(controller, animated: animated)
     }
-    
+
     func pop() {
         pop(animated: true)
     }
-    
+
     func pop(animated: Bool) {
         guard let selectedController = presentingViewController as? UITabBarController else {
             return
         }
-        
+
         guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
             return
         }
-        
+
         rootViewController.popViewController(animated: animated)
     }
-    
+
+    func popToRoot(animated: Bool) {
+        guard let selectedController = presentingViewController as? UITabBarController else {
+            return
+        }
+
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+
+        rootViewController.popToRootViewController(animated: true)
+    }
+
     func setRootViewController(viewController: Presentable) {
         presentingViewController = viewController
         delegate?.setRootViewController(presentingViewController)
@@ -139,7 +153,7 @@ extension Router: Routable {
             message: message,
             preferredStyle: .alert
         )
-        
+
         let action = UIAlertAction(
             title: L10n.Router.back,
             style: .cancel,
@@ -147,7 +161,7 @@ extension Router: Routable {
                 dismissCompletion?()
             }
         )
-        
+
         alert.addAction(action)
         self.presentingViewController?
             .toPresent()?

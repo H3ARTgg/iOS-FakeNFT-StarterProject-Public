@@ -1,6 +1,7 @@
 disabled_rules:
 - todo
 - trailing_whitespace
+- nesting
 opt_in_rules:
 - empty_count
 - empty_string

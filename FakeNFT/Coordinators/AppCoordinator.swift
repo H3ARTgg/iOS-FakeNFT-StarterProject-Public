@@ -49,7 +49,9 @@ private extension AppCoordinator {
     }
     
     func createCartFlow() {
-        
+        let cartCoordinator = coordinatorsFactory.makeCartCoordinator(router: router)
+        addDependency(cartCoordinator)
+        cartCoordinator.startFlow()
     }
     
     func createStatisticsFlow() {

@@ -8,4 +8,5 @@ final class MainTabBarController: UITabBarController {
         view.backgroundColor = .white
         tabBar.unselectedItemTintColor = Asset.Colors.ypBlack.color
     }
+    
 }
