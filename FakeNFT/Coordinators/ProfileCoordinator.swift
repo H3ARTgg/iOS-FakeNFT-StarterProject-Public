@@ -56,11 +56,11 @@ private extension ProfileCoordinator {
             var ownedNftCoordination = ownedNftsModule.coordination
             
             ownedNftCoordination.headForActionSheet = { alertModel in
-                self.router.presentActionSheet(alertModel: alertModel)
+                self.router.presentAlertController(alertModel: alertModel, preferredStyle: .actionSheet)
             }
             
             ownedNftCoordination.headForError = { errorMessage in
-                self.router.presentAlert(
+                self.router.presentErrorAlert(
                     message: errorMessage,
                     dismissCompletion: self.router.pop
                 )
@@ -83,7 +83,7 @@ private extension ProfileCoordinator {
             }
             
             favoriteNftsCoordination.headForError = { errorMessage in
-                self.router.presentAlert(
+                self.router.presentErrorAlert(
                     message: errorMessage,
                     dismissCompletion: self.router.pop
                 )
@@ -102,7 +102,7 @@ private extension ProfileCoordinator {
         }
         
         profileCoordination.headForError = { errorMessage in
-            self.router.presentAlert(
+            self.router.presentErrorAlert(
                 message: errorMessage,
                 dismissCompletion: self.router.pop
             )
