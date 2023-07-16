@@ -3,7 +3,6 @@ import Foundation
 protocol CartNetworkServiceProtocol {
     func fetchProducts(_ completion: @escaping (Result<[Nft], Error>) -> Void)
     func putProducts(productIds: [String])
-    func putNewProducts(_ completion: @escaping (Bool) -> Void)
 }
 
 final class CartNetworkService {
@@ -80,24 +79,6 @@ extension CartNetworkService: CartNetworkServiceProtocol {
                 }
             case .failure(let error):
                 print("failed to put order: \(error)")
-            }
-        })
-    }
-    
-    // Временный метод для проверки, если на сервере нет товаров в заказе
-    func putNewProducts(_ completion: @escaping (Bool) -> Void) {
-        var request = OrderRequestPut()
-        request.dto = OrderResult(nfts: [
-            "93", "94", "95"
-        ])
-        
-        networkClient.send(request: request, onResponse: { result in
-            switch result {
-            case .success:
-                completion(true)
-            case .failure(let error):
-                print("failed to put order: \(error)")
-                completion(false)
             }
         })
     }

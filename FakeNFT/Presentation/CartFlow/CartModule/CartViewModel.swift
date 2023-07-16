@@ -66,30 +66,8 @@ final class CartViewModel: ObservableObject, CartCoordination {
                         default: break
                         }
                     }
-                    
-                    // Временный метод для проверки, если на сервере нет товаров в заказе
-                    if products.isEmpty {
-                        self.putProducts()
-                    } else {
-                        self.isInitialLoadCompleted = true
-                    }
                 case .failure(let error):
                     print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    // Временный метод для проверки, если на сервере нет товаров в заказе
-    private func putProducts() {
-        cartNetworkService.putNewProducts { [weak self] result in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case true:
-                    self.fetchProducts()
-                case false:
-                    self.isInitialLoadCompleted = false
                 }
             }
         }
