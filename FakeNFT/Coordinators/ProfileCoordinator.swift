@@ -58,6 +58,13 @@ private extension ProfileCoordinator {
                 self.router.presentActionSheet(alertModel: alertModel)
             }
             
+            ownedNftCoordination.headForError = { errorMessage in
+                self.router.presentAlert(
+                    message: errorMessage,
+                    dismissCompletion: self.router.pop
+                )
+            }
+            
             router.push(ownedNftsView)
         }
         
@@ -74,6 +81,13 @@ private extension ProfileCoordinator {
                 profileCoordination?.onReturnFromFavorites(favoriteNfts)
             }
             
+            favoriteNftsCoordination.headForError = { errorMessage in
+                self.router.presentAlert(
+                    message: errorMessage,
+                    dismissCompletion: self.router.pop
+                )
+            }
+            
             router.push(favoriteNftsView)
         }
         
@@ -84,6 +98,13 @@ private extension ProfileCoordinator {
             
             let aboutView = modulesFactory.makeAboutWebView(urlString: urlString)
             router.push(aboutView)
+        }
+        
+        profileCoordination.headForError = { errorMessage in
+            self.router.presentAlert(
+                message: errorMessage,
+                dismissCompletion: self.router.pop
+            )
         }
         
         router.push(profileView)

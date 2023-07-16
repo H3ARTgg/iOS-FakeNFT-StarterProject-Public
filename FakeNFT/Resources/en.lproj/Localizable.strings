@@ -23,3 +23,5 @@ profile.price = "Price";
 profile.name = "Name";
 profile.about = "Description";
 profile.site = "Website";
+router.error = "Error";
+router.back = "Back";

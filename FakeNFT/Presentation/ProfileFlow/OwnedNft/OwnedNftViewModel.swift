@@ -10,6 +10,7 @@ import Combine
 
 protocol OwnedNftCoordination {
     var headForActionSheet: ((AlertModel) -> Void)? { get set }
+    var headForError: ((String) -> Void)? { get set }
 }
 
 protocol OwnedNftViewModelProtocol {
@@ -25,6 +26,7 @@ protocol OwnedNftViewModelProtocol {
 
 final class OwnedNftViewModel: OwnedNftCoordination {
     var headForActionSheet: ((AlertModel) -> Void)?
+    var headForError: ((String) -> Void)?
     
     private(set) var nfts = CurrentValueSubject<[NftViewModel], Never>([])
     private(set) var thereIsNfts = PassthroughSubject<Bool, Never>()
@@ -64,9 +66,11 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
         })
         .receive(on: DispatchQueue.main)
         .sink(
-            receiveCompletion: { [weak self] error in
-                print(error)
+            receiveCompletion: { [weak self] completion in
                 self?.showLoading.send(false)
+                if case .failure(let error) = completion {
+                    self?.headForError?(error.localizedDescription)
+                }
             },
             receiveValue: { [weak self] nfts in
                 self?.nfts.send(nfts)

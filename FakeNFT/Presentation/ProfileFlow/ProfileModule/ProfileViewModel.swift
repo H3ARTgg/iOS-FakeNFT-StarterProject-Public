@@ -13,6 +13,7 @@ protocol ProfileCoordination: AnyObject {
     var headForOwnedNfts: (([String]) -> Void)? { get set }
     var headForFavoriteNfts: (([String]) -> Void)? { get set }
     var headForAbout: ((String) -> Void)? { get set }
+    var headForError: ((String) -> Void)? { get set }
     
     func setProfile(_ profile: ProfileEditUserViewModel)
     func onReturnFromFavorites(_ favoriteNfts: [String])
@@ -36,6 +37,7 @@ final class ProfileViewModel {
     var headForOwnedNfts: (([String]) -> Void)?
     var headForFavoriteNfts: (([String]) -> Void)?
     var headForAbout: ((String) -> Void)?
+    var headForError: ((String) -> Void)?
     
     private(set) var profileDataPublisher: AnyPublisher<ProfileUserViewModel?, NetworkError>?
     private(set) var getSetProfile = PassthroughSubject<ProfileEditUserViewModel?, NetworkError>()
@@ -60,8 +62,12 @@ final class ProfileViewModel {
                     self?.profileData = profileData
                     self?.showLoading.send(false)
                 })
-                .handleEvents(receiveCompletion: { [weak self] _ in
+                .receive(on: DispatchQueue.main)
+                .handleEvents(receiveCompletion: { [weak self] completion in
                     self?.showLoading.send(false)
+                    if case .failure(let error) = completion {
+                        self?.headForError?(error.localizedDescription)
+                    }
                 })
                 .receive(on: DispatchQueue.main)
         }

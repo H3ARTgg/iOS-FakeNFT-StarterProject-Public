@@ -23,3 +23,5 @@ profile.price = "سعر";
 profile.name = "اسم";
 profile.about = "وصف";
 profile.site = "موقع إلكتروني";
+router.error = "خطأ";
+router.back = "خلف";

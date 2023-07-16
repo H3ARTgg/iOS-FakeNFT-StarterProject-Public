@@ -62,6 +62,12 @@ internal enum L10n {
     /// Sorting
     internal static let sort = L10n.tr("Localizable", "profile.sort", fallback: "Sorting")
   }
+  internal enum Router {
+    /// Back
+    internal static let back = L10n.tr("Localizable", "router.back", fallback: "Back")
+    /// Error
+    internal static let error = L10n.tr("Localizable", "router.error", fallback: "Error")
+  }
   internal enum Statistics {
     /// Statistics
     internal static let icon = L10n.tr("Localizable", "statistics.icon", fallback: "Statistics")

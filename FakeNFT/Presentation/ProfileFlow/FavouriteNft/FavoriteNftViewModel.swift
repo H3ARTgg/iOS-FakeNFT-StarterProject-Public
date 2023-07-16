@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 protocol FavoriteNftCoordination {
+    var headForError: ((String) -> Void)? { get set }
     var finish: (([String]) -> Void)? { get set }
 }
 
@@ -27,6 +28,7 @@ protocol FavoriteNftViewModelProtocol {
 }
 
 final class FavoriteNftViewModel: FavoriteNftCoordination {
+    var headForError: ((String) -> Void)?
     var finish: (([String]) -> Void)?
     
     private(set) var nftsPublisher: AnyPublisher<[NftViewModel], NetworkError>?
@@ -63,8 +65,12 @@ final class FavoriteNftViewModel: FavoriteNftCoordination {
                         self?.thereIsNfts.send(true)
                     }
                 })
-                .handleEvents(receiveCompletion: { [weak self] _ in
+                .receive(on: DispatchQueue.main)
+                .handleEvents(receiveCompletion: { [weak self] completion in
                     self?.showLoading.send(false)
+                    if case .failure(let error) = completion {
+                        self?.headForError?(error.localizedDescription)
+                    }
                 })
         }
         .eraseToAnyPublisher()

@@ -23,3 +23,5 @@ profile.price = "Цена";
 profile.name = "Имя";
 profile.about = "Описание";
 profile.site = "Сайт";
+router.error = "Ошибка";
+router.back = "Назад";

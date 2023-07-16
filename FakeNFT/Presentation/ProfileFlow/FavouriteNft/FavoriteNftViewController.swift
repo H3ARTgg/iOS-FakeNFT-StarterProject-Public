@@ -99,8 +99,7 @@ private extension FavoriteNftViewController {
         
         viewModel.nftsPublisher?
             .sink(
-                receiveCompletion: { error in
-                    print(error)
+                receiveCompletion: { _ in
                 },
                 receiveValue: { [weak self] nfts in
                     self?.dataSource.reload(nfts)
