@@ -14,11 +14,6 @@ internal enum L10n {
   internal static func profileNfts(_ p1: Int) -> String {
     return L10n.tr("Localizable", "profileNfts", p1, fallback: "Plural format key: \"%#@nfts@\"")
   }
-  internal enum Cart {
-    /// Cart
-    internal static let icon = L10n.tr("Localizable", "cart.icon", fallback: "Cart")
-  /// Close
-  internal static let close = L10n.tr("Localizable", "close", fallback: "Close")
   internal enum Alert {
     /// Close
     internal static let close = L10n.tr("Localizable", "alert.close", fallback: "Close")
@@ -34,18 +29,6 @@ internal enum L10n {
       /// To pay
       internal static let pay = L10n.tr("Localizable", "button.to.pay", fallback: "To pay")
     }
-  }
-  internal enum By {
-    /// By title
-    internal static let name = L10n.tr("Localizable", "by.name", fallback: "By title")
-    internal enum Nft {
-      /// By number of NFTs
-      internal static let count = L10n.tr("Localizable", "by.nft.count", fallback: "By number of NFTs")
-    }
-  }
-  internal enum CancelAction {
-    /// Cancel
-    internal static let text = L10n.tr("Localizable", "cancelAction.Text", fallback: "Cancel")
   }
   internal enum Cart {
     /// Cart is empty
@@ -95,6 +78,22 @@ internal enum L10n {
     /// Catalogue
     internal static let icon = L10n.tr("Localizable", "catalogue.icon", fallback: "Catalogue")
   }
+  internal enum Label {
+    /// Return
+    internal static let cancel = L10n.tr("Localizable", "label.cancel", fallback: "Return")
+    internal enum Amount {
+      /// NFT
+      internal static let nft = L10n.tr("Localizable", "label.amount.nft", fallback: "NFT")
+    }
+    internal enum Currency {
+      /// ETH
+      internal static let eth = L10n.tr("Localizable", "label.currency.eth", fallback: "ETH")
+    }
+    internal enum Delete {
+      /// Do you want to remove an item?
+      internal static let nft = L10n.tr("Localizable", "label.delete.nft", fallback: "Do you want to remove an item?")
+    }
+  }
   internal enum Profile {
     /// Description
     internal static let about = L10n.tr("Localizable", "profile.about", fallback: "Description")
@@ -140,6 +139,14 @@ internal enum L10n {
     internal static let back = L10n.tr("Localizable", "router.back", fallback: "Back")
     /// Error
     internal static let error = L10n.tr("Localizable", "router.error", fallback: "Error")
+  }
+  internal enum Sort {
+    /// By price
+    internal static let price = L10n.tr("Localizable", "sort.price", fallback: "By price")
+    /// By rating
+    internal static let rating = L10n.tr("Localizable", "sort.rating", fallback: "By rating")
+    /// By title
+    internal static let title = L10n.tr("Localizable", "sort.title", fallback: "By title")
   }
   internal enum Statistics {
     /// Statistics

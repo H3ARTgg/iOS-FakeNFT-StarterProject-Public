@@ -1,10 +1,3 @@
-//
-//  CartCoordinator.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Velikanov on 09.07.2023.
-//
-
 import Foundation
 
 final class CartCoordinator: BaseCoordinator, Coordinatable {
@@ -48,26 +41,24 @@ private extension CartCoordinator {
             }
         }
         
-        cartCoordinator.handlePaymentScreenOpening = { cartViewModel in
+        cartCoordinator.handlePaymentScreenOpening = { [weak self] cartViewModel in
+            guard let self else { return }
             
             let paymentModule = self.modulesFactory.makePaymentView(cartViewModel: cartViewModel)
             let paymentView = paymentModule.view
             let paymentCoordinator = paymentModule.coordination
             self.router.push(paymentView, animated: true)
             
-            paymentCoordinator.handleForAlert = { [weak self] alertModel in
-                guard let self else { return }
+            paymentCoordinator.handleForAlert = { alertModel in
                 self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
             }
             
-            paymentCoordinator.handleTermsScreenOpening = { [weak self] userURL in
-                guard let self else { return }
-                let aboutView = self.modulesFactory.makeAboutWebView(url: userURL)
+            paymentCoordinator.handleTermsScreenOpening = {
+                let aboutView = self.modulesFactory.makeAboutWebView(urlString: Consts.Cart.Url.termsUrl)
                 self.router.push(aboutView)
             }
             
-            paymentCoordinator.handlePaymentResultScreenPresentation = { [weak self] state in
-                guard let self else { return }
+            paymentCoordinator.handlePaymentResultScreenPresentation = { state in
                 let resultPaymentModule = self.modulesFactory.makePaymentResultView(state, cartViewModel)
                 let resultPaymentView = resultPaymentModule.view
                 let resultPaymentCoordinator = resultPaymentModule.coordination
@@ -79,8 +70,7 @@ private extension CartCoordinator {
                 self.router.push(resultPaymentView)
             }
             
-            paymentCoordinator.handleCartScreenReturn = { [weak self] in
-                guard let self else { return }
+            paymentCoordinator.handleCartScreenReturn = {
                 self.router.pop()
             }
             

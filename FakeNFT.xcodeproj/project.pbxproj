@@ -35,7 +35,7 @@
 		25751B812A5C18AF0022230D /* OrderRequestPut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B802A5C18AF0022230D /* OrderRequestPut.swift */; };
 		25751B992A5F44750022230D /* CartNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751B982A5F44750022230D /* CartNavController.swift */; };
 		25751BAF2A63014E0022230D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BAE2A63014E0022230D /* StorageManager.swift */; };
-		25751BB52A630EBD0022230D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BB42A630EBD0022230D /* Strings.swift */; };
+		25751BB92A645D860022230D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25751BB82A645D860022230D /* Strings.swift */; };
 		25B4DA722A48C628000B1F89 /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */; };
 		25B4DA742A48C816000B1F89 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA732A48C816000B1F89 /* PaymentViewController.swift */; };
 		25B4DA762A48CE8F000B1F89 /* UIProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */; };
@@ -92,7 +92,6 @@
 		78B553FD2A48330200A21777 /* ProfileEditSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FC2A48330200A21777 /* ProfileEditSectionHeaderView.swift */; };
 		78B553FF2A48B20500A21777 /* ProfileEditTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B553FE2A48B20500A21777 /* ProfileEditTableHeaderView.swift */; };
 		78BB462D2A614DF000DF3994 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 78BB462F2A614DF000DF3994 /* Localizable.stringsdict */; };
-		78BB46332A6156CD00DF3994 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BB46322A6156CC00DF3994 /* Strings.swift */; };
 		78D479512A5743C30089E861 /* FavoriteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479502A5743C30089E861 /* FavoriteNftViewController.swift */; };
 		78D479532A5743DB0089E861 /* FavoriteNftViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */; };
 		78D479552A5743EA0089E861 /* FavoriteNftDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D479542A5743EA0089E861 /* FavoriteNftDataSource.swift */; };
@@ -169,9 +168,7 @@
 		25751B802A5C18AF0022230D /* OrderRequestPut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestPut.swift; sourceTree = "<group>"; };
 		25751B982A5F44750022230D /* CartNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavController.swift; sourceTree = "<group>"; };
 		25751BAE2A63014E0022230D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		25751BB22A630B520022230D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		25751BB32A630B530022230D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
-		25751BB42A630EBD0022230D /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		25751BB82A645D860022230D /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		25B4DA712A48C628000B1F89 /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		25B4DA732A48C816000B1F89 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		25B4DA752A48CE8F000B1F89 /* UIProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProgressHUD.swift; sourceTree = "<group>"; };
@@ -235,7 +232,6 @@
 		78BB462E2A614DF000DF3994 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		78BB46302A614DFB00DF3994 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		78BB46312A614DFF00DF3994 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		78BB46322A6156CC00DF3994 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		78D479502A5743C30089E861 /* FavoriteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftViewController.swift; sourceTree = "<group>"; };
 		78D479522A5743DB0089E861 /* FavoriteNftViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftViewModel.swift; sourceTree = "<group>"; };
 		78D479542A5743EA0089E861 /* FavoriteNftDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftDataSource.swift; sourceTree = "<group>"; };
@@ -434,9 +430,9 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				25751BAE2A63014E0022230D /* StorageManager.swift */,
 				78D4795C2A595F810089E861 /* Models */,
 				787AC6672A50461500DE15E1 /* NftDataManager.swift */,
-				25751BAE2A63014E0022230D /* StorageManager.swift */,
 				78F308A52A3EF3EA0036BF33 /* Networking */,
 			);
 			path = Services;
@@ -563,9 +559,8 @@
 		786545192A40CB0800C1961B /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				78BB46322A6156CC00DF3994 /* Strings.swift */,
+				25751BB82A645D860022230D /* Strings.swift */,
 				7865451A2A40CB3100C1961B /* XCAssets+Generated.swift */,
-				25751BB42A630EBD0022230D /* Strings.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -1187,7 +1182,6 @@
 				78D479802A5A846C0089E861 /* StatisticsCoordinator.swift in Sources */,
 				78D479752A5A81EE0089E861 /* UIViewController+Ext.swift in Sources */,
 				5BD984682A49828F00CF45DE /* WebViewViewController.swift in Sources */,
-				78BB46332A6156CD00DF3994 /* Strings.swift in Sources */,
 				78D479532A5743DB0089E861 /* FavoriteNftViewModel.swift in Sources */,
 				787AC6712A505A2900DE15E1 /* OwnedNftTableViewCell.swift in Sources */,
 				787AC66B2A5059EE00DE15E1 /* OwnedNftViewController.swift in Sources */,
@@ -1213,8 +1207,8 @@
 				78F308C02A3EFDBB0036BF33 /* Consts.swift in Sources */,
 				250DF10D2A47892100AC2E4E /* CartViewModel.swift in Sources */,
 				25FB791B2A59F4E000D9377B /* CurrencyResult.swift in Sources */,
+				25751BB92A645D860022230D /* Strings.swift in Sources */,
 				250DF0FB2A47540700AC2E4E /* PaymentView.swift in Sources */,
-				25751BB52A630EBD0022230D /* Strings.swift in Sources */,
 				78B553F22A46E4D300A21777 /* ProfileUserViewModel.swift in Sources */,
 				78F308BA2A3EF9A40036BF33 /* ProfileViewController.swift in Sources */,
 				78B553F92A4825A000A21777 /* ProfileEditCell.swift in Sources */,
@@ -1247,7 +1241,7 @@
 				250DF0F92A4752D800AC2E4E /* CustomButton.swift in Sources */,
 				250DF0F72A474C6D00AC2E4E /* CustomLabel.swift in Sources */,
 				25FB791D2A5A0A6000D9377B /* PaymentViewModel.swift in Sources */,
-				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				3FC8C39129D2453B0081F015 /* ProfileRequests.swift in Sources */,
 				78D4795B2A595F360089E861 /* ProfileCellModel.swift in Sources */,
 				784B952D2A4B6BBF00563B4B /* ProfileEditUserModel.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ProfileRequests.swift in Sources */,
@@ -1268,7 +1262,6 @@
 				78D4796F2A5A808C0089E861 /* BaseCoordinator.swift in Sources */,
 				78F308BE2A3EFA510036BF33 /* CartViewController.swift in Sources */,
 				250DF10F2A47895A00AC2E4E /* Observable.swift in Sources */,
-				78D479772A5A824C0089E861 /* Alert.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				5BD9846A2A4982A300CF45DE /* WebViewModel.swift in Sources */,
 				25FB79132A59D43800D9377B /* PaymentViewCollection.swift in Sources */,

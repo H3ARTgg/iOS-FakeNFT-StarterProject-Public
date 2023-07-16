@@ -140,11 +140,11 @@ extension CartViewModel {
     }
     
     private func createSortAlertModel() -> AlertModel {
-        let alertTitle = L10n.Sort.catalogue
+        let alertTitle = L10n.Sort.title
         let sortPriceActionTitle = L10n.Sort.price
         let sortRatingActionTitle = L10n.Sort.rating
         let sortTitleActionTitle = L10n.Sort.title
-        let cancelActionTitle = L10n.CancelAction.text
+        let cancelActionTitle = L10n.Alert.close
         
         let sortPriceAction = AlertAction(
             actionText: sortPriceActionTitle,

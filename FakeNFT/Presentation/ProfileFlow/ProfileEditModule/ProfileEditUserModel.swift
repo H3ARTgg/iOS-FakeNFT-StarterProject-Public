@@ -20,4 +20,3 @@ struct ProfileEditUserViewModel {
     let description: String
     let site: String
 }
-

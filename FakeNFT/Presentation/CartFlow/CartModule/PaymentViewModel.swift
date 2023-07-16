@@ -7,7 +7,7 @@ enum ViewState {
 }
 
 protocol PaymentCoordination: AnyObject {
-    var handleTermsScreenOpening: ((URL) -> Void)? { get set }
+    var handleTermsScreenOpening: (() -> Void)? { get set }
     var handlePaymentResultScreenPresentation: ((ViewState) -> Void)? { get set }
     var handleCartScreenReturn: (() -> Void)? { get set }
     var handleForAlert: ((AlertModel) -> Void)? { get set }
@@ -30,7 +30,7 @@ final class PaymentViewModel: ObservableObject, PaymentCoordination {
     
     private var isInitialLoadCompleted = false
         
-    var handleTermsScreenOpening: ((URL) -> Void)?
+    var handleTermsScreenOpening: (() -> Void)?
     var handlePaymentResultScreenPresentation: ((ViewState) -> Void)?
     var handleCartScreenReturn: (() -> Void)?
     var handleForAlert: ((AlertModel) -> Void)?
@@ -88,8 +88,7 @@ extension PaymentViewModel: PaymentViewModelProtocol {
     }
     
     func showTerms() {
-        guard let url = URL(string: Consts.Cart.Url.termsUrl) else { return }
-        handleTermsScreenOpening?(url)
+        handleTermsScreenOpening?()
     }
     
     func closePaymentViewController() {

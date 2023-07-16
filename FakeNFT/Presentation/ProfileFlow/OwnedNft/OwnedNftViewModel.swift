@@ -127,6 +127,7 @@ extension OwnedNftViewModel: OwnedNftViewModelProtocol {
         
         let alertModel = AlertModel(
             alertText: alertText,
+            message: nil,
             alertActions: [
                 alertSortByPriceAction,
                 alertSortByRatingAction,
