@@ -155,6 +155,8 @@
 		7891546D2A51770200DC78B6 /* NetworkTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
 		7891546F2A51770200DC78B6 /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		789154702A51770200DC78B6 /* NftDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftDataManager.swift; sourceTree = "<group>"; };
+		78BB46202A608F9D00DF3994 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		78BB46212A608F9D00DF3994 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78D4796A2A5A808C0089E861 /* BaseCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		78D4796B2A5A808C0089E861 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
 		78D4796C2A5A808C0089E861 /* ModulesFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModulesFactory.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				en,
 				Base,
 				ru,
+				ar,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -984,6 +987,7 @@
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
 				78F308CE2A3F02620036BF33 /* ru */,
+				78BB46202A608F9D00DF3994 /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -993,6 +997,7 @@
 			children = (
 				78F308CC2A3F02550036BF33 /* en */,
 				78F308CF2A3F02620036BF33 /* ru */,
+				78BB46212A608F9D00DF3994 /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
