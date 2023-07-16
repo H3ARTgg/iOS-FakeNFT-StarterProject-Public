@@ -16,9 +16,8 @@ protocol Routable {
     func present(_ module: Presentable?, presentationStyle: UIModalPresentationStyle)
     func present(_ module: Presentable?, animated: Bool, presentationStyle: UIModalPresentationStyle, dismissCompletion: (() -> Void)?)
     
-    func push(_ module: Presentable?)
-    func push(_ module: Presentable?, animated: Bool)
-
+    func push(_ module: Presentable?, to navController: UINavigationController)
+    func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool)
     func pop()
     func pop(animated: Bool)
     func popToRoot(animated: Bool)
@@ -46,21 +45,25 @@ final class Router: NSObject {
 }
 
 extension Router: Routable {
-    func push(_ module: Presentable?) {
-        push(module, animated: true)
+    func push(_ module: Presentable?, to navController: UINavigationController) {
+        push(module, to: navController, animated: true)
     }
 
-    func push(_ module: Presentable?, animated: Bool) {
+    func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool) {
         guard let controller = module?.toPresent() else { return }
-        guard let selectedController = presentingViewController as? UITabBarController else {
+        
+        guard let tabbarItem = presentingViewController as? UITabBarController else {
             return
         }
 
-        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+        guard
+            let tabbarViewControllers = tabbarItem.viewControllers,
+            tabbarViewControllers.contains(navController)
+        else {
             return
         }
-
-        rootViewController.pushViewController(controller, animated: animated)
+        
+        navController.pushViewController(controller, animated: animated)
     }
 
     func pop() {

@@ -10,6 +10,7 @@ final class ProfileCoordinator: BaseCoordinator, Coordinatable {
     
     private var modulesFactory: ModulesFactoryProtocol
     private var router: Routable
+    private let navController = ProfileNavController()
     
     init(modulesFactory: ModulesFactoryProtocol, router: Routable) {
         self.modulesFactory = modulesFactory
@@ -17,7 +18,7 @@ final class ProfileCoordinator: BaseCoordinator, Coordinatable {
     }
     
     func startFlow() {
-        router.addToTabBar(ProfileNavController())
+        router.addToTabBar(navController)
         performFlow()
     }
 }
@@ -65,7 +66,7 @@ private extension ProfileCoordinator {
                 )
             }
             
-            router.push(ownedNftsView)
+            router.push(ownedNftsView, to: navController)
         }
         
         profileCoordination.headForFavoriteNfts = { [weak self] favoriteNfts in
@@ -88,7 +89,7 @@ private extension ProfileCoordinator {
                 )
             }
             
-            router.push(favoriteNftsView)
+            router.push(favoriteNftsView, to: navController)
         }
         
         profileCoordination.headForAbout = { [weak self] urlString in
@@ -97,7 +98,7 @@ private extension ProfileCoordinator {
             }
             
             let aboutView = modulesFactory.makeAboutWebView(urlString: urlString)
-            router.push(aboutView)
+            router.push(aboutView, to: navController)
         }
         
         profileCoordination.headForError = { errorMessage in
@@ -107,6 +108,6 @@ private extension ProfileCoordinator {
             )
         }
         
-        router.push(profileView)
+        router.push(profileView, to: navController)
     }
 }
