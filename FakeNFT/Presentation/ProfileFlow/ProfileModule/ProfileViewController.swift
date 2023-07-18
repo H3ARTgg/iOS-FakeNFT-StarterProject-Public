@@ -47,6 +47,10 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = dataSource
         setupNavBar()
         setupBindings()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel.requestProfile()
     }
 }
