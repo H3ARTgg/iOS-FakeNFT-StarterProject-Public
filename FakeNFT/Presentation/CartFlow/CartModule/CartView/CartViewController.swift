@@ -41,6 +41,8 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         
+        UIProgressHUD.show()
+        
         if cartViewModel.isLoadCompleted {
             updateDelegate?.reloadTableView()
             updateDelegate?.refreshPayment()
@@ -63,6 +65,9 @@ final class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        
+        UIProgressHUD.show()
+        cartViewModel.fetchProducts()
     }
     
     // MARK: - Actions

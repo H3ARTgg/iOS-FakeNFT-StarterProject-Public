@@ -82,6 +82,5 @@ extension PaymentResultViewController: PaymentResultViewControllerDelegate {
     func closePaymentResultViewController() {
         cartViewModel.updateCart()
         tabBarController?.tabBar.isHidden = false
-        tabBarController?.selectedIndex = 1
     }
 }

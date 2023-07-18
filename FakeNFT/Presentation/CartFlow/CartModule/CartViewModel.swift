@@ -11,6 +11,7 @@ protocol CartCoordination: AnyObject {
 protocol CartViewModelProtocol {
     var listProducts: [Nft] { get }
     var isLoadCompleted: Bool { get }
+    func fetchProducts()
     func delete(from id: Int)
     func updateCart()
     func bind(updateViewController: @escaping ([Nft]) -> Void)
@@ -42,8 +43,18 @@ final class CartViewModel: ObservableObject, CartCoordination {
         self.cartNetworkService = cartNetworkService
         fetchProducts()
     }
+}
+
+extension CartViewModel: CartViewModelProtocol {
+    var listProducts: [Nft] {
+        return products
+    }
+
+    var isLoadCompleted: Bool {
+        return isInitialLoadCompleted
+    }
     
-    private func fetchProducts() {
+    func fetchProducts() {
         cartNetworkService.fetchProducts { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
@@ -66,21 +77,13 @@ final class CartViewModel: ObservableObject, CartCoordination {
                         default: break
                         }
                     }
+                    
+                    UIProgressHUD.dismiss()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
-    }
-}
-
-extension CartViewModel: CartViewModelProtocol {
-    var listProducts: [Nft] {
-        return products
-    }
-
-    var isLoadCompleted: Bool {
-        return isInitialLoadCompleted
     }
 
     func delete(from id: Int) {
