@@ -16,9 +16,17 @@ xcassets:
     output: XCAssets+Generated.swift
 
 strings:
+<<<<<<< HEAD
 
   inputs: en.lproj
   
   outputs:
     templateName: structured-swift5
     output: Strings.swift
+=======
+  inputs: en.lproj
+  
+  outputs:
+    - templateName: structured-swift5
+      output: Strings.swift
+>>>>>>> develop

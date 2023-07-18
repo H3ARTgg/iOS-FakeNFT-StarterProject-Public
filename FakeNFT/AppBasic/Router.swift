@@ -1,10 +1,3 @@
-//
-//  Router.swift
-//  Tracker
-//
-//  Created by Aleksandr Velikanov on 01.04.2023.
-//
-
 import UIKit
 
 protocol Routable {
@@ -18,15 +11,22 @@ protocol Routable {
     
     func push(_ module: Presentable?, to navController: UINavigationController)
     func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool)
+<<<<<<< HEAD
     func popToRoot(animated: Bool)
     
+=======
+    func pop()
+    func pop(animated: Bool)
+    func popToRoot(animated: Bool)
+
+>>>>>>> develop
     func dismissModule(_ module: Presentable?)
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
     
-    func presentAlert(message: String)
-    func presentActionSheet(alertModel: AlertModel)
-    
+    func presentErrorAlert(message: String, dismissCompletion: (() -> Void)?)
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style)
+
     func addToTabBar(_ module: Presentable?)
 }
 
@@ -45,14 +45,22 @@ extension Router: Routable {
     func push(_ module: Presentable?, to navController: UINavigationController) {
         push(module, to: navController, animated: true)
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> develop
     func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool) {
         guard let controller = module?.toPresent() else { return }
         
         guard let tabbarItem = presentingViewController as? UITabBarController else {
             return
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> develop
         guard
             let tabbarViewControllers = tabbarItem.viewControllers,
             tabbarViewControllers.contains(navController)
@@ -62,11 +70,32 @@ extension Router: Routable {
         
         navController.pushViewController(controller, animated: animated)
     }
+<<<<<<< HEAD
     
+=======
+
+    func pop() {
+        pop(animated: true)
+    }
+
+    func pop(animated: Bool) {
+        guard let selectedController = presentingViewController as? UITabBarController else {
+            return
+        }
+
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+
+        rootViewController.popViewController(animated: animated)
+    }
+
+>>>>>>> develop
     func popToRoot(animated: Bool) {
         guard let selectedController = presentingViewController as? UITabBarController else {
             return
         }
+<<<<<<< HEAD
         
         guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
             return
@@ -75,6 +104,16 @@ extension Router: Routable {
         rootViewController.popToRootViewController(animated: true)
     }
     
+=======
+
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+
+        rootViewController.popToRootViewController(animated: true)
+    }
+
+>>>>>>> develop
     func setRootViewController(viewController: Presentable) {
         presentingViewController = viewController
         delegate?.setRootViewController(presentingViewController)
@@ -131,13 +170,32 @@ extension Router: Routable {
         rootViewController.setViewControllers(viewControllers, animated: false)
     }
     
-    func presentAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        presentingViewController?.toPresent()?.present(alert, animated: true)
+    func presentErrorAlert(message: String, dismissCompletion: (() -> Void)? = nil) {
+        let alert = UIAlertController(
+            title: L10n.Router.error,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        let action = UIAlertAction(
+            title: L10n.Router.back,
+            style: .cancel,
+            handler: { _ in
+                dismissCompletion?()
+            }
+        )
+
+        alert.addAction(action)
+        self.presentingViewController?
+            .toPresent()?
+            .present(
+                alert,
+                animated: true
+            )
     }
     
-    func presentActionSheet(alertModel: AlertModel) {
-        let alert = UIAlertController(title: alertModel.alertText, message: nil, preferredStyle: .actionSheet)
+    func presentAlertController(alertModel: AlertModel, preferredStyle: UIAlertController.Style) {
+        let alert = UIAlertController(title: alertModel.alertText, message: alertModel.message, preferredStyle: preferredStyle)
         alertModel.alertActions.forEach { alertAction in
             let actionStyle: UIAlertAction.Style
             switch alertAction.actionRole {
@@ -149,7 +207,6 @@ extension Router: Routable {
             let action = UIAlertAction(title: alertAction.actionText, style: actionStyle, handler: { _ in alertAction.action?() })
             alert.addAction(action)
         }
-        
         presentingViewController?.toPresent()?.present(alert, animated: true)
     }
 }

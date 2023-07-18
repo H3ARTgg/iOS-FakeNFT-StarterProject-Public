@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 enum NetworkClientError: Error {
     case httpStatusCode(Int)
@@ -16,6 +17,11 @@ protocol NetworkClient {
     func send<T: Decodable>(request: NetworkRequest,
                             type: T.Type,
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    
+    func networkPublisher<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type
+    ) -> AnyPublisher<T, NetworkError>
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -23,10 +29,11 @@ struct DefaultNetworkClient: NetworkClient {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
+    init(decoder: JSONDecoder = JSONDecoder(),
          encoder: JSONEncoder = JSONEncoder()) {
-        self.session = session
+        let sessionConfiguration = URLSessionConfiguration.default
+        sessionConfiguration.timeoutIntervalForRequest = 10
+        self.session = URLSession(configuration: sessionConfiguration)
         self.decoder = decoder
         self.encoder = encoder
     }
@@ -102,5 +109,24 @@ struct DefaultNetworkClient: NetworkClient {
         } catch {
             onResponse(.failure(NetworkClientError.parsingError))
         }
+    }
+    
+    func networkPublisher<T: Decodable>(request: NetworkRequest, type: T.Type) -> AnyPublisher<T, NetworkError> {
+        guard let urlRequest = create(request: request) else {
+            return Fail(error: NetworkError.badRequest).eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: urlRequest)
+            .map(\.data)
+            .decode(type: type.self, decoder: decoder)
+            .mapError { (error) -> NetworkError in
+                switch error {
+                case is URLError:
+                    return NetworkError.addressUnreachable(request.endpoint)
+                default:
+                    return NetworkError.invalidResponse
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }

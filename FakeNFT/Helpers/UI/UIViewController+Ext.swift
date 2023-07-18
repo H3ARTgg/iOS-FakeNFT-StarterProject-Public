@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
@@ -28,5 +29,17 @@ protocol Presentable: AnyObject {
 extension UIViewController: Presentable {
     func toPresent() -> UIViewController? {
         return self
+    }
+}
+
+// MARK: - Progress HUD
+
+extension UIViewController {
+    func displayLoading(_ isVisible: Bool) {
+        if isVisible {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
     }
 }
