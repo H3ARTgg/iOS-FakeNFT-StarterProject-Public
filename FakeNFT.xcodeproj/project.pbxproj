@@ -188,7 +188,7 @@
 		1D7CD11C2A4E35D800921667 /* CollectionDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionDetailsCell.swift; sourceTree = "<group>"; };
 		1D7CD11E2A4E35DE00921667 /* CollectionDetailsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionDetailsCellViewModel.swift; sourceTree = "<group>"; };
 		1D7CD1202A4E35ED00921667 /* LikesNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesNetworkModel.swift; sourceTree = "<group>"; };
-		1D7CD1222A4E35F300921667 /* NFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
+		1D7CD1222A4E35F300921667 /* NFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NFT.swift; path = ../Presentation/CatalogueFlow/CollectionDetailsModule/Models/NFT.swift; sourceTree = "<group>"; };
 		1D7CD1242A4E35F900921667 /* OrderNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderNetworkModel.swift; sourceTree = "<group>"; };
 		1D7CD1262A4E35FE00921667 /* OrderResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderResponce.swift; sourceTree = "<group>"; };
 		1D7CD12A2A4E361800921667 /* CatalogueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueViewModel.swift; sourceTree = "<group>"; };
@@ -198,7 +198,6 @@
 		1D7CD1322A4E363900921667 /* CatalogueSupplementaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueSupplementaryViewModel.swift; sourceTree = "<group>"; };
 		1D7CD1342A4E364300921667 /* CatalogueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueCell.swift; sourceTree = "<group>"; };
 		1D7CD1362A4E364900921667 /* CatalogueCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueCellViewModel.swift; sourceTree = "<group>"; };
-		1D7CD1482A4E36F900921667 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		1DD2FC672A66FEBD00024155 /* CatalogueRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatalogueRequests.swift; path = ../../../Models/Network/CatalogueRequests.swift; sourceTree = "<group>"; };
 		1DFFD3032A641B7300A89137 /* CatalogueNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueNavController.swift; sourceTree = "<group>"; };
 		250DF0F32A47453900AC2E4E /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -401,7 +400,6 @@
 			isa = PBXGroup;
 			children = (
 				1D7CD1202A4E35ED00921667 /* LikesNetworkModel.swift */,
-				1D7CD1222A4E35F300921667 /* NFT.swift */,
 				1D7CD1242A4E35F900921667 /* OrderNetworkModel.swift */,
 				1D7CD1262A4E35FE00921667 /* OrderResponce.swift */,
 			);
@@ -600,6 +598,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1D7CD1222A4E35F300921667 /* NFT.swift */,
 				250DF10A2A47876D00AC2E4E /* Nft.swift */,
 				25FB79182A59F48700D9377B /* Currency.swift */,
 				253A208C2A5B4E2D0031C9CE /* PaymentResponse.swift */,
@@ -1088,7 +1087,6 @@
 			children = (
 				1D7CD12C2A4E362000921667 /* CustomProgressHUD.swift */,
 				1DFFD3032A641B7300A89137 /* CatalogueNavController.swift */,
-				1D7CD1482A4E36F900921667 /* Observable.swift */,
 				1DECC1E82A456632005A9116 /* CollectionDetailsModule */,
 				78F308B62A3EF83C0036BF33 /* CatalogueModule */,
 			);
