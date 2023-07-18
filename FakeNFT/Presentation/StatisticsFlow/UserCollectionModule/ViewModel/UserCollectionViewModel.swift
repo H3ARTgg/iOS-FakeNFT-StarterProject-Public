@@ -27,7 +27,7 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollec
     
     private var nftsId: [String]?
     
-    private var nfts: [NftNetworkModel] = [] {
+    private var nfts: [NftResponseModel] = [] {
         didSet {
             guard let nftsId
             else {
