@@ -25,7 +25,7 @@ private extension CatalogueCoordinator {
         let catalogueView = catalogueModule.view
         
         catalogueCoordination.headForActionSheet = {[weak self] alertModel in
-            self?.router.presentActionSheet(alertModel: alertModel)
+            self?.router.presentAlertController(alertModel: alertModel, preferredStyle: .actionSheet)
         }
         
         catalogueCoordination.headForCollectionDetails = { [weak self] collectionId in

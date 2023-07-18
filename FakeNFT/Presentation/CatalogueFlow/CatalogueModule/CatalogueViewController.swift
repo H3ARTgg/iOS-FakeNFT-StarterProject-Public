@@ -25,8 +25,8 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         control.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return control
     }()
-    private lazy var errorButton: CustomButton = {
-        let button = CustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+    private lazy var errorButton: OtherCustomButton = {
+        let button = OtherCustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
         button.configure(text: L10n.Error.Try.again)
         return button
     }()
@@ -63,7 +63,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
                 self?.viewModel.sortByNftCount()
         }
         let cancelAction = AlertAction(actionText: L10n.Alert.close, actionRole: .cancel, action: nil)
-        let alertModel = AlertModel(alertText: L10n.Sort.catalogue, alertActions: [sortByName, sortByNftsCount, cancelAction])
+        let alertModel = AlertModel(alertText: L10n.Sort.catalogue, message: nil, alertActions: [sortByName, sortByNftsCount, cancelAction])
         viewModel.didTapSortButton(with: alertModel)
     }
     

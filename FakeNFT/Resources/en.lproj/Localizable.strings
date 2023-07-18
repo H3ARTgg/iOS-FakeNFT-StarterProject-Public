@@ -65,3 +65,12 @@ Statistic.UserCollectionViewController.Title = "Collection NFT";
 Statistic.PlugLabel.Text = "No NFT";
 Statistic.ErrorAlert.Title = "Error";
 Statistic.ErrorPlugView.Text = "Oops, something went wrong(";
+
+error.try.again = "Try again";
+error.connection.message = "Something went wrong(";
+collection.author = "Collection author";
+sort.catalogue = "Sorting";
+by.name = "By title";
+by.nft.count = "By number of NFTs";
+image.load.failure = "Try again";
+

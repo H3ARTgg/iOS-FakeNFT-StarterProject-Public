@@ -52,8 +52,8 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
         gesture.numberOfTouchesRequired = 1
         return gesture
     }()
-    private lazy var errorButton: CustomButton = {
-        let button = CustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
+    private lazy var errorButton: OtherCustomButton = {
+        let button = OtherCustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
         button.configure(text: L10n.Error.Try.again)
         return button
     }()

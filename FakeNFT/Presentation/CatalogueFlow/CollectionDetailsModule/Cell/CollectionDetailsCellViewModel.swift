@@ -108,7 +108,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             guard let self else { return }
             
             var orderIds = self.orderNftsIds
-            var request = OrderRequestPut()
+            var request = OrderRequestPutCatalogue()
             if self.isInCart {
                 orderIds = orderIds.filter({ $0 != self.id })
             } else {
