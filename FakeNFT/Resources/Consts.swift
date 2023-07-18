@@ -8,7 +8,6 @@ struct Consts {
         static let cart = Asset.Assets.cartIcon.image
         
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
-        static let sortButtonCatalogue = Asset.Assets.sortButtonCatalogue.image
         static let outCart = Asset.Assets.notInCart.image
         static let inCart = Asset.Assets.inCart.image
         static let inFavorites = Asset.Assets.inFavorites.image
@@ -19,7 +18,6 @@ struct Consts {
         static let cross = UIImage(systemName: "xmark")
         static let backButton = Asset.Assets.chevronBackward.image
         static let sortMenu = Asset.Assets.sortMenu.image
-       // static let like = Asset.Assets.like.image
     }
     
     struct Fonts {

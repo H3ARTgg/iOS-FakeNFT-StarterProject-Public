@@ -94,8 +94,9 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
             target: nil,
             action: nil
         )
+        let sortIcon = Asset.Assets.sortIcon.image.withTintColor(Asset.Colors.ypBlack.color)
         let rightBarButton = UIBarButtonItem(
-            image: Consts.Images.sortButtonCatalogue,
+            image: sortIcon,
             style: .done,
             target: self,
             action: #selector(didTapSortButton))

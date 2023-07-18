@@ -59,7 +59,6 @@ internal enum Asset {
     internal static let fillStar = ImageAsset(name: "fillStar")
     internal static let star = ImageAsset(name: "star")
     internal static let sortMenu = ImageAsset(name: "sortMenu")
-    internal static let sortButtonCatalogue = ImageAsset(name: "sort_button_catalogue")
   }
   internal enum Colors {
     internal static let ypBackground = ColorAsset(name: "ypBackground")

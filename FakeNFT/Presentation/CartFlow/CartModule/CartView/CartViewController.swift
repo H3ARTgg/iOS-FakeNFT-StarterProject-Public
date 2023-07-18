@@ -74,12 +74,14 @@ final class CartViewController: UIViewController {
 // MARK: - Private methods
 extension CartViewController {
     private func configureNavBar() {
+        let sortIcon = Asset.Assets.sortIcon.image.withTintColor(Asset.Colors.ypBlack.color)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: Asset.Assets.sortButton.image,
+            image: sortIcon,
             style: .done,
             target: self,
             action: #selector(openSortAlert)
         )
+        navigationItem.rightBarButtonItem?.tintColor = Asset.Colors.ypBlack.color
     }
 }
 
