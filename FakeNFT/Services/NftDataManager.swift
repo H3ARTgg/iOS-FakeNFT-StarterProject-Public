@@ -6,6 +6,11 @@
 //
 
 import Foundation
+<<<<<<< HEAD
+
+protocol NftDataManagerProtocol {
+
+=======
 import Combine
 
 protocol NftDataManagerProtocol {
@@ -14,6 +19,7 @@ protocol NftDataManagerProtocol {
     func getUserNamesPublisher(ids: [String]) -> AnyPublisher<[String], NetworkError>
     func getUserNamePublisher(id: String) -> AnyPublisher<String, NetworkError>
     func removeFavoriteNft(_ id: String) -> AnyPublisher<ProfileResponseModel, NetworkError>
+>>>>>>> develop
 }
 
 final class NftDataManager: NftDataManagerProtocol {
@@ -22,6 +28,9 @@ final class NftDataManager: NftDataManagerProtocol {
     init(networkService: NetworkClient) {
         self.networkService = networkService
     }
+<<<<<<< HEAD
+    
+=======
 
     private func getNftPublisher(nftId: String) -> AnyPublisher<NftResponseModel, NetworkError> {
         let nftGetRequest = NftGetRequest(id: nftId)
@@ -90,4 +99,5 @@ final class NftDataManager: NftDataManagerProtocol {
         }
        .eraseToAnyPublisher()
     }
+>>>>>>> develop
 }

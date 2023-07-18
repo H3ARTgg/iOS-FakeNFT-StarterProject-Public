@@ -14,6 +14,9 @@ protocol ModulesFactoryProtocol {
     func makeStatisticView() -> (view: Presentable, coordination: StatisticCoordination)
     func makeUserCardView(userCardData: UserNetworkModel) -> (view: Presentable, coordination: UserCardCoordination)
     func makeUserCollection(nftsId: [String]?) -> (view: Presentable, coordination: UserCollectionCoordination)
+
+    func makeCatalogueView() -> (view: Presentable, coordination: CatalogueCoordination)
+    func makeCollectionDetailsViewWith(collectionId: String) -> (view: Presentable, coordination: CollectionDetailsCoordination)
 }
 
 final class ModulesFactory: ModulesFactoryProtocol {
@@ -117,5 +120,20 @@ extension ModulesFactory {
         let userCollectionViewController = UserCollectionViewController(viewModel: userCollectionViewModel)
         
         return (userCollectionViewController, userCollectionViewModel)
+    }
+}
+
+// MARK: - CatalogueFlow
+extension ModulesFactory {
+    func makeCatalogueView() -> (view: Presentable, coordination: CatalogueCoordination) {
+        let catalogueVM = CatalogueViewModel(networkClient: DefaultNetworkClient())
+        let catalogueVC = CatalogueViewController(viewModel: catalogueVM)
+        return (catalogueVC, catalogueVM)
+    }
+    
+    func makeCollectionDetailsViewWith(collectionId: String) -> (view: Presentable, coordination: CollectionDetailsCoordination) {
+        let colDetVM = CollectionDetailsViewModel(collectionId: collectionId, networkClient: DefaultNetworkClient())
+        let colDetVC = CollectionDetailsViewController(viewModel: colDetVM)
+        return (colDetVC, colDetVM)
     }
 }
