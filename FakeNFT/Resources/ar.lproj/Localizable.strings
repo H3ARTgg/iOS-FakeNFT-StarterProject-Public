@@ -5,6 +5,7 @@ profile.icon = "حساب تعريفي";
 catalogue.icon = "فهرس";
 cart.icon = "سلة";
 statistics.icon = "إحصائيات";
+
 profile.owned = "الخاصة بي";
 profile.favorite = "مميزة";
 profile.ownedScreen = "NFTs الخاصة بي";
@@ -52,3 +53,15 @@ cart.resultPayment.failureButton = "لمحاولة مرة أخرى";
 cart.resultPayment.successTitle = "نجاح! تم الدفع";
 cart.resultPayment.successCongratulationTitle = "مبروك على شرائك!";
 cart.resultPayment.successButton = "العودة إلى الكتالوج";
+
+Statistic.FilterAlert.Title = "فرز";
+Statistic.AlertAction.SortByName.Title = "الترتيب حسب الاسم";
+Statistic.AlertAction.SortByRating.Title = "حسب التصنيف";
+Statistic.AlertAction.Cancel.Title = "يلغي";
+Statistic.AlertAction.Repeat.Title = "يكرر";
+Statistic.UserSiteButton.Title = "انتقل إلى الموقع";
+Statistic.UserCollectionButton.Title = "مجموعة NFT(%d)";
+Statistic.UserCollectionViewController.Title = "مجموعة NFT";
+Statistic.PlugLabel.Text = "لا NFT";
+Statistic.ErrorAlert.Title = "خطأ";
+Statistic.ErrorPlugView.Text = "تبا شيء ما حدث بشكل خاطئ";

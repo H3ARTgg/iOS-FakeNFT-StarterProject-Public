@@ -55,6 +55,8 @@ private extension AppCoordinator {
     }
     
     func createStatisticsFlow() {
-    
+        let statisticCoordinator = coordinatorsFactory.makeStatisticsCoordinator(router: router)
+        addDependency(statisticCoordinator)
+        statisticCoordinator.startFlow()
     }
 }

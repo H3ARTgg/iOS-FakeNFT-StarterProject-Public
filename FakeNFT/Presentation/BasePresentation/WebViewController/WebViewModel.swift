@@ -6,7 +6,7 @@ protocol WebViewViewModelProtocol {
 }
 
 final class WebViewViewModel: WebViewViewModelProtocol {
-    public var loadURL: ((URL) -> Void)?
+    var loadURL: ((URL) -> Void)?
     
     private let url: URL?
     

@@ -12,6 +12,7 @@ class WebViewViewController: UIViewController {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.backgroundColor = .clear
+        webView.accessibilityIdentifier = Consts.Statistic.webViewAccessibilityIdentifier
         return webView
     }()
     
@@ -53,7 +54,7 @@ extension WebViewViewController {
     
     private func navigationItemSetup() {
         let backButton = UIBarButtonItem(
-            image: Consts.Images.backButton,
+            image: Asset.Assets.chevronBackward.image,
             style: .done,
             target: self,
             action: #selector(backButtonTapped))

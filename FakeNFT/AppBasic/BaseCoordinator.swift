@@ -1,10 +1,3 @@
-//
-//  BaseCoordinator.swift
-//  Tracker
-//
-//  Created by Aleksandr Velikanov on 01.04.2023.
-//
-
 protocol Coordinatable: AnyObject {
     func startFlow()
 }

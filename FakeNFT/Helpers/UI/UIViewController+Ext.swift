@@ -38,8 +38,7 @@ extension UIViewController {
     func displayLoading(_ isVisible: Bool) {
         if isVisible {
             ProgressHUD.show()
-        }
-        else {
+        } else {
             ProgressHUD.dismiss()
         }
     }

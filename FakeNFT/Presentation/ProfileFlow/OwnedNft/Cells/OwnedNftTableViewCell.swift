@@ -25,7 +25,7 @@ final class OwnedNftTableViewCell: UITableViewCell {
             ratingStackView.setupRating(cellModel.rating)
             authorNameLabel.text = cellModel.author
             priceLabel.text = String(format: "%.2f", cellModel.price) + currency
-            likeImageView.image = cellModel.isLiked ? Asset.Assets.likeSet.image : Asset.Assets.like.image
+          //  likeImageView.image = cellModel.isLiked ? Asset.Assets.likeSet.image : Asset.Assets.like.image
         }
     }
     

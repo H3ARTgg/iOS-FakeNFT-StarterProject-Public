@@ -78,7 +78,7 @@ private extension ProfileCoordinator {
             let favoriteNftsView = favoriteNftsModule.view
             var favoriteNftsCoordination = favoriteNftsModule.coordination
             
-            favoriteNftsCoordination.finish = { [weak profileCoordination] favoriteNfts in
+            favoriteNftsCoordination.finish = { [weak profileCoordination] _ in
                 profileCoordination?.onReturnFromFavorites()
             }
             
