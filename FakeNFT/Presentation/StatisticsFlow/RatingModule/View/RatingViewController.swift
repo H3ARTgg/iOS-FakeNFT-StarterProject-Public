@@ -29,12 +29,15 @@ final class RatingViewController: UIViewController {
         navigationItemSetup()
         addViews()
         activateConstraints()
-        UIBlockingProgressHUD.show()
+        ProgressHUD.show()
         bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if viewModel.countUsers != 0 {
+            ProgressHUD.dismiss()
+        }
         tabBarController?.tabBar.isHidden = false
     }
     

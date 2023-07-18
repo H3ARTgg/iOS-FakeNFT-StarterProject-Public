@@ -66,7 +66,6 @@ private extension ProfileTableViewCell {
         NSLayoutConstraint.activate([
             cellText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cellText.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            //cellText.trailingAnchor.constraint(equalTo: indicator.leadingAnchor),
             
             indicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

@@ -10,6 +10,7 @@ class BaseCoordinator {
         for childCoordinator in childCoordinators where childCoordinator === coordinator {
             return
         }
+        
         childCoordinators.append(coordinator)
     }
     

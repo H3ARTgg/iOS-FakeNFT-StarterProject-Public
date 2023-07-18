@@ -5,6 +5,7 @@ final class StatisticsCoordinator: BaseCoordinator, Coordinatable {
     
     private var modulesFactory: ModulesFactoryProtocol
     private var router: Routable
+    private let navController = StatisticNavController()
     
     init(modulesFactory: ModulesFactoryProtocol, router: Routable) {
         self.modulesFactory = modulesFactory
@@ -12,7 +13,7 @@ final class StatisticsCoordinator: BaseCoordinator, Coordinatable {
     }
     
     func startFlow() {
-        router.addToTabBar(StatisticNavController())
+        router.addToTabBar(navController)
         performFlow()
     }
 }
@@ -41,8 +42,8 @@ private extension StatisticsCoordinator {
             
             userCardCoordination.headForAbout = { [weak self] userURL in
                 guard let self else { return }
-                let aboutView = self.modulesFactory.makeAboutWebView(url: userURL)
-                self.router.push(aboutView)
+                let aboutView = self.modulesFactory.makeAboutWebView(urlString: userURL)
+                self.router.push(aboutView, to: navController)
             }
             
             userCardCoordination.headForUserCollection = { [weak self] nftId in
@@ -56,11 +57,11 @@ private extension StatisticsCoordinator {
                     self.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
                 }
                 
-                self.router.push(userCollectionView)
+                self.router.push(userCollectionView, to: navController)
             }
-            self.router.push(userCardView)
+            self.router.push(userCardView, to: navController)
         }
         
-        self.router.push(statisticView)
+        self.router.push(statisticView, to: navController)
     }
 }

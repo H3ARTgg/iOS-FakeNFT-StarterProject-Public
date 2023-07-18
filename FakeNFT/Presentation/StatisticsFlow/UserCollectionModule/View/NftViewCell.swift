@@ -202,7 +202,7 @@ private extension NftViewCell {
     }
     
     func setLikeImage(isLiked: Bool) {
-        let image = isLiked ? Asset.Assets.like.image : Asset.Assets.noLike.image
+        let image = isLiked ? Asset.Assets.likeSet.image : Asset.Assets.noLike.image
         likeButton.setImage(image, for: .normal)
     }
     

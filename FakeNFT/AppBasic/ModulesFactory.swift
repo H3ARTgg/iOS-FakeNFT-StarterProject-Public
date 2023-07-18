@@ -106,7 +106,6 @@ extension ModulesFactory {
         return (userCardViewController, userCardViewModel)
     }
     
-    
     func makeUserCollection(nftsId: [String]?) -> (view: Presentable, coordination: UserCollectionCoordination) {
         let nftsProvider = NftProvider()
         let errorHandler = ErrorHandler()
