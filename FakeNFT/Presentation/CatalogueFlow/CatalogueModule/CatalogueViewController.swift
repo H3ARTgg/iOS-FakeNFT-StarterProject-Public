@@ -4,7 +4,7 @@ final class CatalogueViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.catalogue,
+        self.tabBarItem = UITabBarItem(title: L10n.Catalogue.icon,
                                        image: Consts.Images.catalogue,
                                        tag: 1)
     }

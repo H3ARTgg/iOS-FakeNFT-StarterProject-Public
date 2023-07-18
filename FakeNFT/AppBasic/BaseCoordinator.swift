@@ -1,10 +1,3 @@
-//
-//  BaseCoordinator.swift
-//  Tracker
-//
-//  Created by Aleksandr Velikanov on 01.04.2023.
-//
-
 protocol Coordinatable: AnyObject {
     func startFlow()
 }
@@ -14,7 +7,7 @@ class BaseCoordinator {
     private var childCoordinators: [Coordinatable] = []
     
     func addDependency(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+        for childCoordinator in childCoordinators where childCoordinator === coordinator {
             return
         }
         childCoordinators.append(coordinator)

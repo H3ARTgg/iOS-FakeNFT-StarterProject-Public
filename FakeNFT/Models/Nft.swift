@@ -1,12 +1,9 @@
 import Foundation
 
 struct Nft {
-    let createdAt: String
+    let id: Int
     let name: String
-    let images: [String]
+    let image: String
     let rating: Int
-    let description: String
-    let price: Float
-    let author: String
-    let id: String
+    let price: Double
 }

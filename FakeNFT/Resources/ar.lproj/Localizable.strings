@@ -6,6 +6,54 @@ catalogue.icon = "فهرس";
 cart.icon = "سلة";
 statistics.icon = "إحصائيات";
 
+profile.owned = "الخاصة بي";
+profile.favorite = "مميزة";
+profile.ownedScreen = "NFTs الخاصة بي";
+profile.favoriteScreen = "NFTs مميزة";
+profile.developer = "عن المطور";
+profile.changePhoto = "غير الصوره";
+profile.sort = "فرز";
+profile.byPrice = "حسب السعر";
+profile.byRating = "حسب التصنيف";
+profile.byTitle = "بالاسم";
+profile.close = "يغلق";
+profile.noNfts = "ليس لديك NFTs حتى الآن";
+profile.noFavoriteNfts = "ليس لديك أي NFTs مفضلة حتى الآن";
+profile.from = "من";
+profile.price = "سعر";
+profile.name = "اسم";
+profile.about = "وصف";
+profile.site = "موقع إلكتروني";
+router.error = "خطأ";
+router.back = "خلف";
+
+button.to.pay = "للدفع";
+label.amount.nft = "NFT";
+label.currency.eth = "ETH";
+label.delete.nft = "هل أنت متأكد أنك تريد إزالة العنصر من المهملات؟";
+button.delete.nft = "يمسح";
+label.cancel = "يعود";
+alert.sort = "فرز";
+sort.price = "حسب السعر";
+sort.rating = "حسب التصنيف";
+sort.title = "بالاسم";
+alert.close = "يغلق";
+
+cart.cartIsEmpty = "البطاقه خاليه";
+cart.payment.method = "اختر طريقة الدفع";
+cart.label.terms = "من خلال إجراء عملية شراء ، فإنك توافق على الشروط";
+cart.button.terms = "اتفاقية المستخدم";
+cart.button.payment = "يدفع";
+cart.alert.payment.title = "خطأ";
+cart.alert.payment.message = "اختر عملة";
+cart.alert.payment.action = "حسنا";
+cart.resultPayment.failureTitle = "أُووبس! هناك خطأ ما :(";
+cart.resultPayment.failureTryTitle = "حاول ثانية!";
+cart.resultPayment.failureButton = "لمحاولة مرة أخرى";
+cart.resultPayment.successTitle = "نجاح! تم الدفع";
+cart.resultPayment.successCongratulationTitle = "مبروك على شرائك!";
+cart.resultPayment.successButton = "العودة إلى الكتالوج";
+
 Statistic.FilterAlert.Title = "فرز";
 Statistic.AlertAction.SortByName.Title = "الترتيب حسب الاسم";
 Statistic.AlertAction.SortByRating.Title = "حسب التصنيف";
@@ -17,6 +65,3 @@ Statistic.UserCollectionViewController.Title = "مجموعة NFT";
 Statistic.PlugLabel.Text = "لا NFT";
 Statistic.ErrorAlert.Title = "خطأ";
 Statistic.ErrorPlugView.Text = "تبا شيء ما حدث بشكل خاطئ";
-
-
-
