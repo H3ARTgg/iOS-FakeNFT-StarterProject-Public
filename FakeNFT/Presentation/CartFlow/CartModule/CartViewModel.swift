@@ -6,6 +6,7 @@ protocol CartCoordination: AnyObject {
     var handleNftDeletion: (() -> Void)? { get set }
     var handleCartScreenReturn: (() -> Void)? { get set }
     var handleForActionSheet: ((AlertModel) -> Void)? { get set }
+    var handleForErrorAlert: ((AlertModel) -> Void)? { get set }
 }
 
 protocol CartViewModelProtocol {
@@ -29,6 +30,7 @@ final class CartViewModel: ObservableObject, CartCoordination {
     var handleNftDeletion: (() -> Void)?
     var handleCartScreenReturn: (() -> Void)?
     var handleForActionSheet: ((AlertModel) -> Void)?
+    var handleForErrorAlert: ((AlertModel) -> Void)?
     
     private let storageManager: StorageManager
     private var cartNetworkService: CartNetworkServiceProtocol
@@ -41,7 +43,6 @@ final class CartViewModel: ObservableObject, CartCoordination {
     ) {
         self.storageManager = storageManager
         self.cartNetworkService = cartNetworkService
-        fetchProducts()
     }
 }
 
@@ -81,6 +82,8 @@ extension CartViewModel: CartViewModelProtocol {
                     UIProgressHUD.dismiss()
                 case .failure(let error):
                     print(error.localizedDescription)
+                    UIProgressHUD.dismiss()
+                    self.showErrorAlert()
                 }
             }
         }
@@ -120,6 +123,11 @@ extension CartViewModel: CartViewModelProtocol {
     
     func closeDeleteNftViewController() {
         handleNftDeletion?()
+    }
+    
+    func showErrorAlert() {
+        let alert = createErrorAlertModel()
+        handleForErrorAlert?(alert)
     }
 }
 
@@ -185,6 +193,32 @@ extension CartViewModel {
                 sortTitleAction,
                 cancelAction
             ]
+        )
+        
+        return alertModel
+    }
+    
+    private func createErrorAlertModel() -> AlertModel {
+        let repeatActionTitle = L10n.Statistic.AlertAction.Repeat.title
+        let cancelActionTitle = L10n.Statistic.AlertAction.Cancel.title
+                
+        let repeatAction = AlertAction(
+            actionText: repeatActionTitle,
+            actionRole: .regular
+        ) { [weak self] in
+            self?.fetchProducts()
+        }
+        
+        let cancelAction = AlertAction(
+            actionText: cancelActionTitle,
+            actionRole: .cancel,
+            action: nil
+        )
+        
+        let alertModel = AlertModel(
+            alertText: "Ошибка",
+            message: "Данные не получены",
+            alertActions: [cancelAction, repeatAction]
         )
         
         return alertModel

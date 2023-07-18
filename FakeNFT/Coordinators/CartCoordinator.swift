@@ -27,6 +27,10 @@ private extension CartCoordinator {
         cartCoordinator.handleForActionSheet = { [weak self] alertModel in
             self?.router.presentAlertController(alertModel: alertModel, preferredStyle: .actionSheet)
         }
+        
+        cartCoordinator.handleForErrorAlert = { [weak self] alertModel in
+            self?.router.presentAlertController(alertModel: alertModel, preferredStyle: .alert)
+        }
                 
         cartCoordinator.handleNftSelection = { [weak self] nft, cartViewModel in
             guard let self else {
