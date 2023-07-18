@@ -16,6 +16,10 @@ protocol Routable {
     func present(_ module: Presentable?, presentationStyle: UIModalPresentationStyle)
     func present(_ module: Presentable?, animated: Bool, presentationStyle: UIModalPresentationStyle, dismissCompletion: (() -> Void)?)
     
+    func push(_ module: Presentable?, to navController: UINavigationController)
+    func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool)
+    func popToRoot(animated: Bool)
+    
     func dismissModule(_ module: Presentable?)
     func dismissModule(_ module: Presentable?, completion: (() -> Void)?)
     func dismissModule(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
@@ -38,6 +42,39 @@ final class Router: NSObject {
 }
 
 extension Router: Routable {
+    func push(_ module: Presentable?, to navController: UINavigationController) {
+        push(module, to: navController, animated: true)
+    }
+    
+    func push(_ module: Presentable?, to navController: UINavigationController, animated: Bool) {
+        guard let controller = module?.toPresent() else { return }
+        
+        guard let tabbarItem = presentingViewController as? UITabBarController else {
+            return
+        }
+        
+        guard
+            let tabbarViewControllers = tabbarItem.viewControllers,
+            tabbarViewControllers.contains(navController)
+        else {
+            return
+        }
+        
+        navController.pushViewController(controller, animated: animated)
+    }
+    
+    func popToRoot(animated: Bool) {
+        guard let selectedController = presentingViewController as? UITabBarController else {
+            return
+        }
+        
+        guard let rootViewController = selectedController.selectedViewController as? UINavigationController else {
+            return
+        }
+        
+        rootViewController.popToRootViewController(animated: true)
+    }
+    
     func setRootViewController(viewController: Presentable) {
         presentingViewController = viewController
         delegate?.setRootViewController(presentingViewController)

@@ -1,17 +1,42 @@
 import Foundation
 import UIKit
 import Kingfisher
+import Combine
 
-final class CollectionDetailsViewModel {
+protocol CollectionDetailsCoordination: AnyObject {
+    var finish: (() -> Void)? { get set }
+    var headForAbout: ((String) -> Void)? { get set }
+}
+
+protocol CollectionDetailsViewModelProtocol: AnyObject {
+    var nftCollectionPublisher: AnyPublisher<[NFTCollectionResponce], Never> { get }
+    var nftsPublisher: AnyPublisher<[CollectionDetailsCellViewModel], Never> { get }
+    func requestCollection()
+    func getViewModelForCellAt(_ indexPath: IndexPath) -> CollectionDetailsCellViewModel
+    func getViewModelForWebView(with url: URL) -> WebViewViewModelProtocol
+    func downloadImageFor(_ imageView: UIImageView)
+    func getNftsCount() -> Int
+    func didSwipeRight()
+    func didTapAuthorLink(with url: URL)
+}
+
+final class CollectionDetailsViewModel: CollectionDetailsViewModelProtocol, CollectionDetailsCoordination {
+    var finish: (() -> Void)?
+    var headForAbout: ((String) -> Void)?
     private var collectionId: String
     private var networkClient: NetworkClient
-    @Observable private(set) var nftCollection: NFTCollectionResponce?
-    @Observable private(set) var nfts: [CollectionDetailsCellViewModel] = []
+    var nftCollectionPublisher: AnyPublisher<[NFTCollectionResponce], Never> {
+        nftCollectionSubject.eraseToAnyPublisher()
+    }
+    var nftsPublisher: AnyPublisher<[CollectionDetailsCellViewModel], Never> {
+        nftsSubject.eraseToAnyPublisher()
+    }
+    private let nftCollectionSubject = CurrentValueSubject<[NFTCollectionResponce], Never>([])
+    private let nftsSubject = CurrentValueSubject<[CollectionDetailsCellViewModel], Never>([])
     
     init(collectionId: String, networkClient: NetworkClient) {
         self.collectionId = collectionId
         self.networkClient = networkClient
-        requestCollection()
     }
     
     func requestCollection() {
@@ -22,11 +47,11 @@ final class CollectionDetailsViewModel {
                 switch result {
                 case .success(let collection):
                     DispatchQueue.main.async {
-                        self.nftCollection = collection
+                        self.nftCollectionSubject.send([collection])
                     }
                     self.requestNfts(collection.nfts)
                 case .failure(let error):
-                    self.nftCollection = nil
+                    self.nftCollectionSubject.send([])
                     print("failed collection: \(error.localizedDescription)")
                 }
             }
@@ -34,14 +59,14 @@ final class CollectionDetailsViewModel {
     }
     
     func getViewModelForCellAt(_ indexPath: IndexPath) -> CollectionDetailsCellViewModel {
-        return nfts[indexPath.row]
+        return nftsSubject.value[indexPath.row]
     }
     
     func downloadImageFor(_ imageView: UIImageView) {
-        guard let nftCollection else { return }
+        guard !nftCollectionSubject.value.isEmpty else { return }
         imageView.kf.setImage(
             with:
-                URL(string: nftCollection.cover
+                URL(string: nftCollectionSubject.value[0].cover
                     .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 )
         )
@@ -49,6 +74,18 @@ final class CollectionDetailsViewModel {
     
     func getViewModelForWebView(with url: URL) -> WebViewViewModelProtocol {
         WebViewViewModel(url: url)
+    }
+    
+    func getNftsCount() -> Int {
+        nftsSubject.value.count
+    }
+    
+    func didSwipeRight() {
+        finish?()
+    }
+    
+    func didTapAuthorLink(with url: URL) {
+        headForAbout?(url.absoluteString)
     }
     
     private func requestNfts(_ ids: [String]) {
@@ -62,7 +99,7 @@ final class CollectionDetailsViewModel {
                     switch result {
                     case .success(let nft):
                         DispatchQueue.main.async {
-                            self.nfts.append(
+                            self.nftsSubject.value.append(
                                 CollectionDetailsCellViewModel(
                                     nft: nft,
                                     networkClient: self.networkClient
@@ -75,6 +112,5 @@ final class CollectionDetailsViewModel {
                 })
             }
         }
-        
     }
 }

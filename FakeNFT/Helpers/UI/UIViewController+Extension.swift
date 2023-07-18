@@ -5,7 +5,7 @@ extension UIViewController {
     func setupErrorContent(with tuple: (UILabel, CustomButton)) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            tuple.0.text = Consts.LocalizedStrings.errorConnectionMessage
+            tuple.0.text = L10n.Error.Connection.message
             tuple.0.font = Consts.Fonts.regular17
             tuple.0.textColor = Asset.Colors.ypBlack.color
             

@@ -1,6 +1,12 @@
 import UIKit
+import Combine
 
-final class CollectionDetailsViewController: UIViewController {
+protocol CollectionDetailsViewControllerProtocol: AnyObject {
+    var cancellables: [AnyCancellable] { get }
+    var viewModel: CollectionDetailsViewModelProtocol { get }
+}
+
+final class CollectionDetailsViewController: UIViewController, CollectionDetailsViewControllerProtocol {
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -16,7 +22,6 @@ final class CollectionDetailsViewController: UIViewController {
     private lazy var aboutAuthorTextView: UITextView = {
         let textView = UITextView()
         textView.font = Consts.Fonts.regular13
-        textView.textColor = Asset.Colors.ypBlack.color
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.delegate = self
@@ -49,14 +54,16 @@ final class CollectionDetailsViewController: UIViewController {
     }()
     private lazy var errorButton: CustomButton = {
         let button = CustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
-        button.configure(text: Consts.LocalizedStrings.errorAlertAgain)
+        button.configure(text: L10n.Error.Try.again)
         return button
     }()
     private let errorTitle = UILabel()
-    private var viewModel: CollectionDetailsViewModel?
+    private(set) var viewModel: CollectionDetailsViewModelProtocol
+    private(set) var cancellables: [AnyCancellable] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.requestCollection()
         configureViewController()
         addSubviews()
         setupLayouts()
@@ -69,9 +76,9 @@ final class CollectionDetailsViewController: UIViewController {
         CustomProgressHUD.dismiss()
     }
     
-    init(viewModel: CollectionDetailsViewModel) {
-        super.init(nibName: .none, bundle: .main)
+    init(viewModel: CollectionDetailsViewModelProtocol) {
         self.viewModel = viewModel
+        super.init(nibName: .none, bundle: .main)
     }
     
     required init?(coder: NSCoder) {
@@ -80,13 +87,13 @@ final class CollectionDetailsViewController: UIViewController {
     
     @objc
     private func didSwipeRight() {
-        navigationController?.popToRootViewController(animated: true)
+        viewModel.didSwipeRight()
     }
     
     @objc
     private func didTapErrorButton() {
         CustomProgressHUD.show()
-        viewModel?.requestCollection()
+        viewModel.requestCollection()
     }
     
     private func configureViewController() {
@@ -97,48 +104,37 @@ final class CollectionDetailsViewController: UIViewController {
     }
     
     private func binds() {
-        viewModel?.$nftCollection.bind(action: { [weak self] collection in
-            DispatchQueue.main.async {
+        let nftCollectionCancellable = viewModel.nftCollectionPublisher
+            .sink { [weak self] collection in
                 guard let self else { return }
-                guard let collection else {
+                guard !collection.isEmpty else { return }
+                self.collectionLabel.text = collection[0].name
+                self.descriptionTextView.text = collection[0].description
+                self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection[0].author)
+                self.viewModel.downloadImageFor(self.coverImageView)
+                CustomProgressHUD.dismiss()
+                
+                if collection.isEmpty {
                     self.setupErrorContent(with: (self.errorTitle, self.errorButton))
                     CustomProgressHUD.dismiss()
-                    return
                 }
-                
-                self.collectionLabel.text = collection.name
-                self.descriptionTextView.text = collection.description
-                self.aboutAuthorTextView.attributedText = self.makeTextForAboutAuthor(author: collection.author)
-                self.viewModel?.downloadImageFor(self.coverImageView)
-                CustomProgressHUD.dismiss()
             }
-        })
         
-        viewModel?.$nfts.bind(action: { [weak self] _ in
-            self?.collectionView.performBatchUpdates({
-                self?.collectionView.insertItems(at: [IndexPath(row: (self?.viewModel?.nfts.count ?? 0) - 1, section: 0)])
-            })
-        })
-    }
-    
-    private func presentNftViewViewController() {
-        // *показывает экран просмотра NFT*
-    }
-    
-    private func presentWebViewController(with url: URL) {
-        guard let viewModel else { return }
-        let webViewVC = WebViewViewController(viewModel: viewModel.getViewModelForWebView(with: url))
-        webViewVC.modalPresentationStyle = .overFullScreen
-        navigationController?.pushViewController(webViewVC, animated: true)
+        let nftsCancellable = viewModel.nftsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.collectionView.reloadData()
+            }
+        
+        cancellables = [nftCollectionCancellable, nftsCancellable]
     }
     
     private func makeTextForAboutAuthor(author: String) -> NSAttributedString {
-        let author = NSMutableAttributedString(string: author)
-        author.addAttributes([.font: Consts.Fonts.regular15, .strokeColor: Asset.Colors.ypBlueUniversal], range: NSRange(location: 0, length: author.length))
-        let attributedString = NSMutableAttributedString(string: "\(Consts.LocalizedStrings.collectionAuthor): ")
+        let attributedString = NSMutableAttributedString(string: "\(L10n.Collection.author): \(author)")
         attributedString.addAttributes([.foregroundColor: Asset.Colors.ypBlack.color], range: NSRange(location: 0, length: attributedString.length))
-        attributedString.append(author)
-        attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 17, length: author.length))
+        attributedString.addAttributes([.font: Consts.Fonts.regular15, .foregroundColor: Asset.Colors.ypBlueUniversal.color], range: NSRange(location: 19, length: author.count))
+        attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 19, length: author.count))
         return attributedString
     }
 }
@@ -146,14 +142,14 @@ final class CollectionDetailsViewController: UIViewController {
 // MARK: - DataSource
 extension CollectionDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.nfts.count ?? 0
+        viewModel.getNftsCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionDetailsCell.defaultReuseIdentifier, for: indexPath) as? CollectionDetailsCell else {
             return UICollectionViewCell(frame: .zero)
         }
-        cell.viewModel = viewModel?.getViewModelForCellAt(indexPath)
+        cell.viewModel = viewModel.getViewModelForCellAt(indexPath)
         return cell
     }
     
@@ -174,7 +170,7 @@ extension CollectionDetailsViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presentNftViewViewController()
+        // *показывает экран просмотра NFT*
     }
 }
 
@@ -229,7 +225,7 @@ extension CollectionDetailsViewController {
 // MARK: = TextViewDelegate
 extension CollectionDetailsViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        presentWebViewController(with: URL)
+        viewModel.didTapAuthorLink(with: URL)
         return false
     }
 }

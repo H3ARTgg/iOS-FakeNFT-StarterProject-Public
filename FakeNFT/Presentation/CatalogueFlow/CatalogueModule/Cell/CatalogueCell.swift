@@ -21,7 +21,7 @@ final class CatalogueCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var failButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(), target: self, action: #selector(didTapFailButton))
         button.setImage(nil, for: .normal)
-        button.setTitle(Consts.LocalizedStrings.failImageLoadText, for: .normal)
+        button.setTitle(L10n.Image.Load.failure, for: .normal)
         button.setTitleColor(Asset.Colors.ypBlack.color, for: .normal)
         button.backgroundColor = Asset.Colors.ypWhite.color
         button.titleLabel?.font = Consts.Fonts.bold22

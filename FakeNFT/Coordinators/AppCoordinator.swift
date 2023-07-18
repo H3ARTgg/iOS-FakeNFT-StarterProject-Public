@@ -43,7 +43,9 @@ private extension AppCoordinator {
     }
     
     func createCatalogueFlow() {
-       
+        let catalogueCoordinator = CatalogueCoordinator(modulesFactory: modulesFactory, router: router)
+        addDependency(catalogueCoordinator)
+        catalogueCoordinator.startFlow()
     }
     
     func createCartFlow() {

@@ -3,10 +3,9 @@ import SnapKit
 import ProgressHUD
 import Combine
 
-protocol CatalogueViewControllerProtocol {
+protocol CatalogueViewControllerProtocol: AnyObject {
     var viewModel: CatalogueViewModelProtocol { get }
-    var isFailedCancellable: AnyCancellable? { get }
-    var nftCollectionsCancellable: AnyCancellable? { get }
+    var cancellables: [AnyCancellable] { get }
 }
 
 final class CatalogueViewController: UIViewController, CatalogueViewControllerProtocol {
@@ -21,15 +20,6 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         collectionView.refreshControl = refreshControl
         return collectionView
     }()
-    private lazy var sortButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(
-            image: Consts.Images.sortButtonCatalogue,
-            style: .done,
-            target: self,
-            action: #selector(didTapSortButton))
-        button.title = ""
-        return button
-    }()
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -37,20 +27,16 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     }()
     private lazy var errorButton: CustomButton = {
         let button = CustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
-        button.configure(text: Consts.LocalizedStrings.errorAlertAgain)
+        button.configure(text: L10n.Error.Try.again)
         return button
     }()
     private let errorTitle = UILabel()
     private(set) var viewModel: CatalogueViewModelProtocol
-    private(set) var isFailedCancellable: AnyCancellable?
-    private(set) var nftCollectionsCancellable: AnyCancellable?
+    private(set) var cancellables: [AnyCancellable] = []
     
     init(viewModel: CatalogueViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.tabBarItem = UITabBarItem(title: Consts.LocalizedStrings.catalogue,
-                                       image: Consts.Images.catalogue,
-                                       tag: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +47,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
         super.viewDidLoad()
         viewModel.requestCollections()
         configureViewController()
+        setupNavBar()
         addSubviews()
         setupLayouts()
         binds()
@@ -69,7 +56,15 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     
     @objc
     private func didTapSortButton() {
-        setupAlert()
+        let sortByName = AlertAction(actionText: L10n.Sort.title, actionRole: .regular) { [weak self] in
+            self?.viewModel.sortByName()
+        }
+        let sortByNftsCount = AlertAction(actionText: L10n.By.Nft.count, actionRole: .regular) { [weak self] in
+                self?.viewModel.sortByNftCount()
+        }
+        let cancelAction = AlertAction(actionText: L10n.Alert.close, actionRole: .cancel, action: nil)
+        let alertModel = AlertModel(alertText: L10n.Sort.catalogue, alertActions: [sortByName, sortByNftsCount, cancelAction])
+        viewModel.didTapSortButton(with: alertModel)
     }
     
     @objc
@@ -89,25 +84,35 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     
     private func configureViewController() {
         view.backgroundColor = Asset.Colors.ypWhite.color
-        navigationItem.rightBarButtonItem = sortButton
+    }
+    
+    private func setupNavBar() {
         navigationController?.navigationBar.tintColor = Asset.Colors.ypBlack.color
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(
+        let backBarButton = UIBarButtonItem(
             title: "",
             style: .done,
             target: nil,
             action: nil
         )
+        let rightBarButton = UIBarButtonItem(
+            image: Consts.Images.sortButtonCatalogue,
+            style: .done,
+            target: self,
+            action: #selector(didTapSortButton))
+        rightBarButton.title = ""
+        
+        navigationItem.backBarButtonItem = backBarButton
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     private func binds() {
-        nftCollectionsCancellable = viewModel.nftCollectionsPublisher
+        let nftCollectionsCancellable = viewModel.nftCollectionsPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.collectionView.reloadData()
             })
         
-        isFailedCancellable = viewModel.isFailedPublisher
+        let isFailedCancellable = viewModel.isFailedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
@@ -116,18 +121,13 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
                     self.setupErrorContent(with: (self.errorTitle, self.errorButton))
                 }
             }
+        cancellables = [nftCollectionsCancellable, isFailedCancellable]
     }
     
     private func forceHideRefreshControl(for collectionView: UICollectionView) {
         if collectionView.contentOffset.y < 0 {
             collectionView.setContentOffset(CGPoint.zero, animated: true)
         }
-    }
-    
-    private func presentCollectionDetailsViewController(at indexPath: IndexPath) {
-        let detailsVM = viewModel.getViewModelForCollectionDetails(with: indexPath)
-        let collectionDetailsVC = CollectionDetailsViewController(viewModel: detailsVM)
-        navigationController?.pushViewController(collectionDetailsVC, animated: true)
     }
 }
 
@@ -150,23 +150,6 @@ private extension CatalogueViewController {
             make.trailing.equalTo(view.snp.trailing)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-    }
-    
-    private func setupAlert() {
-        let alert = UIAlertController(title: "", message: Consts.LocalizedStrings.sortingCatalogueMessage, preferredStyle: .actionSheet)
-        let sortByName = UIAlertAction(title: Consts.LocalizedStrings.byName, style: .default) { [weak self] _ in
-            self?.viewModel.sortByName()
-        }
-        let sortByNftsCount = UIAlertAction(title: Consts.LocalizedStrings.byNftCount, style: .default) { [ weak self] _ in
-            self?.viewModel.sortByNftCount()
-        }
-        let cancelAction = UIAlertAction(title: Consts.LocalizedStrings.close, style: .cancel)
-        
-        alert.addAction(sortByName)
-        alert.addAction(sortByNftsCount)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
     }
     
     private func removeErrorContent() {
@@ -211,7 +194,7 @@ extension CatalogueViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         (UIApplication.shared.windows.first ?? UIWindow()).isUserInteractionEnabled = false
-        presentCollectionDetailsViewController(at: indexPath)
+        viewModel.didTapCollectionDetailsWith(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

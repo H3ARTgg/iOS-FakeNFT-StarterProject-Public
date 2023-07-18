@@ -1,19 +1,26 @@
 import Foundation
 import Combine
 
-protocol CatalogueViewModelProtocol {
+protocol CatalogueCoordination: AnyObject {
+    var headForCollectionDetails: ((String) -> Void)? { get set }
+    var headForActionSheet: ((AlertModel) -> Void)? { get set }
+}
+protocol CatalogueViewModelProtocol: AnyObject {
     var isFailedPublisher: AnyPublisher<Bool, Never> { get }
     var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> { get }
     func requestCollections()
     func getViewModelForCell(with indexPath: IndexPath) -> CatalogueCellViewModelProtocol?
     func getViewModelForSupView(with indexPath: IndexPath) -> CatalogueSupplementaryViewModel?
-    func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel
     func sortByName()
     func sortByNftCount()
     func getNftsCount() -> Int
+    func didTapCollectionDetailsWith(_ indexPath: IndexPath)
+    func didTapSortButton(with alertModel: AlertModel)
 }
 
-final class CatalogueViewModel: CatalogueViewModelProtocol {
+final class CatalogueViewModel: CatalogueViewModelProtocol, CatalogueCoordination {
+    var headForCollectionDetails: ((String) -> Void)?
+    var headForActionSheet: ((AlertModel) -> Void)?
     var nftCollectionsPublisher: AnyPublisher<[CatalogueSupplementaryViewModel], Never> {
         nftCollectionsSubject.eraseToAnyPublisher()
     }
@@ -74,11 +81,15 @@ final class CatalogueViewModel: CatalogueViewModelProtocol {
         }
     }
     
-    func getViewModelForCollectionDetails(with indexPath: IndexPath) -> CollectionDetailsViewModel {
-        CollectionDetailsViewModel(collectionId: nftCollectionsSubject.value[indexPath.section].id, networkClient: networkClient)
-    }
-    
     func getNftsCount() -> Int {
         nftCollectionsSubject.value.count
+    }
+    
+    func didTapCollectionDetailsWith(_ indexPath: IndexPath) {
+        headForCollectionDetails?(nftCollectionsSubject.value[indexPath.section].id)
+    }
+    
+    func didTapSortButton(with alertModel: AlertModel) {
+        headForActionSheet?(alertModel)
     }
 }

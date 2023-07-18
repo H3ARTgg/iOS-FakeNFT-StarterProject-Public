@@ -14,3 +14,11 @@ xcassets:
   outputs:
     templateName: swift5
     output: XCAssets+Generated.swift
+
+strings:
+
+  inputs: en.lproj
+  
+  outputs:
+    templateName: structured-swift5
+    output: Strings.swift
