@@ -63,12 +63,16 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.requestCollection()
         configureViewController()
         addSubviews()
         setupLayouts()
         binds()
         CustomProgressHUD.show()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.requestCollection()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

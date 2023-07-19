@@ -40,6 +40,7 @@ final class CollectionDetailsViewModel: CollectionDetailsViewModelProtocol, Coll
     }
     
     func requestCollection() {
+        self.nftsSubject.send([])
         let request = CollectionRequestGet(id: collectionId)
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
