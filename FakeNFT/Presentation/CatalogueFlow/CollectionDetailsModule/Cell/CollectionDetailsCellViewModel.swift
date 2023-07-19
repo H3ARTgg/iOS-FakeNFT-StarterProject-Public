@@ -52,7 +52,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
     
     private func isInOrderFor(_ nftId: String) {
         dispatchGroup.enter()
-        let request = OrderRequestGet()
+        let request = OrderRequest()
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
@@ -98,7 +98,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             guard let self else { return }
             
             var orderIds = self.orderNftsIds
-            var request = OrderRequestPutCatalogue()
+            var request = OrderRequestPut()
             if self.isInCart {
                 orderIds = orderIds.filter({ $0 != self.id })
             } else {

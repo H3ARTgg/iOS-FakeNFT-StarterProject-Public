@@ -52,7 +52,6 @@ internal enum Asset {
     internal static let coverFake = ImageAsset(name: "cover_fake")
     internal static let flag2CrossedFill = ImageAsset(name: "flag.2.crossed.fill")
     internal static let inCart = ImageAsset(name: "in_cart")
-    internal static let inFavorites = ImageAsset(name: "in_favorites")
     internal static let likeSet = ImageAsset(name: "likeSet")
     internal static let notInCart = ImageAsset(name: "not_in_cart")
     internal static let notInFavorites = ImageAsset(name: "not_in_favorites")
