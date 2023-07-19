@@ -45,7 +45,7 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                 ratingStackView = viewModel.getImageForRating()
                 
                 let isInOrderCancellable = viewModel.isInOrderPublisher
-                    .debounce(for: 0.5, scheduler: DispatchQueue.main)
+                    .removeDuplicates()
                     .sink { [weak self] check in
                         self?.cartButton.isUserInteractionEnabled = true
                         CustomProgressHUD.dismiss()
@@ -53,7 +53,7 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                     }
                 
                 let isFavoriteCancellable = viewModel.isFavoritePublisher
-                    .debounce(for: 0.5, scheduler: DispatchQueue.main)
+                    .removeDuplicates()
                     .sink { [weak self] check in
                         self?.favoriteButton.isUserInteractionEnabled = true
                         CustomProgressHUD.dismiss()
