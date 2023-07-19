@@ -15,11 +15,11 @@ final class CollectionDetailsCellViewModel: Identifiable {
     private let dispatchGroup = DispatchGroup()
     private var currentTask: NetworkTask?
     
-    init(nft: NFT, networkClient: NetworkClient) {
+    init(nft: NftResponseModel, networkClient: NetworkClient) {
         self.name = nft.name
         self.images = nft.images
         self.rating = nft.rating
-        self.price = nft.price
+        self.price = Float(nft.price)
         self.id = nft.id
         self.networkClient = networkClient
         isInOrderFor(nft.id)
@@ -56,16 +56,11 @@ final class CollectionDetailsCellViewModel: Identifiable {
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             
-            self.currentTask = self.networkClient.send(request: request, type: OrderResponce.self) { (result: Result<OrderResponce, Error>) in
+            self.currentTask = self.networkClient.send(request: request, type: OrderResult.self) { (result: Result<OrderResult, Error>) in
                 switch result {
                 case .success(let order):
                     DispatchQueue.main.async {
                         self.orderNftsIds = order.nfts
-                        if order.nfts.contains(nftId) {
-                            self.isInCart = true
-                        } else {
-                            self.isInCart = false
-                        }
                     }
                 case .failure(let error):
                     print("failed order request: \(error)")
@@ -114,7 +109,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             } else {
                 orderIds.append(self.id)
             }
-            request.dto = OrderNetworkModel(nfts: orderIds)
+            request.dto = OrderResult(nfts: orderIds)
             
             self.currentTask = self.networkClient.send(request: request, onResponse: { result in
                 switch result {

@@ -95,7 +95,7 @@ final class CollectionDetailsViewModel: CollectionDetailsViewModelProtocol, Coll
             let request = NftGetRequest(id: $0)
             DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
                 
-                self.networkClient.send(request: request, type: NFT.self, onResponse: { (result: Result<NFT, Error>) in
+                self.networkClient.send(request: request, type: NftResponseModel.self, onResponse: { (result: Result<NftResponseModel, Error>) in
                     switch result {
                     case .success(let nft):
                         DispatchQueue.main.async {
