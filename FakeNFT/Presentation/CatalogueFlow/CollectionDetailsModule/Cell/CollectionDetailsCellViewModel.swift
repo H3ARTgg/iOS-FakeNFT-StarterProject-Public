@@ -1,12 +1,22 @@
 import UIKit
+import Combine
 
 final class CollectionDetailsCellViewModel: Identifiable {
     let id: String
     let name: String
     let price: Float
-    @Observable private(set) var isInCart: Bool = false
-    @Observable private(set) var isFavorite: Bool = false
-    @Observable private(set) var isFailed: Bool = false
+    var isInOrderPublisher: AnyPublisher<Bool, Never> {
+        isInOrderSubject.eraseToAnyPublisher()
+    }
+    var isFavoritePublisher: AnyPublisher<Bool, Never> {
+        isFavoriteSubject.eraseToAnyPublisher()
+    }
+    var isFailedPublisher: AnyPublisher<Bool, Never> {
+        isFailedSubject.eraseToAnyPublisher()
+    }
+    private let isInOrderSubject = CurrentValueSubject<Bool, Never>(false)
+    private let isFavoriteSubject = CurrentValueSubject<Bool, Never>(false)
+    private let isFailedSubject = CurrentValueSubject<Bool, Never>(false)
     private let images: [String]
     private let rating: Int
     private let networkClient: NetworkClient
@@ -61,10 +71,15 @@ final class CollectionDetailsCellViewModel: Identifiable {
                 case .success(let order):
                     DispatchQueue.main.async {
                         self.orderNftsIds = order.nfts
+                        if order.nfts.contains(self.id) {
+                            self.isInOrderSubject.send(true)
+                        } else {
+                            self.isInOrderSubject.send(false)
+                        }
                     }
                 case .failure(let error):
                     print("failed order request: \(error)")
-                    self.isFailed = true
+                    self.isFailedSubject.send(true)
                 }
                 self.dispatchGroup.leave()
             }
@@ -82,10 +97,15 @@ final class CollectionDetailsCellViewModel: Identifiable {
                 case .success(let likes):
                     DispatchQueue.main.async {
                         self.likesNftIds = likes.likes
+                        if likes.likes.contains(self.id) {
+                            self.isFavoriteSubject.send(true)
+                        } else {
+                            self.isFavoriteSubject.send(false)
+                        }
                     }
                 case .failure(let error):
                     print("failed isInFavorites: \(error)")
-                    self.isFailed = true
+                    self.isFailedSubject.send(true)
                 }
                 self.dispatchGroup.leave()
             })
@@ -99,7 +119,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             
             var orderIds = self.orderNftsIds
             var request = OrderRequestPut()
-            if self.isInCart {
+            if self.isInOrderSubject.value {
                 orderIds = orderIds.filter({ $0 != self.id })
             } else {
                 orderIds.append(self.id)
@@ -111,14 +131,14 @@ final class CollectionDetailsCellViewModel: Identifiable {
                 case .success:
                     DispatchQueue.main.async {
                         if orderIds.contains(self.id) {
-                            self.isInCart = true
+                            self.isInOrderSubject.send(true)
                         } else {
-                            self.isInCart = false
+                            self.isInOrderSubject.send(false)
                         }
                     }
                 case .failure(let error):
                     print("failed to put order: \(error)")
-                    self.isFailed = true
+                    self.isFailedSubject.send(true)
                 }
             })
             
@@ -132,7 +152,7 @@ final class CollectionDetailsCellViewModel: Identifiable {
             
             var likesIds = self.likesNftIds
             var request = ProfileRequestPut()
-            if self.isFavorite {
+            if self.isFavoriteSubject.value {
                 likesIds = likesIds.filter({ $0 != self.id })
             } else {
                 likesIds.append(self.id)
@@ -144,14 +164,14 @@ final class CollectionDetailsCellViewModel: Identifiable {
                 case .success:
                     DispatchQueue.main.async {
                         if likesIds.contains(self.id) {
-                            self.isFavorite = true
+                            self.isFavoriteSubject.send(true)
                         } else {
-                            self.isFavorite = false
+                            self.isFavoriteSubject.send(false)
                         }
                     }
                 case .failure(let error):
                     print("failed to put likes: \(error)")
-                    self.isFailed = true
+                    self.isFailedSubject.send(true)
                 }
             }
         }

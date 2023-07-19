@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     private var ratingStackView: UIStackView? {
@@ -34,6 +35,7 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         button.tintColor = Asset.Colors.ypWhiteUniversal.color
         return button
     }()
+    private var cancellables: [AnyCancellable] = []
         var viewModel: CollectionDetailsCellViewModel? {
             didSet {
                 guard let viewModel else { return }
@@ -42,21 +44,29 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                 viewModel.downloadImageFor(nftImageView)
                 ratingStackView = viewModel.getImageForRating()
                 
-                viewModel.$isInCart.bind(action: { [weak self] check in
-                    CustomProgressHUD.dismiss()
-                    _ = check ? self?.setInCart() : self?.setOutCart()
-                })
-                
-                viewModel.$isFavorite.bind(action: { [weak self] check in
-                    CustomProgressHUD.dismiss()
-                    _ = check ? self?.setFavorite() : self?.setNotFavorite()
-                })
-                
-                viewModel.$isFailed.bind(action: { check in
-                    if check {
+                let isInOrderCancellable = viewModel.isInOrderPublisher
+                    .debounce(for: 0.5, scheduler: DispatchQueue.main)
+                    .sink { [weak self] check in
+                        self?.cartButton.isUserInteractionEnabled = true
                         CustomProgressHUD.dismiss()
+                        _ = check ? self?.setInCart() : self?.setOutCart()
                     }
-                })
+                
+                let isFavoriteCancellable = viewModel.isFavoritePublisher
+                    .debounce(for: 0.5, scheduler: DispatchQueue.main)
+                    .sink { [weak self] check in
+                        self?.favoriteButton.isUserInteractionEnabled = true
+                        CustomProgressHUD.dismiss()
+                        _ = check ? self?.setFavorite() : self?.setNotFavorite()
+                    }
+                
+                let isFailedCancellable = viewModel.isFailedPublisher
+                    .sink { check in
+                        if check {
+                            CustomProgressHUD.dismiss()
+                        }
+                    }
+                cancellables = [isInOrderCancellable, isFavoriteCancellable, isFailedCancellable]
             }
         }
     
@@ -73,12 +83,14 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     
     @objc
     private func didTapCart() {
+        cartButton.isUserInteractionEnabled = false
         CustomProgressHUD.show()
         viewModel?.didTapCart()
     }
     
     @objc
     private func didTapFavorite() {
+        favoriteButton.isUserInteractionEnabled = false
         CustomProgressHUD.show()
         viewModel?.didTapFavorite()
     }
