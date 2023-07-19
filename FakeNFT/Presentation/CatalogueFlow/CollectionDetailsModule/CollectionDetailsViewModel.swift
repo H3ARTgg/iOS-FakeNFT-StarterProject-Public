@@ -13,7 +13,6 @@ protocol CollectionDetailsViewModelProtocol: AnyObject {
     var nftsPublisher: AnyPublisher<[CollectionDetailsCellViewModel], Never> { get }
     func requestCollection()
     func getViewModelForCellAt(_ indexPath: IndexPath) -> CollectionDetailsCellViewModel
-    func getViewModelForWebView(with url: URL) -> WebViewViewModelProtocol
     func downloadImageFor(_ imageView: UIImageView)
     func getNftsCount() -> Int
     func didSwipeRight()
@@ -71,10 +70,6 @@ final class CollectionDetailsViewModel: CollectionDetailsViewModelProtocol, Coll
                     .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 )
         )
-    }
-    
-    func getViewModelForWebView(with url: URL) -> WebViewViewModelProtocol {
-        WebViewViewModel(url: url)
     }
     
     func getNftsCount() -> Int {
