@@ -10,7 +10,6 @@ struct Consts {
         static let statistics = UIImage(systemName: "flag.2.crossed.fill")
         static let outCart = Asset.Assets.notInCart.image
         static let inCart = Asset.Assets.inCart.image
-        static let inFavorites = Asset.Assets.inFavorites.image
         static let outFavorites = Asset.Assets.notInFavorites.image
         static let editBold = UIImage(systemName: "square.and.pencil",
                                       withConfiguration: UIImage.SymbolConfiguration(weight: .bold))
