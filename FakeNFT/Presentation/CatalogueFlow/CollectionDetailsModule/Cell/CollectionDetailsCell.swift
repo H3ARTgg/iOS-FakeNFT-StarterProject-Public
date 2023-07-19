@@ -35,7 +35,7 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
         button.tintColor = Asset.Colors.ypWhiteUniversal.color
         return button
     }()
-    private var cancellables: [AnyCancellable] = []
+    private var cancellables: Set<AnyCancellable> = []
         var viewModel: CollectionDetailsCellViewModel? {
             didSet {
                 guard let viewModel else { return }
@@ -44,29 +44,31 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
                 viewModel.downloadImageFor(nftImageView)
                 ratingStackView = viewModel.getImageForRating()
                 
-                let isInOrderCancellable = viewModel.isInOrderPublisher
+                viewModel.isInOrderPublisher
                     .removeDuplicates()
                     .sink { [weak self] check in
                         self?.cartButton.isUserInteractionEnabled = true
                         CustomProgressHUD.dismiss()
                         _ = check ? self?.setInCart() : self?.setOutCart()
                     }
+                    .store(in: &cancellables)
                 
-                let isFavoriteCancellable = viewModel.isFavoritePublisher
+                viewModel.isFavoritePublisher
                     .removeDuplicates()
                     .sink { [weak self] check in
                         self?.favoriteButton.isUserInteractionEnabled = true
                         CustomProgressHUD.dismiss()
                         _ = check ? self?.setFavorite() : self?.setNotFavorite()
                     }
+                    .store(in: &cancellables)
                 
-                let isFailedCancellable = viewModel.isFailedPublisher
+                viewModel.isFailedPublisher
                     .sink { check in
                         if check {
                             CustomProgressHUD.dismiss()
                         }
                     }
-                cancellables = [isInOrderCancellable, isFavoriteCancellable, isFailedCancellable]
+                    .store(in: &cancellables)
             }
         }
     

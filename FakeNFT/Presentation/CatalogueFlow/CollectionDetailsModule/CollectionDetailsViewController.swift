@@ -2,7 +2,7 @@ import UIKit
 import Combine
 
 protocol CollectionDetailsViewControllerProtocol: AnyObject {
-    var cancellables: [AnyCancellable] { get }
+    var cancellables: Set<AnyCancellable> { get }
     var viewModel: CollectionDetailsViewModelProtocol { get }
 }
 
@@ -59,7 +59,7 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
     }()
     private let errorTitle = UILabel()
     private(set) var viewModel: CollectionDetailsViewModelProtocol
-    private(set) var cancellables: [AnyCancellable] = []
+    private(set) var cancellables: Set<AnyCancellable> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +108,7 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
     }
     
     private func binds() {
-        let nftCollectionCancellable = viewModel.nftCollectionPublisher
+        viewModel.nftCollectionPublisher
             .sink { [weak self] collection in
                 guard let self else { return }
                 guard !collection.isEmpty else { return }
@@ -123,15 +123,15 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
                     CustomProgressHUD.dismiss()
                 }
             }
+            .store(in: &cancellables)
         
-        let nftsCancellable = viewModel.nftsPublisher
+        viewModel.nftsPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
                 self.collectionView.reloadData()
             }
-        
-        cancellables = [nftCollectionCancellable, nftsCancellable]
+            .store(in: &cancellables)
     }
     
     private func makeTextForAboutAuthor(author: String) -> NSAttributedString {

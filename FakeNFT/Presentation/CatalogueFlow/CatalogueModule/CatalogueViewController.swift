@@ -5,7 +5,7 @@ import Combine
 
 protocol CatalogueViewControllerProtocol: AnyObject {
     var viewModel: CatalogueViewModelProtocol { get }
-    var cancellables: [AnyCancellable] { get }
+    var cancellables: Set<AnyCancellable> { get }
 }
 
 final class CatalogueViewController: UIViewController, CatalogueViewControllerProtocol {
@@ -32,7 +32,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     }()
     private let errorTitle = UILabel()
     private(set) var viewModel: CatalogueViewModelProtocol
-    private(set) var cancellables: [AnyCancellable] = []
+    private(set) var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: CatalogueViewModelProtocol) {
         self.viewModel = viewModel
@@ -107,13 +107,14 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     }
     
     private func binds() {
-        let nftCollectionsCancellable = viewModel.nftCollectionsPublisher
+        viewModel.nftCollectionsPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.collectionView.reloadData()
             })
+            .store(in: &cancellables)
         
-        let isFailedCancellable = viewModel.isFailedPublisher
+        viewModel.isFailedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
@@ -122,7 +123,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
                     self.setupErrorContent(with: (self.errorTitle, self.errorButton))
                 }
             }
-        cancellables = [nftCollectionsCancellable, isFailedCancellable]
+            .store(in: &cancellables)
     }
     
     private func forceHideRefreshControl(for collectionView: UICollectionView) {
