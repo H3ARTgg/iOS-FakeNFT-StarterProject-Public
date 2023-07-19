@@ -27,7 +27,7 @@ final class CatalogueViewController: UIViewController, CatalogueViewControllerPr
     }()
     private lazy var errorButton: OtherCustomButton = {
         let button = OtherCustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
-        button.configure(text: L10n.Error.Try.again)
+        button.configure(text: L10n.Image.Load.failure)
         return button
     }()
     private let errorTitle = UILabel()

@@ -145,10 +145,6 @@ internal enum L10n {
       /// Something went wrong(
       internal static let message = L10n.tr("Localizable", "error.connection.message", fallback: "Something went wrong(")
     }
-    internal enum Try {
-      /// Try again
-      internal static let again = L10n.tr("Localizable", "error.try.again", fallback: "Try again")
-    }
   }
   internal enum Image {
     internal enum Load {

@@ -54,7 +54,7 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
     }()
     private lazy var errorButton: OtherCustomButton = {
         let button = OtherCustomButton.systemButton(with: UIImage(), target: self, action: #selector(didTapErrorButton))
-        button.configure(text: L10n.Error.Try.again)
+        button.configure(text: L10n.Image.Load.failure)
         return button
     }()
     private let errorTitle = UILabel()
@@ -136,9 +136,26 @@ final class CollectionDetailsViewController: UIViewController, CollectionDetails
     
     private func makeTextForAboutAuthor(author: String) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: "\(L10n.Collection.author): \(author)")
-        attributedString.addAttributes([.foregroundColor: Asset.Colors.ypBlack.color], range: NSRange(location: 0, length: attributedString.length))
-        attributedString.addAttributes([.font: Consts.Fonts.regular15, .foregroundColor: Asset.Colors.ypBlueUniversal.color], range: NSRange(location: 19, length: author.count))
-        attributedString.addAttributes([.link: "https://practicum.yandex.ru/"], range: NSRange(location: 19, length: author.count))
+        attributedString
+            .addAttributes(
+                [
+                    .foregroundColor: Asset.Colors.ypBlack.color
+                ],
+                range: NSRange(location: 0, length: attributedString.length))
+        attributedString
+            .addAttributes(
+                [
+                    .font: Consts.Fonts.regular15,
+                    .foregroundColor: Asset.Colors.ypBlueUniversal.color
+                ],
+                range: NSRange(location: L10n.Collection.author.count + 2, length: author.count)
+            )
+        attributedString
+            .addAttributes(
+                [
+                    .link: "https://practicum.yandex.ru/"
+                ],
+                range: NSRange(location: L10n.Collection.author.count + 2, length: author.count))
         return attributedString
     }
 }

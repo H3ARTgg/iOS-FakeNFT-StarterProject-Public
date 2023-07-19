@@ -66,7 +66,6 @@ Statistic.PlugLabel.Text = "No NFT";
 Statistic.ErrorAlert.Title = "Error";
 Statistic.ErrorPlugView.Text = "Oops, something went wrong(";
 
-error.try.again = "Try again";
 error.connection.message = "Something went wrong(";
 collection.author = "Collection author";
 sort.catalogue = "Sorting";
