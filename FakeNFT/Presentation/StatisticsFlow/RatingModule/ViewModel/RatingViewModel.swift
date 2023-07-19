@@ -8,6 +8,7 @@ protocol StatisticCoordination: AnyObject {
 
 protocol RatingViewModelProtocol {
     var showTableView: ((Bool) -> Void)? { get set }
+    var showProgressHUD: ((Bool) -> Void)? { get set }
     var showPlugView: ((Bool, String?) -> Void)? { get set }
     
     var countUsers: Int { get }
@@ -27,6 +28,7 @@ final class RatingViewModel: StatisticCoordination {
     
     var showTableView: ((Bool) -> Void)?
     var showPlugView: ((Bool, String?) -> Void)?
+    var showProgressHUD: ((Bool) -> Void)?
     
     private var statisticProvider: StatisticProviderProtocol?
     private var sortingStore: SortStatisticStoreProtocol
@@ -53,6 +55,7 @@ final class RatingViewModel: StatisticCoordination {
     }
     
     private func getUsers() {
+        showProgressHUD?(true)
         statisticProvider?.fetchUsersNextPage(completion: { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
@@ -64,6 +67,7 @@ final class RatingViewModel: StatisticCoordination {
                     self.showPlugView?(true, L10n.Statistic.ErrorPlugView.text)
                     self.showErrorAlert(message: failure.localizedDescription)
                 }
+                self.showProgressHUD?(false)
             }
         })
     }

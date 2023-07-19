@@ -29,15 +29,11 @@ final class RatingViewController: UIViewController {
         navigationItemSetup()
         addViews()
         activateConstraints()
-        ProgressHUD.show()
         bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if viewModel.countUsers != 0 {
-            ProgressHUD.dismiss()
-        }
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -119,7 +115,10 @@ private extension RatingViewController {
             guard let self else { return }
             self.plugLabel.isHidden = !isHidden
             self.plugLabel.text = text
-            UIBlockingProgressHUD.dismiss()
+        }
+        
+        viewModel.showProgressHUD = { show in
+            show ? ProgressHUD.show() : ProgressHUD.dismiss()
         }
     }
     
@@ -148,7 +147,6 @@ private extension RatingViewController {
             guard let ratingTableView else { return }
             ratingTableView.alpha = show ? 1 : 0
         }
-        UIBlockingProgressHUD.dismiss()
     }
 }
 
