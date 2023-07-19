@@ -86,10 +86,12 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     private func setInCart() {
         UIView.animate(withDuration: 0.25) { [weak self] in
             self?.cartButton.alpha = 0
-            self?.cartButton.setImage(Consts.Images.inCart, for: .normal)
         } completion: { [weak self] isCompleted in
             if isCompleted {
-                self?.cartButton.alpha = 1
+                self?.cartButton.setImage(Consts.Images.inCart, for: .normal)
+                UIView.animate(withDuration: 0.1) {
+                    self?.cartButton.alpha = 1
+                }
             }
         }
     }
@@ -97,24 +99,24 @@ final class CollectionDetailsCell: UICollectionViewCell, ReuseIdentifying {
     private func setOutCart() {
         UIView.animate(withDuration: 0.25) { [weak self] in
             self?.cartButton.alpha = 0
-            self?.cartButton.setImage(Consts.Images.outCart, for: .normal)
         } completion: { [weak self] isCompleted in
             if isCompleted {
-                self?.cartButton.alpha = 1
+                self?.cartButton.setImage(Consts.Images.outCart, for: .normal)
+                UIView.animate(withDuration: 0.1) {
+                    self?.cartButton.alpha = 1
+                }
             }
         }
     }
     
     private func setFavorite() {
         UIView.animate(withDuration: 0.25) { [weak self] in
-            self?.favoriteButton.setImage(Consts.Images.inFavorites, for: .normal)
             self?.favoriteButton.tintColor = Asset.Colors.ypRedUniversal.color
         }
     }
     
     private func setNotFavorite() {
         UIView.animate(withDuration: 0.25) { [weak self] in
-            self?.favoriteButton.setImage(Consts.Images.outFavorites, for: .normal)
             self?.favoriteButton.tintColor = Asset.Colors.ypWhiteUniversal.color
         }
     }

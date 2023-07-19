@@ -82,11 +82,6 @@ final class CollectionDetailsCellViewModel: Identifiable {
                 case .success(let likes):
                     DispatchQueue.main.async {
                         self.likesNftIds = likes.likes
-                        if likes.likes.contains(nftId) {
-                            self.isFavorite = true
-                        } else {
-                            self.isFavorite = false
-                        }
                     }
                 case .failure(let error):
                     print("failed isInFavorites: \(error)")
