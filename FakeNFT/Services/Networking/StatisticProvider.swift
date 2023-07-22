@@ -24,8 +24,8 @@ extension StatisticProvider: StatisticProviderProtocol {
             switch result {
             case .success(let model):
                 completion(.success(model))        
-            case .failure(let failure):
-                completion(.failure(failure))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

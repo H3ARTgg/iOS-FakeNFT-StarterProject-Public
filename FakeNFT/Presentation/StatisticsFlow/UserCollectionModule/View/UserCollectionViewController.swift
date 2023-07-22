@@ -50,6 +50,7 @@ private extension UserCollectionViewController {
         collectionView.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.refreshControl = refreshControl
+        collectionView.alpha = 0
         return collectionView
     }
     
@@ -84,22 +85,22 @@ private extension UserCollectionViewController {
     func bind() {
         viewModel.showCollectionView = { [weak self] isHidden in
             guard let self else { return }
-            self.showCollectionView(show: isHidden)
-            self.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.showCollectionView(show: isHidden)
+                self.collectionView.reloadData()
+            }
         }
         
         viewModel.showPlugView = { [weak self] (isHidden, text) in
             guard let self else { return }
-            self.plugLabel.isHidden = !isHidden
-            self.plugLabel.text = text
+            DispatchQueue.main.async {
+                self.plugLabel.isHidden = !isHidden
+                self.plugLabel.text = text
+            }
         }
         
         viewModel.showProgressHUD = { check in
             check ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
-        }
-        
-        viewModel.blockUI = { isBlock in
-            isBlock ? UIBlockingProgressHUD.unBlockUI() : UIBlockingProgressHUD.blockUI()
         }
     }
     

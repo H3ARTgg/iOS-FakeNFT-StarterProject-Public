@@ -1,5 +1,9 @@
 import Foundation
 
+protocol NftViewCellViewModelDelegate: AnyObject {
+    func changeFavoritesForNFT(id: String)
+}
+
 protocol NftViewCellViewModelProtocol {
     var setLike: ((Bool) -> Void)? { get set }
     
@@ -22,6 +26,10 @@ final class NftViewCellViewModel: NftViewCellViewModelProtocol {
     var like: Bool {
         isLike
     }
+
+    weak var delegate: NftViewCellViewModelDelegate?
+
+    private let id: String
     
     private(set) var isLike: Bool {
         didSet {
@@ -35,10 +43,11 @@ final class NftViewCellViewModel: NftViewCellViewModelProtocol {
         nftPrice = "\(String(format: "%.1f", nft.price)) ETH"
         rating = nft.rating
         self.isLike = isLiked
-        likeButtonTapped()
+        self.id = nft.id
     }
     
     func likeButtonTapped() {
+        delegate?.changeFavoritesForNFT(id: id)
         isLike.toggle()
     }
 }
