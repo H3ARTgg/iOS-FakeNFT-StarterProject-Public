@@ -1,0 +1,75 @@
+
+// MARK: - Main
+
+profile.icon = "Profile";
+catalogue.icon = "Catalogue";
+cart.icon = "Cart";
+statistics.icon = "Statistics";
+
+profile.owned = "My";
+profile.favorite = "Favorite";
+profile.ownedScreen = "My NFTs";
+profile.favoriteScreen = "Favorite NFTs";
+profile.developer = "About developer";
+profile.changePhoto = "Change photo";
+profile.sort = "Sorting";
+profile.byPrice = "By price";
+profile.byRating = "By rating";
+profile.byTitle = "By title";
+profile.close = "Close";
+profile.noNfts = "You don't have NFTs yet";
+profile.noFavoriteNfts = "You don't have any favorite NFTs yet";
+profile.from = "from";
+profile.price = "Price";
+profile.name = "Name";
+profile.about = "Description";
+profile.site = "Website";
+router.error = "Error";
+router.back = "Back";
+
+button.to.pay = "To pay";
+label.amount.nft = "NFT";
+label.currency.eth = "ETH";
+label.delete.nft = "Do you want to remove an item?";
+button.delete.nft = "Delete";
+label.cancel = "Return";
+alert.sort = "Sorting";
+sort.price = "By price";
+sort.rating = "By rating";
+sort.title = "By title";
+alert.close = "Close";
+
+cart.cartIsEmpty = "Cart is empty";
+cart.payment.method = "Select a Payment Method";
+cart.label.terms = "By making a purchase, you agree to the terms";
+cart.button.terms = "User Agreement";
+cart.button.payment = "Pay";
+cart.alert.payment.title = "Error";
+cart.alert.payment.message = "Choose a currency";
+cart.alert.payment.action = "OK";
+cart.resultPayment.failureTitle = "Oops! Something went wrong :(";
+cart.resultPayment.failureTryTitle = "Try again!";
+cart.resultPayment.failureButton = "To try one more time";
+cart.resultPayment.successTitle = "Success! Payment went through";
+cart.resultPayment.successCongratulationTitle = "congratulations on your purchase!";
+cart.resultPayment.successButton = "Back to catalog";
+
+Statistic.FilterAlert.Title = "Sorting";
+Statistic.AlertAction.SortByName.Title = "By name";
+Statistic.AlertAction.SortByRating.Title = "By rating";
+Statistic.AlertAction.Cancel.Title = "Cancel";
+Statistic.AlertAction.Repeat.Title = "Repeat";
+Statistic.UserSiteButton.Title = "Go to site";
+Statistic.UserCollectionButton.Title = "Collection NFT (%d)";
+Statistic.UserCollectionViewController.Title = "Collection NFT";
+Statistic.PlugLabel.Text = "No NFT";
+Statistic.ErrorAlert.Title = "Error";
+Statistic.ErrorPlugView.Text = "Oops, something went wrong(";
+
+error.connection.message = "Something went wrong(";
+collection.author = "Collection author";
+sort.catalogue = "Sorting";
+by.name = "By title";
+by.nft.count = "By number of NFTs";
+image.load.failure = "Try again";
+

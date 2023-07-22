@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="FakeNFT/en.lproj/InfoPlist.strings" source-language="en" target-language="ru" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>FakeNFT</source>
+        <target>FakeNFT</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="FakeNFT/Resources/en.lproj/Localizable.strings" source-language="en" target-language="ru" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+    </header>
+    <body>
+      <trans-unit id="cart.icon" xml:space="preserve">
+        <source>Cart</source>
+        <target>Корзина</target>
+        <note>Cart tabbar icon title</note>
+      </trans-unit>
+      <trans-unit id="catalogue.icon" xml:space="preserve">
+        <source>Catalogue</source>
+        <target>Каталог</target>
+        <note>Catalogue tabbar icon title</note>
+      </trans-unit>
+      <trans-unit id="profile.icon" xml:space="preserve">
+        <source>Profile</source>
+        <target>Профиль</target>
+        <note>Profile tabbar icon title</note>
+      </trans-unit>
+      <trans-unit id="statistics.icon" xml:space="preserve">
+        <source>Statistics</source>
+        <target>Статистика</target>
+        <note>Statistics tabbar icon title</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
