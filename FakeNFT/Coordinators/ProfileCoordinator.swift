@@ -38,9 +38,9 @@ private extension ProfileCoordinator {
             let profileEditView = profileEditNftsModule.view
             var profileEditCoordination = profileEditNftsModule.coordination
             
-            profileEditCoordination.finish = { [weak profileCoordination] profileEditUser in
+            profileEditCoordination.finish = { [weak profileCoordination, weak self] profileEditUser in
                 profileCoordination?.setProfile(profileEditUser)
-                self.router.dismissModule(profileEditView)
+                self?.router.dismissModule(profileEditView)
             }
             
             router.present(profileEditView)
