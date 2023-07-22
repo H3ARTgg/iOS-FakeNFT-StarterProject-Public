@@ -193,17 +193,28 @@ private extension NftViewCell {
         nftPriceLabel.text = viewModel.nftPrice
         ratingStackView.setupRating(viewModel.rating)
         setLikeImage(isLiked: viewModel.like)
+        addCartImage(isInCart: viewModel.isInCart)
         loadImage()
         
         viewModel.setLike = { [weak self] isLike in
             guard let self else { return }
             self.setLikeImage(isLiked: isLike)
         }
+
+        viewModel.addToCart = { [weak self] isInCart in
+            guard let self else { return }
+            self.addCartImage(isInCart: isInCart)
+        }
     }
     
     func setLikeImage(isLiked: Bool) {
         let image = isLiked ? Asset.Assets.likeSet.image : Asset.Assets.noLike.image
         likeButton.setImage(image, for: .normal)
+    }
+
+    func addCartImage(isInCart: Bool) {
+        let image = isInCart ? Asset.Assets.inCart.image : Asset.Assets.cart.image
+        cartButton.setImage(image, for: .normal)
     }
     
     func loadImage() {
@@ -214,7 +225,7 @@ private extension NftViewCell {
     
     @objc
     func cartButtonTapped() {
-        print("add to cart")
+        viewModel?.cartButtonTapped()
     }
     
     @objc

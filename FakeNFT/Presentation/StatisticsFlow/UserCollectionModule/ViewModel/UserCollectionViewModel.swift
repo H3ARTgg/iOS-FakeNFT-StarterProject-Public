@@ -25,6 +25,13 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollec
     var blockUI: ((Bool) -> Void)?
     
     private var nftsId: [String]?
+
+    private var nftInCart: [String] = [] {
+        didSet {
+            showCollectionView?(isDownload)
+        }
+    }
+
     private var favoriteNFT: [String] = [] {
         didSet {
             showCollectionView?(isDownload)
@@ -42,7 +49,8 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollec
 
     private var isDownload: Bool {
         guard nftsId != nil else { return true }
-        return !favoriteNFT.isEmpty && !nfts.isEmpty
+        guard favoriteNFT.count > 1 && nftInCart.count > 1 else { return true }
+        return !favoriteNFT.isEmpty && !nfts.isEmpty && !nftInCart.isEmpty
     }
     
     init(
@@ -53,6 +61,7 @@ final class UserCollectionViewModel: UserCollectionViewModelProtocol, UserCollec
             self.nftsId = nftsId
             self.errorHandler = errorHandler
             fetchFavoriteNFT()
+            fetchNftInCart()
         }
 }
 
@@ -64,8 +73,11 @@ extension UserCollectionViewModel {
     func nftCellViewModel(at index: Int) -> NftViewCellViewModel? {
         guard !nfts.isEmpty else { return nil }
         let nft = nfts[index]
-        let isLiked = favoriteNFT.contains(nfts[index].id )
-        let viewModel = NftViewCellViewModel(nft: nft, isLiked: isLiked)
+        let nftID = nfts[index].id
+        let isLiked = favoriteNFT.contains(nftID)
+        let isInCart = nftInCart.contains(nftID)
+
+        let viewModel = NftViewCellViewModel(nft: nft, isLiked: isLiked, isInCart: isInCart)
         viewModel.delegate = self
         return viewModel
     }
@@ -129,6 +141,20 @@ extension UserCollectionViewModel {
             }
         }
     }
+
+    private func fetchNftInCart() {
+        nftsProvider.fetchNFTInCart { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let nftInCart):
+                self.nftInCart = nftInCart
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 extension UserCollectionViewModel: NftViewCellViewModelDelegate {
@@ -142,6 +168,32 @@ extension UserCollectionViewModel: NftViewCellViewModelDelegate {
         }
 
         nftsProvider.changeFavoritesForNFT(favoriteNFT: favoriteNFT) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                self.fetchFavoriteNFT()
+                DispatchQueue.main.async {
+                    self.showProgressHUD?(false)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.showProgressHUD?(false)
+                    self.showErrorAlert(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func changeNftInCart(id: String) {
+        showProgressHUD?(true)
+
+        if let index = nftInCart.firstIndex(of: id) {
+            nftInCart.remove(at: index)
+        } else {
+            nftInCart.append(id)
+        }
+
+        nftsProvider.changeNFTinCart(nftInCart: nftInCart) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success:

@@ -4,6 +4,8 @@ protocol NftProviderProtocol {
     func fetchNfts(nftsId: [String], _ completion: @escaping (Result<[NftResponseModel], Error>) -> Void)
     func fetchFavoriteNFT(_ completion: @escaping (Result<[String], Error>) -> Void)
     func changeFavoritesForNFT(favoriteNFT: [String], _ completion: @escaping (Result<Void, Error>) -> Void)
+    func fetchNFTInCart(_ completion: @escaping (Result<[String], Error>) -> Void)
+    func changeNFTinCart(nftInCart: [String], _ completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 struct NftProvider {
@@ -60,6 +62,33 @@ extension NftProvider: NftProviderProtocol {
     func changeFavoritesForNFT(favoriteNFT: [String], _ completion: @escaping (Result<Void, Error>) -> Void) {
         var request = ProfileRequestPut()
         request.dto = LikesNetworkModel(likes: favoriteNFT)
+        networkClient.send(request: request) { result in
+            switch result {
+            case .success:
+                completion(.success(Void()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchNFTInCart(_ completion: @escaping (Result<[String], Error>) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let networkRequest = OrderRequest()
+            networkClient.send(request: networkRequest, type: OrderResult.self) { result in
+                switch result {
+                case .success(let model):
+                    completion(.success(model.nfts))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    func changeNFTinCart(nftInCart: [String], _ completion: @escaping (Result<Void, Error>) -> Void) {
+        var request = OrderRequestPut()
+        request.dto = OrderResult(nfts: nftInCart)
         networkClient.send(request: request) { result in
             switch result {
             case .success:
